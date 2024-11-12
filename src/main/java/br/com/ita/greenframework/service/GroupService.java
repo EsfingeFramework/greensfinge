@@ -31,4 +31,10 @@ public class GroupService {
         return value;
     }
 
+    public Integer doSomething5(Integer test) {
+        String value = "GruopService - doSomething5 - "+test;
+        System.out.println(value);
+        return 10;
+    }
+
 }

@@ -1,4 +1,4 @@
-package br.com.ita.greenframework.configuration;
+package br.com.ita.greenframework.configurations;
 
 import br.com.ita.greenframework.dto.Configuration;
 

@@ -1,6 +1,6 @@
 package br.com.ita.greenframework.main;
 
-import br.com.ita.greenframework.configuration.GreenFactory;
+import br.com.ita.greenframework.configurations.GreenFactory;
 import br.com.ita.greenframework.service.UserService;
 
 public class Main {

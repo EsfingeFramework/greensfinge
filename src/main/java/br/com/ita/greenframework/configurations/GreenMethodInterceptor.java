@@ -1,4 +1,4 @@
-package br.com.ita.greenframework.configuration;
+package br.com.ita.greenframework.configurations;
 
 import br.com.ita.greenframework.annotations.GreenOptional;
 import net.bytebuddy.ByteBuddy;
@@ -30,7 +30,7 @@ public class GreenMethodInterceptor {
                                 .and(ElementMatchers.not(ElementMatchers.isEquals())
                                 .and(ElementMatchers.not(ElementMatchers.isHashCode())
                                 .and(ElementMatchers.not(ElementMatchers.isToString()))))) // Exclui os métodos equals, hashCode e toString
-                        .intercept(MethodDelegation.to(GreenGenericMocker.class)) // Usa o método genérico de mock
+                        .intercept(MethodDelegation.to(GreenGenericMocker.class))
                         .make()
                         .load(fieldClass.getClassLoader())
                         .getLoaded()
@@ -41,10 +41,8 @@ public class GreenMethodInterceptor {
             }
         }
 
-        // Chamando o método original usando o proceed (zuper.call())
         Object result = zuper.call();
 
-        // Lógica após a execução do método original
         System.out.println("After method execution: " + method.toGenericString());
 
         return result;
