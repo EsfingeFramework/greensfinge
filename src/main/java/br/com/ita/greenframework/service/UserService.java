@@ -4,8 +4,8 @@ import br.com.ita.greenframework.annotations.GreenOptional;
 
 public class UserService {
 
-    @GreenOptional(configurationkey = "groupService")
-    private GroupService groupService;
+    @GreenOptional(configurationKey = "groupService")
+    private GroupService groupService = new GroupService();
 
     public void createUser() {
         System.out.println("Init UserService - createUser");
