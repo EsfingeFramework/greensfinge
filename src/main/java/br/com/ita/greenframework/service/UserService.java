@@ -1,11 +1,19 @@
 package br.com.ita.greenframework.service;
 
+import br.com.ita.greenframework.annotations.GreenDefault;
+import br.com.ita.greenframework.annotations.GreenNumberConfig;
 import br.com.ita.greenframework.annotations.GreenOptional;
 
 public class UserService {
 
-    @GreenOptional(configurationKey = "groupService")
+    @GreenOptional(configurationKey = @GreenDefault(configurationKey = "keyGroupService"))
     private GroupService groupService = new GroupService();
+
+    @GreenOptional(configurationKey = @GreenDefault(configurationKey = "keyProfileService"))
+    private ProfileService profileService = new ProfileService();
+
+    @GreenNumberConfig(configurationKey = @GreenDefault(configurationKey = "keyNumber"))
+    private Integer numberTest;
 
     public void createUser() {
         System.out.println("Init UserService - createUser");
@@ -15,17 +23,20 @@ public class UserService {
         String return3 = groupService.doSomething3(1);
         String return4 = groupService.doSomething4(2);
         Integer return5 = groupService.doSomething5(4);
+        String return6 = profileService.doSomething6("OtherTest");
 
         System.out.println("******************************************************");
         System.out.println("******************************************************");
         System.out.println("******************************************************");
 
         System.out.println("Call: groupService.doSomething0() - return: void");
-        System.out.println("Call: groupService.doSomething() - return: "+return1);
+        System.out.println("Call: groupService.doSomething(\"Test\") - return: "+return1);
         System.out.println("Call: groupService.doSomething2() - return: "+return2);
         System.out.println("Call: groupService.doSomething3(1) - return: "+return3);
         System.out.println("Call: groupService.doSomething4(2) - return: "+return4);
         System.out.println("Call: groupService.doSomething5(4) - return: "+return5);
+        System.out.println("Call: profileService.doSomething6(\"OtherTest\") - return: "+return6);
         System.out.println("Finish UserService - createUser");
     }
+
 }

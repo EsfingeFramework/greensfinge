@@ -1,7 +1,7 @@
 package br.com.ita.greenframework.configurations;
 
-import br.com.ita.greenframework.dto.Configuration;
-import br.com.ita.greenframework.dto.GreenConfigurationDTO;
+import br.com.ita.greenframework.dto.GreenDefaultConfiguration;
+import br.com.ita.greenframework.dto.GreenConfiguration;
 
 import java.util.HashMap;
 import java.util.List;
@@ -9,24 +9,24 @@ import java.util.Map;
 
 public class GreenConfigurationFacade {
 
-    private final Map<String, Configuration> CACHE = new HashMap<>();
+    private final Map<String, GreenDefaultConfiguration> cache = new HashMap<>();
 
-    public List<GreenConfigurationDTO> getConfigurations() {
-        GreenConfiguration greenConfiguration = new GreenConfiguration();
+    public List<GreenConfiguration> getConfigurations() {
+        br.com.ita.greenframework.configurations.GreenConfiguration greenConfiguration = new br.com.ita.greenframework.configurations.GreenConfiguration();
         return greenConfiguration.getConfigurationsInProject();
     }
 
-    public void setGeneralConfiguration(Configuration config) {
-        CACHE.put(config.getConfigurationKey(), config);
+    public void setGeneralConfiguration(GreenDefaultConfiguration config) {
+        cache.put(config.getConfigurationKey(), config);
         GreenThreadLocal greenThreadLocal = new GreenThreadLocal();
-        greenThreadLocal.setValue(CACHE);
+        greenThreadLocal.setValue(cache);
     }
 
-    public void setPersonalConfiguration(Configuration config) {
+    public void setPersonalConfiguration(GreenDefaultConfiguration config) {
 
     }
 
-    public Map<String, Configuration> getCache() {
-        return CACHE;
+    public Map<String, GreenDefaultConfiguration> getCache() {
+        return cache;
     }
 }

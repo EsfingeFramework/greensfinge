@@ -1,8 +1,6 @@
 package br.com.ita.greenframework.annotations;
 
 import br.com.ita.greenframework.dto.GreenOptionalConfiguration;
-import net.sf.esfinge.metadata.annotation.finder.SearchInsideAnnotations;
-import net.sf.esfinge.metadata.annotation.finder.SearchOnEnclosingElements;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -12,13 +10,7 @@ import java.lang.annotation.Target;
 @GreenConfigAnnotation(annotationName = GreenOptional.class, className = GreenOptionalConfiguration.class)
 @Target({ElementType.FIELD, ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
-@SearchOnEnclosingElements
-@SearchInsideAnnotations
-public @interface GreenOptional {
+public @interface GreenDefault {
 
-    GreenDefault configurationKey();
-
-    String strDefaultValue() default "";
-    int numberDefaultValue() default 0;
-
+    String configurationKey();
 }

@@ -1,25 +1,26 @@
 package br.com.ita.greenframework.configurations;
 
 import br.com.ita.greenframework.annotations.GreenConfigAnnotation;
-import br.com.ita.greenframework.dto.GreenConfigurationDTO;
+import br.com.ita.greenframework.annotations.GreenDefault;
+import br.com.ita.greenframework.configurations.esfinge.dto.ClassContainer;
+import br.com.ita.greenframework.configurations.esfinge.dto.ContainerField;
 import io.github.classgraph.ClassGraph;
 import io.github.classgraph.ScanResult;
+import net.sf.esfinge.metadata.AnnotationReader;
 
 import java.lang.annotation.Annotation;
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class GreenConfiguration {
 
-    public List<GreenConfigurationDTO> getConfigurationsInProject() {
-        List<GreenConfigurationDTO> configs = new ArrayList<>();
+    public List<br.com.ita.greenframework.dto.GreenConfiguration> getConfigurationsInProject() {
+        List<br.com.ita.greenframework.dto.GreenConfiguration> configs = new ArrayList<>();
         List<Class<Annotation>> classesAnnotations = scanAllAnnotations();
 
         try (ScanResult scanResult = new ClassGraph()
                 .enableAllInfo()
-                .acceptPackages("br.com.ita.greenframework")
+                .acceptPackages(GreenDefault.class.getPackage().getName())
                 .scan()) {
 
             for (Class<Annotation> classAnnotation : classesAnnotations) {
@@ -31,19 +32,23 @@ public class GreenConfiguration {
         return configs;
     }
 
-    private void searchForAnnotation(ScanResult scanResult, Class<Annotation> classAnnotation, List<GreenConfigurationDTO> configs) {
+    private void searchForAnnotation(ScanResult scanResult, Class<Annotation> classAnnotation, List<br.com.ita.greenframework.dto.GreenConfiguration> configs) {
         scanResult.getAllClasses().forEach(classInfo -> {
             try {
                 Class<?> clazz = Class.forName(classInfo.getName());
-                for (Field field : clazz.getDeclaredFields()) {
-                    if (field.isAnnotationPresent(classAnnotation)) {
-                        Annotation annotation = field.getAnnotation(classAnnotation);
-                        String configurationKey = (String) annotation.annotationType().getMethod("configurationKey").invoke(annotation);
 
-                        configs.add(new GreenConfigurationDTO(clazz.getName(), field.getName(), classAnnotation.getName(), configurationKey));
+                AnnotationReader reader = new AnnotationReader();
+                ClassContainer containerField = reader.readingAnnotationsTo(clazz, ClassContainer.class);
+
+                if(!containerField.getFields().isEmpty()) {
+                    for (ContainerField field : containerField.getFields()) {
+                        if(field.isHasGreenAnnotation()) {
+                            System.out.println(field);
+                            configs.add(new br.com.ita.greenframework.dto.GreenConfiguration(clazz.getName(), field.getAttributeName(), classAnnotation.getName(), field.getAnnotationValue()));
+                        }
                     }
                 }
-            } catch (ClassNotFoundException | NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         });

@@ -1,15 +1,17 @@
 package br.com.ita.greenframework.configurations;
 
-import br.com.ita.greenframework.annotations.GreenOptional;
-import br.com.ita.greenframework.dto.OptionalConfiguration;
-import net.bytebuddy.ByteBuddy;
-import net.bytebuddy.implementation.MethodDelegation;
+import br.com.ita.greenframework.configurations.esfinge.dto.ClassContainer;
+import br.com.ita.greenframework.configurations.esfinge.dto.ContainerField;
+import br.com.ita.greenframework.configurations.interceptorprocessor.GreenStrategyProcessor;
 import net.bytebuddy.implementation.bind.annotation.*;
-import net.bytebuddy.matcher.ElementMatchers;
+import net.sf.esfinge.metadata.AnnotationReader;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.List;
 import java.util.concurrent.Callable;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class GreenMethodInterceptor {
 
@@ -17,33 +19,22 @@ public class GreenMethodInterceptor {
     public Object intercept(@This Object target, @AllArguments Object[] args, @Origin Method method, @SuperCall Callable<?> zuper) throws Exception {
         System.out.println("Before method execution: " + method.toGenericString());
 
-        Field[] declaredFields = target.getClass().getSuperclass().getDeclaredFields();
-        for (Field field : declaredFields) {
-            if(field.isAnnotationPresent(GreenOptional.class)) {
-                GreenOptional annotation = field.getAnnotation(GreenOptional.class);
-                GreenThreadLocal greenThreadLocal = new GreenThreadLocal();
-                OptionalConfiguration configuration = (OptionalConfiguration)greenThreadLocal.getValue(annotation.configurationKey());
+        AnnotationReader reader = new AnnotationReader();
+        ClassContainer classContainer = reader.readingAnnotationsTo(target.getClass().getSuperclass(), ClassContainer.class);
 
-                if(configuration.isIgnore()) {
-                    field.setAccessible(true);
+        List<Field> declaredFields = Stream.of(target.getClass().getSuperclass().getDeclaredFields())
+                .collect(Collectors.toList());
 
-                    Class fieldClass = Class.forName(field.getGenericType().getTypeName());
+        for (ContainerField containerField : classContainer.getFields()) {
+            if(containerField.isHasGreenAnnotation()) {
 
-                    Object mockObject = new ByteBuddy()
-                            .subclass(fieldClass)
-                            .method(ElementMatchers.isDeclaredBy(fieldClass)
-                                    .and(ElementMatchers.not(ElementMatchers.isEquals())
-                                    .and(ElementMatchers.not(ElementMatchers.isHashCode())
-                                    .and(ElementMatchers.not(ElementMatchers.isToString())))))
-                            .intercept(MethodDelegation.to(GreenGenericMocker.class))
-                            .make()
-                            .load(fieldClass.getClassLoader())
-                            .getLoaded()
-                            .getDeclaredConstructor()
-                            .newInstance();
+                Field field = declaredFields.stream().filter(e -> e.getName().equals(containerField.getAttributeName()))
+                        .findFirst()
+                        .orElseGet(null);
 
-                    field.set(target, mockObject);
-                }
+                GreenStrategyProcessor strategyProcessor = GreenStrategyProcessor.getInstance()
+                        .getProcessor(containerField.getAnnotationField());
+                strategyProcessor.process(field, containerField, target);
             }
         }
 
