@@ -1,9 +1,9 @@
-package br.com.ita.greenframework.configurations.interceptorprocessor;
+package br.com.ita.greenframework.configuration.interceptorprocessor;
 
 import br.com.ita.greenframework.GreenException;
-import br.com.ita.greenframework.annotations.GreenDefault;
-import br.com.ita.greenframework.configurations.GreenThreadLocal;
-import br.com.ita.greenframework.configurations.esfinge.dto.ContainerField;
+import br.com.ita.greenframework.annotation.GreenDefault;
+import br.com.ita.greenframework.configuration.GreenThreadLocal;
+import br.com.ita.greenframework.configuration.esfinge.dto.ContainerField;
 
 import java.lang.reflect.Field;
 import java.util.HashMap;

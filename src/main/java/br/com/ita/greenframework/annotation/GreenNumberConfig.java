@@ -1,4 +1,4 @@
-package br.com.ita.greenframework.annotations;
+package br.com.ita.greenframework.annotation;
 
 import br.com.ita.greenframework.dto.GreenNumberConfiguration;
 

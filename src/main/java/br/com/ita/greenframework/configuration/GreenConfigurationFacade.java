@@ -1,4 +1,4 @@
-package br.com.ita.greenframework.configurations;
+package br.com.ita.greenframework.configuration;
 
 import br.com.ita.greenframework.dto.GreenDefaultConfiguration;
 import br.com.ita.greenframework.dto.GreenConfiguration;
@@ -10,10 +10,10 @@ import java.util.Map;
 public class GreenConfigurationFacade {
 
     private final Map<String, GreenDefaultConfiguration> cache = new HashMap<>();
+    private final GreenConfigConfiguration greenConfigConfiguration = new GreenConfigConfiguration();
 
     public List<GreenConfiguration> getConfigurations() {
-        br.com.ita.greenframework.configurations.GreenConfiguration greenConfiguration = new br.com.ita.greenframework.configurations.GreenConfiguration();
-        return greenConfiguration.getConfigurationsInProject();
+        return greenConfigConfiguration.getConfigurationsInProject();
     }
 
     public void setGeneralConfiguration(GreenDefaultConfiguration config) {

@@ -1,6 +1,7 @@
-package br.com.ita.greenframework.annotations;
+package br.com.ita.greenframework.annotation;
 
 import br.com.ita.greenframework.dto.GreenOptionalConfiguration;
+import br.com.ita.greenframework.util.GreenConstant;
 import net.sf.esfinge.metadata.annotation.finder.SearchInsideAnnotations;
 import net.sf.esfinge.metadata.annotation.finder.SearchOnEnclosingElements;
 
@@ -18,7 +19,7 @@ public @interface GreenOptional {
 
     GreenDefault configurationKey();
 
-    String strDefaultValue() default "";
-    int numberDefaultValue() default 0;
+    String strDefaultValue() default GreenConstant.STR_DEFAULT_VALUE;
+    int numberDefaultValue() default GreenConstant.INT_DEFAULT_VALUE;
 
 }

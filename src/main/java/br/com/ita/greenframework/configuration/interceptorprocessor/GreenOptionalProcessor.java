@@ -1,8 +1,8 @@
-package br.com.ita.greenframework.configurations.interceptorprocessor;
+package br.com.ita.greenframework.configuration.interceptorprocessor;
 
-import br.com.ita.greenframework.annotations.GreenOptional;
-import br.com.ita.greenframework.configurations.GreenGenericMocker;
-import br.com.ita.greenframework.configurations.esfinge.dto.ContainerField;
+import br.com.ita.greenframework.annotation.GreenOptional;
+import br.com.ita.greenframework.configuration.GreenGenericMocker;
+import br.com.ita.greenframework.configuration.esfinge.dto.ContainerField;
 import br.com.ita.greenframework.dto.GreenOptionalConfiguration;
 import net.bytebuddy.ByteBuddy;
 import net.bytebuddy.implementation.MethodDelegation;
@@ -25,14 +25,13 @@ public class GreenOptionalProcessor extends GreenStrategyProcessor {
             try {
                 fieldClass = Class.forName(field.getGenericType().getTypeName());
 
-
                 Object mockObject = new ByteBuddy()
                         .subclass(fieldClass)
                         .method(ElementMatchers.isDeclaredBy(fieldClass)
                                 .and(ElementMatchers.not(ElementMatchers.isEquals())
                                 .and(ElementMatchers.not(ElementMatchers.isHashCode())
                                 .and(ElementMatchers.not(ElementMatchers.isToString())))))
-                        .intercept(MethodDelegation.to(GreenGenericMocker.class))
+                        .intercept(MethodDelegation.to(new GreenGenericMocker(containerField)))
                         .make()
                         .load(fieldClass.getClassLoader())
                         .getLoaded()

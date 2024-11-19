@@ -1,4 +1,4 @@
-package br.com.ita.greenframework.configurations.esfinge.dto;
+package br.com.ita.greenframework.configuration.esfinge.dto;
 
 import lombok.Getter;
 import lombok.Setter;

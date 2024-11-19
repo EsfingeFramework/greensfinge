@@ -1,6 +1,6 @@
-package br.com.ita.greenframework.configurations.esfinge.annotation;
+package br.com.ita.greenframework.configuration.esfinge.annotation;
 
-import br.com.ita.greenframework.configurations.esfinge.processor.GreenReadAttributesAnnotationProcessor;
+import br.com.ita.greenframework.configuration.esfinge.processor.GreenReadAttributesAnnotationProcessor;
 import net.sf.esfinge.metadata.annotation.container.AnnotationReadingConfig;
 
 import java.lang.annotation.Retention;

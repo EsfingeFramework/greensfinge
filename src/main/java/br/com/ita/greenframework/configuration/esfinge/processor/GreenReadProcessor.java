@@ -1,7 +1,7 @@
-package br.com.ita.greenframework.configurations.esfinge.processor;
+package br.com.ita.greenframework.configuration.esfinge.processor;
 
-import br.com.ita.greenframework.annotations.GreenNumberConfig;
-import br.com.ita.greenframework.annotations.GreenOptional;
+import br.com.ita.greenframework.annotation.GreenNumberConfig;
+import br.com.ita.greenframework.annotation.GreenOptional;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.AnnotatedElement;

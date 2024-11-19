@@ -1,4 +1,4 @@
-package br.com.ita.greenframework.configurations.esfinge.processor;
+package br.com.ita.greenframework.configuration.esfinge.processor;
 
 import net.sf.esfinge.metadata.AnnotationReadingException;
 import net.sf.esfinge.metadata.AnnotationValidationException;

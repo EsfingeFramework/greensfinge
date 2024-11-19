@@ -1,4 +1,4 @@
-package br.com.ita.greenframework.annotations;
+package br.com.ita.greenframework.annotation;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

@@ -1,8 +1,8 @@
-package br.com.ita.greenframework.configurations.esfinge.dto;
+package br.com.ita.greenframework.configuration.esfinge.dto;
 
-import br.com.ita.greenframework.configurations.esfinge.annotation.GreenReadAnnotation;
-import br.com.ita.greenframework.configurations.esfinge.annotation.GreenReadAttributesAnnotation;
-import br.com.ita.greenframework.configurations.esfinge.annotation.GreenReadFieldClassAnnotation;
+import br.com.ita.greenframework.configuration.esfinge.annotation.GreenReadAnnotation;
+import br.com.ita.greenframework.configuration.esfinge.annotation.GreenReadAttributesAnnotation;
+import br.com.ita.greenframework.configuration.esfinge.annotation.GreenReadFieldClassAnnotation;
 import lombok.Getter;
 import lombok.Setter;
 import net.sf.esfinge.metadata.annotation.container.ContainerFor;
