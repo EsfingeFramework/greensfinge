@@ -3,12 +3,14 @@ package br.com.ita.greenframework.configuration;
 import br.com.ita.greenframework.configuration.esfinge.dto.ClassContainer;
 import br.com.ita.greenframework.configuration.esfinge.dto.ContainerField;
 import br.com.ita.greenframework.configuration.interceptorprocessor.GreenStrategyProcessor;
+import lombok.extern.slf4j.Slf4j;
 import net.bytebuddy.implementation.bind.annotation.*;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.concurrent.Callable;
 
+@Slf4j
 public class GreenMethodInterceptor {
 
     private final ClassContainer classContainer;
@@ -19,7 +21,7 @@ public class GreenMethodInterceptor {
 
     @RuntimeType
     public Object intercept(@This Object target, @AllArguments Object[] args, @Origin Method method, @SuperCall Callable<?> zuper) throws Exception {
-        System.out.println("Before method execution: " + method.toGenericString());
+        log.debug("Before method execution: " + method.toGenericString());
 
         for (ContainerField containerField : classContainer.getFields()) {
             if(containerField.isHasGreenAnnotation()) {
@@ -34,7 +36,7 @@ public class GreenMethodInterceptor {
 
         Object result = zuper.call();
 
-        System.out.println("After method execution: " + method.toGenericString());
+        log.debug("After method execution: " + method.toGenericString());
 
         return result;
     }

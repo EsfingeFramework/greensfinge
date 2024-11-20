@@ -20,7 +20,7 @@ public class GreenFactory {
         AnnotationReader reader = new AnnotationReader();
         ClassContainer classContainer = reader.readingAnnotationsTo(target, ClassContainer.class);
 
-            return (T) BYTE_BUDDY.subclass(target)
+            return BYTE_BUDDY.subclass(target)
                     .method(ElementMatchers.isDeclaredBy(target)
                         .and(ElementMatchers.not(ElementMatchers.isEquals())
                         .and(ElementMatchers.not(ElementMatchers.isHashCode())

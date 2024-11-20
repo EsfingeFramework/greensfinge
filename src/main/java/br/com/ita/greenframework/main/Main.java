@@ -7,14 +7,16 @@ import br.com.ita.greenframework.dto.GreenDefaultConfiguration;
 import br.com.ita.greenframework.dto.GreenNumberConfiguration;
 import br.com.ita.greenframework.dto.GreenOptionalConfiguration;
 import br.com.ita.greenframework.service.UserService;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.Random;
 
+@Slf4j
 public class Main {
 
     public static void main(String[] args) throws Exception {
         GreenConfigurationFacade facade = new GreenConfigurationFacade();
-        facade.getConfigurations().forEach(System.out::println);
+        facade.getConfigurations().forEach(config -> log.info(config.toString()));
 
         for (int i = 0; i < 4; i++) {
             GreenDefaultConfiguration config1 =  GreenOptionalConfiguration.builder()

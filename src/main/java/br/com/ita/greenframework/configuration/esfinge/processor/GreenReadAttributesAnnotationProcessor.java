@@ -1,5 +1,6 @@
 package br.com.ita.greenframework.configuration.esfinge.processor;
 
+import lombok.SneakyThrows;
 import net.sf.esfinge.metadata.AnnotationReadingException;
 import net.sf.esfinge.metadata.AnnotationValidationException;
 import net.sf.esfinge.metadata.container.AnnotationReadingProcessor;
@@ -24,34 +25,35 @@ public class GreenReadAttributesAnnotationProcessor extends GreenReadProcessor i
         property = ((Field) elementWithMetadata).getName();
     }
 
+    @SneakyThrows
     @Override
     public void read(AnnotatedElement elementWithMetadata, Object container, ContainerTarget target) throws AnnotationReadingException {
         Map<String, Object> values = new HashMap<>();
 
         Annotation annotation = getGreenAnnotation(elementWithMetadata);
-        if(Objects.nonNull(annotation)) {
-            try {
-                for (Method method : annotation.annotationType().getMethods()) {
-                    if(!method.getDeclaringClass().getName().startsWith("java.lang")) {
-                        Object value = method.invoke(annotation);
-                        if (value instanceof Annotation) {
-                            Annotation nestedAnnotation = (Annotation) value;
-                            for (Method nestedMethod : nestedAnnotation.annotationType().getDeclaredMethods()) {
-                                Object nestedValue = nestedMethod.invoke(nestedAnnotation);
-                                values.put(nestedMethod.getName(), nestedValue);
-                            }
-                        } else {
-                            values.put(method.getName(), value);
-                        }
-
+        if (Objects.nonNull(annotation)) {
+            for (Method method : annotation.annotationType().getMethods()) {
+                if (!method.getDeclaringClass().getName().startsWith("java.lang")) {
+                    Object value = method.invoke(annotation);
+                    if (value instanceof Annotation) {
+                        processAnnotation(value, values);
+                    } else {
+                        values.put(method.getName(), value);
                     }
-                }
 
-                BeanUtils.setProperty(container, property, values);
-            } catch (IllegalAccessException | InvocationTargetException e) {
-                throw new RuntimeException(e);
+                }
             }
+
+            BeanUtils.setProperty(container, property, values);
         }
 
+    }
+
+    private void processAnnotation(Object value, Map<String, Object> values) throws InvocationTargetException, IllegalAccessException {
+        Annotation nestedAnnotation = (Annotation) value;
+        for (Method nestedMethod : nestedAnnotation.annotationType().getDeclaredMethods()) {
+            Object nestedValue = nestedMethod.invoke(nestedAnnotation);
+            values.put(nestedMethod.getName(), nestedValue);
+        }
     }
 }

@@ -51,4 +51,9 @@ public abstract class GreenStrategyProcessor {
     protected <T> T getThreadLocalConfiguration(GreenDefault configurationClass) {
          return (T) greenThreadLocal.getValue(configurationClass.configurationKey());
     }
+
+    protected void setReflectionValue(Field field, Object target, Object value) throws IllegalAccessException {
+        field.setAccessible(true);
+        field.set(target, value);
+    }
 }

@@ -1,5 +1,6 @@
 package br.com.ita.greenframework.configuration.esfinge.processor;
 
+import lombok.SneakyThrows;
 import net.sf.esfinge.metadata.AnnotationReadingException;
 import net.sf.esfinge.metadata.AnnotationValidationException;
 import net.sf.esfinge.metadata.container.AnnotationReadingProcessor;
@@ -21,17 +22,12 @@ public class GreenReadFieldAnnotationProcessor extends GreenReadProcessor implem
         property = ((Field) elementWithMetadata).getName();
     }
 
+    @SneakyThrows
     @Override
     public void read(AnnotatedElement elementWithMetadata, Object container, ContainerTarget target) throws AnnotationReadingException {
-        try {
-            Annotation annotation = getGreenAnnotation(elementWithMetadata);
-            if(Objects.nonNull(annotation)) {
-                BeanUtils.setProperty(container, property, annotation.annotationType().getSimpleName());
+        Annotation annotation = getGreenAnnotation(elementWithMetadata);
+        if (Objects.nonNull(annotation)) {
+            BeanUtils.setProperty(container, property, annotation.annotationType().getSimpleName());
             }
-        } catch (IllegalAccessException e) {
-            throw new RuntimeException(e);
-        } catch (InvocationTargetException e) {
-            throw new RuntimeException(e);
-        }
     }
 }

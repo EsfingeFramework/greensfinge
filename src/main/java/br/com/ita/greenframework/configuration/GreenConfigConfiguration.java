@@ -1,6 +1,5 @@
 package br.com.ita.greenframework.configuration;
 
-import br.com.ita.greenframework.annotation.GreenConfigAnnotation;
 import br.com.ita.greenframework.configuration.esfinge.dto.ClassContainer;
 import br.com.ita.greenframework.configuration.esfinge.dto.ContainerField;
 import br.com.ita.greenframework.dto.GreenConfiguration;
@@ -8,7 +7,6 @@ import io.github.classgraph.ClassGraph;
 import io.github.classgraph.ScanResult;
 import net.sf.esfinge.metadata.AnnotationReader;
 
-import java.lang.annotation.Annotation;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,20 +14,19 @@ public class GreenConfigConfiguration {
 
     public List<GreenConfiguration> getConfigurationsInProject() {
         List<GreenConfiguration> configs = new ArrayList<>();
-        List<Class<Annotation>> classesAnnotations = scanAllAnnotations();
 
         try (ScanResult scanResult = new ClassGraph()
                 .enableAllInfo()
                 .acceptPackages(GreenEnvironment.getPackage())
                 .scan()) {
 
-                searchForAnnotation(scanResult, classesAnnotations, configs);
+                searchForAnnotation(scanResult, configs);
         }
 
         return configs;
     }
 
-    private void searchForAnnotation(ScanResult scanResult, List<Class<Annotation>> classAnnotations, List<GreenConfiguration> configs) {
+    private void searchForAnnotation(ScanResult scanResult, List<GreenConfiguration> configs) {
         scanResult.getAllClasses().forEach(classInfo -> {
             try {
                 Class<?> clazz = Class.forName(classInfo.getName());
@@ -55,25 +52,4 @@ public class GreenConfigConfiguration {
         });
     }
 
-    private List<Class<Annotation>> scanAllAnnotations() {
-        List<Class<Annotation>> listAnnotations = new ArrayList<>();
-
-        try (ScanResult scanResult = new ClassGraph()
-                .enableAllInfo()
-                .acceptPackages(GreenConfigAnnotation.class.getPackage().getName())
-                .scan()) {
-
-            scanResult.getAllClasses().forEach(classInfo -> {
-                try {
-                    Class<?> classAnnotation = Class.forName(classInfo.getName());
-                    if(classAnnotation.isAnnotationPresent(GreenConfigAnnotation.class)) {
-                        listAnnotations.add((Class<Annotation>) classAnnotation);
-                    }
-                } catch (ClassNotFoundException e) {
-                    e.printStackTrace();
-                }
-            });
-        }
-        return listAnnotations;
-    }
 }

@@ -15,7 +15,7 @@ public class GreenNumberConfigProcessor extends GreenStrategyProcessor{
         GreenNumberConfig annotation = field.getAnnotation(GreenNumberConfig.class);
         GreenNumberConfiguration configuration = getThreadLocalConfiguration(annotation.configurationKey());
 
-        field.setAccessible(true);
-        field.set(target, configuration.getValue());
+        setReflectionValue(field, target, configuration.getValue());
     }
+
 }

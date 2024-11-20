@@ -3,11 +3,13 @@ package br.com.ita.greenframework.configuration;
 import br.com.ita.greenframework.configuration.esfinge.dto.ContainerField;
 import br.com.ita.greenframework.dto.GreenOptionalConfiguration;
 import br.com.ita.greenframework.util.GreenConstant;
+import lombok.extern.slf4j.Slf4j;
 import net.bytebuddy.implementation.bind.annotation.*;
 
 import java.lang.reflect.Method;
 import java.util.concurrent.Callable;
 
+@Slf4j
 public class GreenGenericMocker {
 
     private final GreenThreadLocal greenThreadLocal = new GreenThreadLocal();
@@ -19,8 +21,7 @@ public class GreenGenericMocker {
 
     @RuntimeType
     public Object intercept(@This Object target, @AllArguments Object[] args, @Origin Method method, @SuperCall Callable<?> zuper) {
-        String methodName = method.getName();
-        System.out.println(String.format("Intercepted: %s method: %s ", method.getDeclaringClass(), methodName));
+        log.debug("Intercepted: {} method: {} ", method.getDeclaringClass(), method.getName());
 
         if (String.class.equals(method.getReturnType())) {
             return getStrMockValue();

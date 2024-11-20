@@ -6,7 +6,7 @@ import java.lang.annotation.RetentionPolicy;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface GreenConfigAnnotation {
 
-    Class annotationName();
-    Class className();
+    Class<?> annotationName();
+    Class<?> className();
 
 }

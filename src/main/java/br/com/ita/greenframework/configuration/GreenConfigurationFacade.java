@@ -1,7 +1,7 @@
 package br.com.ita.greenframework.configuration;
 
-import br.com.ita.greenframework.dto.GreenDefaultConfiguration;
 import br.com.ita.greenframework.dto.GreenConfiguration;
+import br.com.ita.greenframework.dto.GreenDefaultConfiguration;
 
 import java.util.HashMap;
 import java.util.List;
@@ -23,7 +23,7 @@ public class GreenConfigurationFacade {
     }
 
     public void setPersonalConfiguration(GreenDefaultConfiguration config) {
-
+        throw new IllegalArgumentException();
     }
 
     public Map<String, GreenDefaultConfiguration> getCache() {
