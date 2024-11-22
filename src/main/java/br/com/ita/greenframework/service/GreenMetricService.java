@@ -19,7 +19,7 @@ public class GreenMetricService {
         br.com.ita.greenframework.annotation.GreenMetric annotation = method.getAnnotation(br.com.ita.greenframework.annotation.GreenMetric.class);
 
         if (Objects.nonNull(annotation)) {
-            String key = String.format("%s.%s",method.getDeclaringClass().getName(), method.getName());
+            String key = String.format("%s#%s",method.getDeclaringClass().getName(), method.getName());
             GreenMetric metric = greenMetricDao.findById(key);
 
             if(Objects.isNull(metric)) {

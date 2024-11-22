@@ -22,7 +22,7 @@ public abstract class GreenStrategyProcessor {
 
     protected void populateData() {
         processorTypes.put("GreenOptional", new GreenOptionalProcessor());
-        processorTypes.put("GreenNumber", new GreenNumberConfigProcessor());
+        processorTypes.put("GreenNumber", new GreenNumberProcessor());
     }
 
     public GreenStrategyProcessor getProcessor(String nameGreenAnnotation) {

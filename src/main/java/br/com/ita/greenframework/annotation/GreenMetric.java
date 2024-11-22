@@ -6,5 +6,5 @@ import java.lang.annotation.RetentionPolicy;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface GreenMetric {
 
-    double metricSavedValue() default 0.0;
+    double metricSavedValue();
 }

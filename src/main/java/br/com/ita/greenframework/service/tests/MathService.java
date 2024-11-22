@@ -1,5 +1,6 @@
 package br.com.ita.greenframework.service.tests;
 
+import br.com.ita.greenframework.annotation.GreenMetric;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.stream.LongStream;

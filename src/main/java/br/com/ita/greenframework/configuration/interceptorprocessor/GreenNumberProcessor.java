@@ -7,7 +7,7 @@ import lombok.SneakyThrows;
 
 import java.lang.reflect.Field;
 
-public class GreenNumberConfigProcessor extends GreenStrategyProcessor {
+public class GreenNumberProcessor extends GreenStrategyProcessor {
 
     @SneakyThrows
     @Override
