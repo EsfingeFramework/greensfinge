@@ -1,4 +1,4 @@
-package br.com.ita.greenframework.dto;
+package br.com.ita.greenframework.dto.project;
 
 import lombok.*;
 
@@ -7,8 +7,9 @@ import java.util.Map;
 @Getter
 @Setter
 @ToString
-@AllArgsConstructor
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class GreenConfiguration {
 
     private String className;

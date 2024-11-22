@@ -14,7 +14,6 @@ public class GreenFactory {
 
     private static final ByteBuddy BYTE_BUDDY = new ByteBuddy();
 
-    @SuppressWarnings("unchecked")
     public static <T> T greenify(Class<T> target) throws Exception {
 
         AnnotationReader reader = new AnnotationReader();
@@ -29,6 +28,7 @@ public class GreenFactory {
                     .make()
                     .load(target.getClassLoader(), ClassLoadingStrategy.Default.INJECTION)
                     .getLoaded()
+                    .getDeclaredConstructor()
                     .newInstance();
     }
 

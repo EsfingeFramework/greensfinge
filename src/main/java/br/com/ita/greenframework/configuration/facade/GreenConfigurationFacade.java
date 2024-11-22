@@ -1,7 +1,9 @@
-package br.com.ita.greenframework.configuration;
+package br.com.ita.greenframework.configuration.facade;
 
-import br.com.ita.greenframework.dto.GreenConfiguration;
-import br.com.ita.greenframework.dto.GreenDefaultConfiguration;
+import br.com.ita.greenframework.configuration.GreenThreadLocal;
+import br.com.ita.greenframework.dto.annotation.GreenDefaultConfiguration;
+import br.com.ita.greenframework.dto.project.GreenConfiguration;
+import br.com.ita.greenframework.service.GreenConfigurationService;
 
 import java.util.HashMap;
 import java.util.List;
@@ -10,10 +12,10 @@ import java.util.Map;
 public class GreenConfigurationFacade {
 
     private final Map<String, GreenDefaultConfiguration> cache = new HashMap<>();
-    private final GreenConfigConfiguration greenConfigConfiguration = new GreenConfigConfiguration();
+    private final GreenConfigurationService configurationService = new GreenConfigurationService();
 
     public List<GreenConfiguration> getConfigurations() {
-        return greenConfigConfiguration.getConfigurationsInProject();
+        return configurationService.getConfigurationsInProject();
     }
 
     public void setGeneralConfiguration(GreenDefaultConfiguration config) {

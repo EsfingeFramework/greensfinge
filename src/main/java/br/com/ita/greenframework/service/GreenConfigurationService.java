@@ -1,28 +1,46 @@
-package br.com.ita.greenframework.configuration;
+package br.com.ita.greenframework.service;
 
+import br.com.ita.greenframework.configuration.GreenEnvironment;
 import br.com.ita.greenframework.configuration.esfinge.dto.ClassContainer;
 import br.com.ita.greenframework.configuration.esfinge.dto.ContainerField;
-import br.com.ita.greenframework.dto.GreenConfiguration;
+import br.com.ita.greenframework.dao.GreenFactoryDao;
+import br.com.ita.greenframework.dao.memory.GreenConfigurationDao;
+import br.com.ita.greenframework.dto.project.GreenConfiguration;
 import io.github.classgraph.ClassGraph;
 import io.github.classgraph.ScanResult;
+import lombok.extern.slf4j.Slf4j;
 import net.sf.esfinge.metadata.AnnotationReader;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class GreenConfigConfiguration {
+@Slf4j
+public class GreenConfigurationService {
+
+    private final GreenConfigurationDao configurationDao = GreenFactoryDao.getInstance().create(GreenConfigurationDao.class);
 
     public List<GreenConfiguration> getConfigurationsInProject() {
-        List<GreenConfiguration> configs = new ArrayList<>();
+        List<GreenConfiguration> configurations = configurationDao.findConfigurations();
 
-        try (ScanResult scanResult = new ClassGraph()
-                .enableAllInfo()
-                .acceptPackages(GreenEnvironment.getPackage())
-                .scan()) {
-
-                searchForAnnotation(scanResult, configs);
+        if(configurations.isEmpty()) {
+            configurations = scanForConfigurations();
         }
 
+        return configurations;
+    }
+
+    private List<GreenConfiguration> scanForConfigurations() {
+        String scanPackage = GreenEnvironment.getPackage();
+        log.info("Scanning package: {}",scanPackage);
+
+        List<GreenConfiguration> configs = new ArrayList<>();
+        try (ScanResult scanResult = new ClassGraph()
+                .enableAllInfo()
+                .acceptPackages(scanPackage)
+                .scan()) {
+
+            searchForAnnotation(scanResult, configs);
+        }
         return configs;
     }
 
@@ -50,6 +68,12 @@ public class GreenConfigConfiguration {
                 e.printStackTrace();
             }
         });
+
+        saveAll(configs);
+    }
+
+    private void saveAll(List<GreenConfiguration> greenConfigurations) {
+        configurationDao.save(greenConfigurations);
     }
 
 }

@@ -4,6 +4,8 @@ import br.com.ita.greenframework.GreenException;
 import br.com.ita.greenframework.annotation.GreenDefault;
 import br.com.ita.greenframework.configuration.GreenThreadLocal;
 import br.com.ita.greenframework.configuration.esfinge.dto.ContainerField;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 
 import java.lang.reflect.Field;
 import java.util.HashMap;
@@ -11,19 +13,16 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
 public abstract class GreenStrategyProcessor {
 
-    private final GreenThreadLocal greenThreadLocal = new GreenThreadLocal();
     private static GreenOptionalProcessor instance;
-    private static Map<String, GreenStrategyProcessor> processorTypes = new HashMap<>();
-
-    protected GreenStrategyProcessor() {
-
-    }
+    private final GreenThreadLocal greenThreadLocal = new GreenThreadLocal();
+    private static final Map<String, GreenStrategyProcessor> processorTypes = new HashMap<>();
 
     protected void populateData() {
         processorTypes.put("GreenOptional", new GreenOptionalProcessor());
-        processorTypes.put("GreenNumberConfig", new GreenNumberConfigProcessor());
+        processorTypes.put("GreenNumber", new GreenNumberConfigProcessor());
     }
 
     public GreenStrategyProcessor getProcessor(String nameGreenAnnotation) {
@@ -56,4 +55,5 @@ public abstract class GreenStrategyProcessor {
         field.setAccessible(true);
         field.set(target, value);
     }
+
 }

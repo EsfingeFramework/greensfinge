@@ -1,4 +1,4 @@
-package br.com.ita.greenframework.service;
+package br.com.ita.greenframework.service.tests;
 
 import lombok.extern.slf4j.Slf4j;
 

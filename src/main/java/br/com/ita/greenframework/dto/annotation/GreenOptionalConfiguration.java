@@ -1,4 +1,4 @@
-package br.com.ita.greenframework.dto;
+package br.com.ita.greenframework.dto.annotation;
 
 import br.com.ita.greenframework.util.GreenConstant;
 import lombok.Builder;

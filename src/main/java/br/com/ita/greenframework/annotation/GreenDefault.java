@@ -1,6 +1,6 @@
 package br.com.ita.greenframework.annotation;
 
-import br.com.ita.greenframework.dto.GreenOptionalConfiguration;
+import br.com.ita.greenframework.dto.annotation.GreenOptionalConfiguration;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

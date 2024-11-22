@@ -1,46 +1,57 @@
 package br.com.ita.greenframework.main;
 
-import br.com.ita.greenframework.configuration.GreenConfigurationFacade;
+import br.com.ita.greenframework.configuration.facade.GreenConfigurationFacade;
 import br.com.ita.greenframework.configuration.GreenFactory;
-import br.com.ita.greenframework.dto.GreenConfiguration;
-import br.com.ita.greenframework.dto.GreenDefaultConfiguration;
-import br.com.ita.greenframework.dto.GreenNumberConfiguration;
-import br.com.ita.greenframework.dto.GreenOptionalConfiguration;
-import br.com.ita.greenframework.service.UserService;
+import br.com.ita.greenframework.configuration.facade.GreenMetricFacade;
+import br.com.ita.greenframework.dto.annotation.GreenNumberConfiguration;
+import br.com.ita.greenframework.dto.annotation.GreenOptionalConfiguration;
+import br.com.ita.greenframework.service.tests.UserService;
 import lombok.extern.slf4j.Slf4j;
-
-import java.util.Random;
 
 @Slf4j
 public class Main {
 
     public static void main(String[] args) throws Exception {
         GreenConfigurationFacade facade = new GreenConfigurationFacade();
+        makeConfigurations(facade);
+
+        UserService service = GreenFactory.greenify(UserService.class);
+        service.createUser();
+
+        GreenMetricFacade metricFacade = new GreenMetricFacade();
+        metricFacade.getSavedEnergy().forEach(metric -> log.info(metric.toString()));
+    }
+
+    private static void makeConfigurations(GreenConfigurationFacade facade) {
         facade.getConfigurations().forEach(config -> log.info(config.toString()));
 
-        for (int i = 0; i < 4; i++) {
-            GreenDefaultConfiguration config1 =  GreenOptionalConfiguration.builder()
-                    .ignore(new Random().nextBoolean())
-                    .numberDefaultValue(5612)
-                    .configurationKey("keyGroupService")
-                    .build();
+        facade.setGeneralConfiguration(GreenOptionalConfiguration.builder()
+                .ignore(true)
+                .numberDefaultValue(5612)
+                .configurationKey("keyGroupService")
+                .build());
 
-            GreenDefaultConfiguration config2 =  GreenOptionalConfiguration.builder()
-                    .ignore(new Random().nextBoolean())
-                    .configurationKey("keyProfileService")
-                    .strDefaultValue("Professor Guerra")
-                    .build();
-            GreenDefaultConfiguration config3 =  GreenNumberConfiguration.builder()
-                    .configurationKey("keyNumber")
-                    .value(23)
-                    .build();
+        facade.setGeneralConfiguration(GreenOptionalConfiguration.builder()
+                .ignore(false)
+                .configurationKey("keyProfileService")
+                .strDefaultValue("Professor Guerra")
+                .build());
 
-            facade.setGeneralConfiguration(config1);
-            facade.setGeneralConfiguration(config2);
-            facade.setGeneralConfiguration(config3);
+        facade.setGeneralConfiguration(GreenNumberConfiguration.builder()
+                .configurationKey("keyBeginCountPrimes")
+                .value(2)
+                .build());
 
-            UserService service = GreenFactory.greenify(UserService.class);
-            service.createUser();
-        }
+        facade.setGeneralConfiguration(GreenNumberConfiguration.builder()
+                .configurationKey("keyEndCountPrimes")
+                .value(25_000_000)
+                .build());
+
+        facade.setGeneralConfiguration(GreenOptionalConfiguration.builder()
+                .ignore(true)
+                .numberDefaultValue(222)
+                .configurationKey("keyMathService")
+                .build());
+
     }
 }

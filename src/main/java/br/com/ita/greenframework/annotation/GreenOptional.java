@@ -1,6 +1,6 @@
 package br.com.ita.greenframework.annotation;
 
-import br.com.ita.greenframework.dto.GreenOptionalConfiguration;
+import br.com.ita.greenframework.dto.annotation.GreenOptionalConfiguration;
 import br.com.ita.greenframework.util.GreenConstant;
 import net.sf.esfinge.metadata.annotation.finder.SearchInsideAnnotations;
 import net.sf.esfinge.metadata.annotation.finder.SearchOnEnclosingElements;

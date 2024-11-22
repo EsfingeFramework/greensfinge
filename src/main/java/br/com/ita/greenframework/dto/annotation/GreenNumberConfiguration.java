@@ -1,4 +1,4 @@
-package br.com.ita.greenframework.dto;
+package br.com.ita.greenframework.dto.annotation;
 
 import lombok.Getter;
 import lombok.Setter;

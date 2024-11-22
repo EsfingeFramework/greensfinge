@@ -1,6 +1,6 @@
 package br.com.ita.greenframework.configuration;
 
-import br.com.ita.greenframework.dto.GreenDefaultConfiguration;
+import br.com.ita.greenframework.dto.annotation.GreenDefaultConfiguration;
 
 import java.util.Map;
 
