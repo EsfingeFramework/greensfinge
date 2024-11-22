@@ -15,7 +15,7 @@ public class UserService {
     @GreenOptional(configurationKey = @GreenDefault(configurationKey = "keyGroupService"))
     private GroupService groupService = new GroupService();
 
-    @GreenOptional(configurationKey = @GreenDefault(configurationKey = "keyProfileService"), strDefaultValue = "Teste do Thiago")
+    @GreenOptional(configurationKey = @GreenDefault(configurationKey = "keyProfileService"))
     private ProfileService profileService = new ProfileService();
 
     @GreenOptional(configurationKey = @GreenDefault(configurationKey = "keyMathService"))

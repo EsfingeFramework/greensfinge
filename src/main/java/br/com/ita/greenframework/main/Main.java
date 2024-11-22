@@ -32,9 +32,9 @@ public class Main {
                 .build());
 
         facade.setGeneralConfiguration(GreenOptionalConfiguration.builder()
-                .ignore(false)
+                .ignore(true)
                 .configurationKey("keyProfileService")
-                .strDefaultValue("Professor Guerra")
+                .strDefaultValue("Teacher Guerra")
                 .build());
 
         facade.setGeneralConfiguration(GreenNumberConfiguration.builder()
