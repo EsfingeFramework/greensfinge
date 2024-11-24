@@ -10,6 +10,7 @@ import net.bytebuddy.implementation.MethodDelegation;
 import net.bytebuddy.matcher.ElementMatchers;
 
 import java.lang.reflect.Field;
+import java.util.Objects;
 
 public class GreenOptionalProcessor extends GreenStrategyProcessor {
 
@@ -20,7 +21,7 @@ public class GreenOptionalProcessor extends GreenStrategyProcessor {
         GreenOptional annotation = field.getAnnotation(GreenOptional.class);
         GreenOptionalConfiguration configuration = getThreadLocalConfiguration(annotation.configurationKey());
 
-        if (configuration.isIgnore()) {
+        if (Objects.nonNull(configuration) && configuration.isIgnore()) {
             Class<?> fieldClass = Class.forName(field.getGenericType().getTypeName());
 
             Object mockObject = new ByteBuddy()

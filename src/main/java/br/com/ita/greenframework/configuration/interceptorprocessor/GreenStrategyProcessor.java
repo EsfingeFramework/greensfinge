@@ -17,7 +17,6 @@ import java.util.Optional;
 public abstract class GreenStrategyProcessor {
 
     private static GreenOptionalProcessor instance;
-    private final GreenThreadLocal greenThreadLocal = new GreenThreadLocal();
     private static final Map<String, GreenStrategyProcessor> processorTypes = new HashMap<>();
 
     protected void populateData() {
@@ -48,7 +47,9 @@ public abstract class GreenStrategyProcessor {
 
     @SuppressWarnings("unchecked")
     protected <T> T getThreadLocalConfiguration(GreenDefault configurationClass) {
-         return (T) greenThreadLocal.getValue(configurationClass.configurationKey());
+        return Optional.ofNullable(configurationClass)
+                .map(e-> (T) GreenThreadLocal.getValue(e.configurationKey()))
+                .orElse(null);
     }
 
     protected void setReflectionValue(Field field, Object target, Object value) throws IllegalAccessException {

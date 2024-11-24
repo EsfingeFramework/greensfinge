@@ -18,7 +18,10 @@ public class GreenMetricService {
     public void save(Method method, ContainerField containerField) {
         br.com.ita.greenframework.annotation.GreenMetric annotation = method.getAnnotation(br.com.ita.greenframework.annotation.GreenMetric.class);
 
-        if (Objects.nonNull(annotation)) {
+        if (Objects.isNull(annotation)) {
+            log.debug("The {}#{} method is mocked, but does not contain the @GreenMetric annotation",
+                    method.getDeclaringClass().getName(), method.getName());
+        } else {
             String key = String.format("%s#%s",method.getDeclaringClass().getName(), method.getName());
             GreenMetric metric = greenMetricDao.findById(key);
 

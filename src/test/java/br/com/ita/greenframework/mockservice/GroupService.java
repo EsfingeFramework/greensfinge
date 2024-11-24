@@ -1,4 +1,4 @@
-package br.com.ita.greenframework.service.tests;
+package br.com.ita.greenframework.mockservice;
 
 import br.com.ita.greenframework.annotation.GreenMetric;
 import lombok.extern.slf4j.Slf4j;
@@ -13,7 +13,6 @@ public class GroupService {
         return value;
     }
 
-    @GreenMetric(metricSavedValue = 456.787)
     public void doSomething0() {
         String value = "GroupService - doSomething0 - ";
         log.info(value);
@@ -32,6 +31,7 @@ public class GroupService {
         return value;
     }
 
+    @GreenMetric(metricSavedValue = 456.787)
     public String doSomething4(Integer test) {
         String value = "GroupService - doSomething4 - "+test;
         log.info(value);

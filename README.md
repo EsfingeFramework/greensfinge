@@ -144,7 +144,7 @@ GreenConfigurationFacade facade = new GreenConfigurationFacade();
 And finally, create the object instance using 'GreenFactory.greenify' and call the method.
 
 ```java
-import br.com.ita.greenframework.service.tests.UserService;
+import UserService;
 import br.com.ita.greenframework.configuration.GreenFactory;
 import br.com.ita.greenframework.configuration.facade.GreenMetricFacade;
 
@@ -156,13 +156,13 @@ UserService service = GreenFactory.greenify(UserService.class);
 ```
 The output should be something similar to
 
-GreenMetric(method=br.com.ita.greenframework.service.tests.MathService#countPrimesInRange, containerField=ContainerField(attributeName=mathService, hasGreenAnnotation=true, annotationField=GreenOptional, annotationValue={configurationKey=keyMathService, strDefaultValue=greenDefaultValue, numberDefaultValue=999999999}), greenMetricAnnotation=@br.com.ita.greenframework.annotation.GreenMetric(metricSavedValue=7.89), countCalled=1, getSavedValue=7.89)
+GreenMetric(method=MathService#countPrimesInRange, containerField=ContainerField(attributeName=mathService, hasGreenAnnotation=true, annotationField=GreenOptional, annotationValue={configurationKey=keyMathService, strDefaultValue=greenDefaultValue, numberDefaultValue=999999999}), greenMetricAnnotation=@br.com.ita.greenframework.annotation.GreenMetric(metricSavedValue=7.89), countCalled=1, getSavedValue=7.89)
 
 
-GreenMetric(method=br.com.ita.greenframework.service.tests.GroupService#doSomething2, containerField=ContainerField(attributeName=groupService, hasGreenAnnotation=true, annotationField=GreenOptional, annotationValue={configurationKey=keyGroupService, strDefaultValue=greenDefaultValue, numberDefaultValue=999999999}), greenMetricAnnotation=@br.com.ita.greenframework.annotation.GreenMetric(metricSavedValue=2.788), countCalled=3, getSavedValue=8.363999999999999)
+GreenMetric(method=GroupService#doSomething2, containerField=ContainerField(attributeName=groupService, hasGreenAnnotation=true, annotationField=GreenOptional, annotationValue={configurationKey=keyGroupService, strDefaultValue=greenDefaultValue, numberDefaultValue=999999999}), greenMetricAnnotation=@br.com.ita.greenframework.annotation.GreenMetric(metricSavedValue=2.788), countCalled=3, getSavedValue=8.363999999999999)
 
 
-GreenMetric(method=br.com.ita.greenframework.service.tests.ProfileService#doSomething6, containerField=ContainerField(attributeName=profileService, hasGreenAnnotation=true, annotationField=GreenOptional, annotationValue={configurationKey=keyProfileService, numberDefaultValue=999999999}), greenMetricAnnotation=@br.com.ita.greenframework.annotation.GreenMetric(metricSavedValue=5.78), countCalled=1, getSavedValue=5.78)
+GreenMetric(method=ProfileService#doSomething6, containerField=ContainerField(attributeName=profileService, hasGreenAnnotation=true, annotationField=GreenOptional, annotationValue={configurationKey=keyProfileService, numberDefaultValue=999999999}), greenMetricAnnotation=@br.com.ita.greenframework.annotation.GreenMetric(metricSavedValue=5.78), countCalled=1, getSavedValue=5.78)
 
 ## Referência
 

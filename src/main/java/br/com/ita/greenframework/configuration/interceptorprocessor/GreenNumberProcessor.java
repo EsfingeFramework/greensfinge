@@ -6,6 +6,7 @@ import br.com.ita.greenframework.dto.annotation.GreenNumberConfiguration;
 import lombok.SneakyThrows;
 
 import java.lang.reflect.Field;
+import java.util.Objects;
 
 public class GreenNumberProcessor extends GreenStrategyProcessor {
 
@@ -15,7 +16,9 @@ public class GreenNumberProcessor extends GreenStrategyProcessor {
         GreenNumber annotation = field.getAnnotation(GreenNumber.class);
         GreenNumberConfiguration configuration = getThreadLocalConfiguration(annotation.configurationKey());
 
-        setReflectionValue(field, target, configuration.getValue());
+        if(Objects.nonNull(configuration)) {
+            setReflectionValue(field, target, configuration.getValue());
+        }
     }
 
 }

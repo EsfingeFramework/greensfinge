@@ -4,14 +4,13 @@ import br.com.ita.greenframework.configuration.GreenThreadLocal;
 import br.com.ita.greenframework.dto.annotation.GreenDefaultConfiguration;
 import br.com.ita.greenframework.dto.project.GreenConfiguration;
 import br.com.ita.greenframework.service.GreenConfigurationService;
+import lombok.Getter;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
+@Getter
 public class GreenConfigurationFacade {
 
-    private final Map<String, GreenDefaultConfiguration> cache = new HashMap<>();
     private final GreenConfigurationService configurationService = new GreenConfigurationService();
 
     public List<GreenConfiguration> getConfigurations() {
@@ -19,16 +18,11 @@ public class GreenConfigurationFacade {
     }
 
     public void setGeneralConfiguration(GreenDefaultConfiguration config) {
-        cache.put(config.getConfigurationKey(), config);
-        GreenThreadLocal greenThreadLocal = new GreenThreadLocal();
-        greenThreadLocal.setValue(cache);
+        GreenThreadLocal.setValue(config.getConfigurationKey(), config);
     }
 
     public void setPersonalConfiguration(GreenDefaultConfiguration config) {
         throw new IllegalArgumentException();
     }
 
-    public Map<String, GreenDefaultConfiguration> getCache() {
-        return cache;
-    }
 }

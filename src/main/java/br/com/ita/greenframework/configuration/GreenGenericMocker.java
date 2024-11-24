@@ -14,7 +14,6 @@ import java.util.concurrent.Callable;
 public class GreenGenericMocker {
 
     private final GreenMetricService greenMetricService = new GreenMetricService();
-    private final GreenThreadLocal greenThreadLocal = new GreenThreadLocal();
     private final ContainerField containerField;
 
     public GreenGenericMocker(ContainerField containerField) {
@@ -39,7 +38,7 @@ public class GreenGenericMocker {
 
     private Integer getIntMockValue() {
         String configurationKey = (String) containerField.getAnnotationValue().get("configurationKey");
-        GreenOptionalConfiguration configuration = (GreenOptionalConfiguration)greenThreadLocal.getValue(configurationKey);
+        GreenOptionalConfiguration configuration = (GreenOptionalConfiguration)GreenThreadLocal.getValue(configurationKey);
 
         if(GreenConstant.INT_DEFAULT_VALUE == (int)containerField.getAnnotationValue().get("numberDefaultValue")) {
             return configuration.getNumberDefaultValue();
@@ -50,7 +49,7 @@ public class GreenGenericMocker {
 
     private String getStrMockValue() {
         String configurationKey = (String) containerField.getAnnotationValue().get("configurationKey");
-        GreenOptionalConfiguration configuration = (GreenOptionalConfiguration)greenThreadLocal.getValue(configurationKey);
+        GreenOptionalConfiguration configuration = (GreenOptionalConfiguration)GreenThreadLocal.getValue(configurationKey);
 
         if(GreenConstant.STR_DEFAULT_VALUE.equals(containerField.getAnnotationValue().get("strDefaultValue"))) {
             return configuration.getStrDefaultValue();
