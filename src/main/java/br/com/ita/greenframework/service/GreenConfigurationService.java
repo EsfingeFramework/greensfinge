@@ -4,7 +4,7 @@ import br.com.ita.greenframework.configuration.GreenEnvironment;
 import br.com.ita.greenframework.configuration.esfinge.dto.ClassContainer;
 import br.com.ita.greenframework.configuration.esfinge.dto.ContainerField;
 import br.com.ita.greenframework.dao.GreenFactoryDao;
-import br.com.ita.greenframework.dao.memory.GreenConfigurationDao;
+import br.com.ita.greenframework.dao.memory.GreenConfigurationDaoImpl;
 import br.com.ita.greenframework.dto.project.GreenConfiguration;
 import io.github.classgraph.ClassGraph;
 import io.github.classgraph.ScanResult;
@@ -17,7 +17,7 @@ import java.util.List;
 @Slf4j
 public class GreenConfigurationService {
 
-    private final GreenConfigurationDao configurationDao = GreenFactoryDao.getInstance().create(GreenConfigurationDao.class);
+    private final GreenConfigurationDaoImpl configurationDao = GreenFactoryDao.getInstance().create(GreenConfigurationDaoImpl.class);
 
     public List<GreenConfiguration> getConfigurationsInProject() {
         List<GreenConfiguration> configurations = configurationDao.findConfigurations();

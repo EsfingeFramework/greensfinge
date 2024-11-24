@@ -1,9 +1,9 @@
 package br.com.ita.greenframework.configuration.interceptorprocessor;
 
-import br.com.ita.greenframework.GreenException;
 import br.com.ita.greenframework.annotation.GreenDefault;
 import br.com.ita.greenframework.configuration.GreenThreadLocal;
 import br.com.ita.greenframework.configuration.esfinge.dto.ContainerField;
+import br.com.ita.greenframework.exception.GreenException;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 

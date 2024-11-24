@@ -1,9 +1,9 @@
 package br.com.ita.greenframework.dao;
 
-import br.com.ita.greenframework.GreenException;
 import br.com.ita.greenframework.configuration.GreenEnvironment;
-import br.com.ita.greenframework.dao.memory.GreenConfigurationDao;
-import br.com.ita.greenframework.dao.memory.GreenMetricDao;
+import br.com.ita.greenframework.dao.memory.GreenConfigurationDaoImpl;
+import br.com.ita.greenframework.dao.memory.GreenMetricDaoImpl;
+import br.com.ita.greenframework.exception.GreenException;
 import br.com.ita.greenframework.util.GreenConstant;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -19,8 +19,8 @@ public class GreenFactoryDao {
     private final Map<Class<?>, Object> daoMemory = new HashMap<>();
 
     protected void populateData() {
-        daoMemory.put(GreenMetricDao.class, new GreenMetricDao());
-        daoMemory.put(GreenConfigurationDao.class, new GreenConfigurationDao());
+        daoMemory.put(GreenMetricDaoImpl.class, new GreenMetricDaoImpl());
+        daoMemory.put(GreenConfigurationDaoImpl.class, new GreenConfigurationDaoImpl());
     }
 
     public static GreenFactoryDao getInstance() {

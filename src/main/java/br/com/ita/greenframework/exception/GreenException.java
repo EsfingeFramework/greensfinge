@@ -1,4 +1,4 @@
-package br.com.ita.greenframework;
+package br.com.ita.greenframework.exception;
 
 public class GreenException extends RuntimeException {
 

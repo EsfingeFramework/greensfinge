@@ -1,15 +1,16 @@
 package br.com.ita.greenframework.dao.memory;
 
+import br.com.ita.greenframework.dao.contract.GreenConfigurationDao;
 import br.com.ita.greenframework.dto.project.GreenConfiguration;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class GreenConfigurationDao extends GreenMemoryDao<GreenConfiguration> {
+public class GreenConfigurationDaoImpl extends GreenMemoryDaoImpl<GreenConfiguration> implements GreenConfigurationDao {
 
-    private final String keyName = GreenConfigurationDao.class.getName();
+    private final String keyName = GreenConfigurationDaoImpl.class.getName();
 
-    public GreenConfigurationDao () {
+    public GreenConfigurationDaoImpl() {
         listStorage.put(keyName, new ArrayList<>());
     }
 
