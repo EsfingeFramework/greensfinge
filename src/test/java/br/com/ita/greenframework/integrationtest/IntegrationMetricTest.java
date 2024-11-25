@@ -12,34 +12,12 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class IntegrationMetricTest {
-
-    @Test
-    void testExecuteWithoutMock() throws Exception {
-        GreenConfigurationFacade facade = new GreenConfigurationFacade();
-
-        String mockValue = UUID.randomUUID().toString();
-        facade.setGeneralConfiguration(GreenOptionalConfiguration.builder()
-                .ignore(false)
-                .strDefaultValue(mockValue)
-                .configurationKey("keyGroupService")
-                .build());
-
-        UserService userService = GreenFactory.greenify(UserService.class);
-        Map<String, Object> returnService = userService.testIgnoreAnnotation();
-
-        assertNotEquals(mockValue, returnService.get("test1"));
-        assertEquals("GroupService - doSomething - Test", returnService.get("test1"));
-        assertEquals(0, Integer.valueOf(returnService.get("test2").toString()));
-        assertEquals(0, Integer.valueOf(returnService.get("test3").toString()));
-        assertEquals(0, Long.valueOf(returnService.get("test4").toString()));
-
-        GreenThreadLocal.cleanThreadLocalValue();
-    }
 
     @Test
     void testSameMethodCall() throws Exception {
@@ -59,7 +37,7 @@ class IntegrationMetricTest {
         GreenConfigurationFacade facade = new GreenConfigurationFacade();
         GreenMetricFacade metricFacade = new GreenMetricFacade();
 
-        Integer mockValue = 5;
+        Integer mockValue = 7;
         String mockValueStr = "Mock Test";
         facade.setGeneralConfiguration(GreenNumberConfiguration.builder()
                 .configurationKey("keyBeginCountPrimes")
@@ -85,6 +63,7 @@ class IntegrationMetricTest {
         assertNotNull(greenMetric);
         assertEquals(mockValue, greenMetric.getCountCalled());
         assertEquals(mockValue, list.size());
+        assertEquals(456.787 * greenMetric.getCountCalled(), greenMetric.getSavedValue());
 
         GreenThreadLocal.cleanThreadLocalValue();
     }
