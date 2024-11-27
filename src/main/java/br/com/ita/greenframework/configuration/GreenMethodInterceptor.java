@@ -25,7 +25,6 @@ public class GreenMethodInterceptor {
 
         for (ContainerField containerField : classContainer.getFields()) {
             if(containerField.isHasGreenAnnotation()) {
-
                 Field field = target.getClass().getSuperclass().getDeclaredField(containerField.getAttributeName());
 
                 GreenStrategyProcessor strategyProcessor = GreenStrategyProcessor.getInstance()

@@ -13,7 +13,7 @@ public class GreenConfigurationFacade {
 
     private final GreenConfigurationService configurationService = new GreenConfigurationService();
 
-    public List<GreenConfiguration> getConfigurations() {
+    public List<GreenConfiguration> getConfigurationsInProject() {
         return configurationService.getConfigurationsInProject();
     }
 

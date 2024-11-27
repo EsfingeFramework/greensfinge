@@ -2,6 +2,7 @@ package br.com.ita.greenframework.service;
 
 import br.com.ita.greenframework.configuration.esfinge.dto.ContainerField;
 import br.com.ita.greenframework.dao.GreenFactoryDao;
+import br.com.ita.greenframework.dao.contract.GreenMetricDao;
 import br.com.ita.greenframework.dao.memory.GreenMetricDaoImpl;
 import br.com.ita.greenframework.dto.project.GreenMetric;
 import lombok.extern.slf4j.Slf4j;
@@ -13,7 +14,7 @@ import java.util.Objects;
 @Slf4j
 public class GreenMetricService {
 
-    private final GreenMetricDaoImpl greenMetricDaoImpl = GreenFactoryDao.getInstance().create(GreenMetricDaoImpl.class);
+    private final GreenMetricDao greenMetricDaoImpl = GreenFactoryDao.getInstance().create(GreenMetricDaoImpl.class);
 
     public void save(Method method, ContainerField containerField) {
         br.com.ita.greenframework.annotation.GreenMetric annotation = method.getAnnotation(br.com.ita.greenframework.annotation.GreenMetric.class);

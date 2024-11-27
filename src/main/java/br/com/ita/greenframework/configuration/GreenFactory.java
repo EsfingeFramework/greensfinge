@@ -19,17 +19,17 @@ public class GreenFactory {
         AnnotationReader reader = new AnnotationReader();
         ClassContainer classContainer = reader.readingAnnotationsTo(target, ClassContainer.class);
 
-            return BYTE_BUDDY.subclass(target)
-                    .method(ElementMatchers.isDeclaredBy(target)
+        return BYTE_BUDDY.subclass(target)
+                .method(ElementMatchers.isDeclaredBy(target)
                         .and(ElementMatchers.not(ElementMatchers.isEquals())
                         .and(ElementMatchers.not(ElementMatchers.isHashCode())
                         .and(ElementMatchers.not(ElementMatchers.isToString())))))
-                    .intercept(MethodDelegation.to(new GreenMethodInterceptor(classContainer)))
-                    .make()
-                    .load(target.getClassLoader(), ClassLoadingStrategy.Default.INJECTION)
-                    .getLoaded()
-                    .getDeclaredConstructor()
-                    .newInstance();
+                .intercept(MethodDelegation.to(new GreenMethodInterceptor(classContainer)))
+                .make()
+                .load(target.getClassLoader(), ClassLoadingStrategy.Default.INJECTION)
+                .getLoaded()
+                .getDeclaredConstructor()
+                .newInstance();
     }
 
 }

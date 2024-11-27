@@ -22,7 +22,8 @@ public class GreenGenericMocker {
 
     @RuntimeType
     public Object intercept(@This Object target, @AllArguments Object[] args, @Origin Method method, @SuperCall Callable<?> zuper) {
-        log.debug("Intercepted: {} method: {} ", method.getDeclaringClass(), method.getName());
+        log.debug("Intercepted: {}#{} ", method.getDeclaringClass(), method.getName());
+
         greenMetricService.save(method, containerField);
         if (String.class.equals(method.getReturnType())) {
             return getStrMockValue();

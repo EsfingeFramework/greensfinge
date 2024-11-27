@@ -20,7 +20,11 @@ public class GreenEnvironment {
     }
 
     private static String getEnv(String env) {
-        return System.getenv(env);
+        String value = System.getProperty(env);
+        if (value == null) {
+            value = System.getenv(env);
+        }
+        return value;
     }
 
 }
