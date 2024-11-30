@@ -1,6 +1,5 @@
-package br.com.ita.greenframework.configuration;
+package br.com.ita.greenframework.util;
 
-import br.com.ita.greenframework.util.GreenConstant;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 

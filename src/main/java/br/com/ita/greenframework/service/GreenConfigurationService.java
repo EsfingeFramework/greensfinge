@@ -1,6 +1,6 @@
 package br.com.ita.greenframework.service;
 
-import br.com.ita.greenframework.configuration.GreenEnvironment;
+import br.com.ita.greenframework.util.GreenEnvironment;
 import br.com.ita.greenframework.configuration.esfinge.dto.ClassContainer;
 import br.com.ita.greenframework.configuration.esfinge.dto.ContainerField;
 import br.com.ita.greenframework.dao.GreenFactoryDao;
@@ -55,14 +55,12 @@ public class GreenConfigurationService {
 
                 if(!containerField.getFields().isEmpty()) {
                     for (ContainerField field : containerField.getFields()) {
-                        if(field.isHasGreenAnnotation()) {
-                            configs.add(GreenConfiguration.builder()
-                                    .className(clazz.getName())
-                                    .fieldName(field.getAttributeName())
-                                    .annotation(field.getAnnotationField())
-                                    .configurationValues(field.getAnnotationValue())
-                                    .build());
-                        }
+                        configs.add(GreenConfiguration.builder()
+                                .className(clazz.getName())
+                                .fieldName(field.getAttributeName())
+                                .annotation(field.getAnnotationField())
+                                .configurationValues(field.getAnnotationValue())
+                                .build());
                     }
                 }
             } catch (Exception e) {

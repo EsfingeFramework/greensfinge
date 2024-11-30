@@ -18,6 +18,6 @@ public class GreenOptionalConfiguration extends GreenDefaultConfiguration {
     @Builder.Default
     private String strDefaultValue = GreenConstant.STR_DEFAULT_VALUE;
     @Builder.Default
-    private Integer numberDefaultValue = GreenConstant.INT_DEFAULT_VALUE;
+    private Double numberDefaultValue = GreenConstant.DOUBLE_DEFAULT_VALUE;
 
 }

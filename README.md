@@ -48,16 +48,16 @@ import br.com.ita.greenframework.annotation.GreenNumber;
 import br.com.ita.greenframework.annotation.GreenOptional;
 
 public class UserService {
-    @GreenOptional(configurationKey = @GreenDefault(configurationKey = "keyProfileService"))
+    @GreenOptional(value = @GreenDefault(configurationKey = "keyProfileService"))
     private ProfileService profileService = new ProfileService();
 
-    @GreenOptional(configurationKey = @GreenDefault(configurationKey = "keyMathService"))
+    @GreenOptional(value = @GreenDefault(configurationKey = "keyMathService"))
     private MathService mathService = new MathService();
 
-    @GreenNumber(configurationKey = @GreenDefault(configurationKey = "keyBeginCountPrimes"))
+    @GreenNumber(value = @GreenDefault(configurationKey = "keyBeginCountPrimes"))
     private Integer beginCountPrimes = 50;
 
-    @GreenNumber(configurationKey = @GreenDefault(configurationKey = "keyEndCountPrimes"))
+    @GreenNumber(value = @GreenDefault(configurationKey = "keyEndCountPrimes"))
     private Integer endCountPrimes = 0;
 
     public void createUser() {
@@ -156,10 +156,10 @@ UserService service = GreenFactory.greenify(UserService.class);
 ```
 The output should be something similar to
 
-GreenMetric(method=MathService#countPrimesInRange, containerField=ContainerField(attributeName=mathService, hasGreenAnnotation=true, annotationField=GreenOptional, annotationValue={configurationKey=keyMathService, strDefaultValue=greenDefaultValue, numberDefaultValue=999999999}), greenMetricAnnotation=@br.com.ita.greenframework.annotation.GreenMetric(metricSavedValue=7.89), countCalled=1, getSavedValue=7.89)
+GreenMetric(method=MathService#countPrimesInRange, containerField=ContainerField(attributeName=mathService, hasGreenAnnotation=true, annotationField=GreenOptional, annotationValue={configurationKey=keyMathService, strDefaultValue=greenDefaultReturn, numberDefaultValue=999999999}), greenMetricAnnotation=@br.com.ita.greenframework.annotation.GreenMetric(metricSavedValue=7.89), countCalled=1, getSavedValue=7.89)
 
 
-GreenMetric(method=GroupService#doSomething2, containerField=ContainerField(attributeName=groupService, hasGreenAnnotation=true, annotationField=GreenOptional, annotationValue={configurationKey=keyGroupService, strDefaultValue=greenDefaultValue, numberDefaultValue=999999999}), greenMetricAnnotation=@br.com.ita.greenframework.annotation.GreenMetric(metricSavedValue=2.788), countCalled=3, getSavedValue=8.363999999999999)
+GreenMetric(method=GroupService#doSomething2, containerField=ContainerField(attributeName=groupService, hasGreenAnnotation=true, annotationField=GreenOptional, annotationValue={configurationKey=keyGroupService, strDefaultValue=greenDefaultReturn, numberDefaultValue=999999999}), greenMetricAnnotation=@br.com.ita.greenframework.annotation.GreenMetric(metricSavedValue=2.788), countCalled=3, getSavedValue=8.363999999999999)
 
 
 GreenMetric(method=ProfileService#doSomething6, containerField=ContainerField(attributeName=profileService, hasGreenAnnotation=true, annotationField=GreenOptional, annotationValue={configurationKey=keyProfileService, numberDefaultValue=999999999}), greenMetricAnnotation=@br.com.ita.greenframework.annotation.GreenMetric(metricSavedValue=5.78), countCalled=1, getSavedValue=5.78)

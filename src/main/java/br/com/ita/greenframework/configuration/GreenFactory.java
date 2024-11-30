@@ -3,6 +3,7 @@ package br.com.ita.greenframework.configuration;
 import br.com.ita.greenframework.configuration.esfinge.dto.ClassContainer;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.SneakyThrows;
 import net.bytebuddy.ByteBuddy;
 import net.bytebuddy.dynamic.loading.ClassLoadingStrategy;
 import net.bytebuddy.implementation.MethodDelegation;
@@ -14,7 +15,8 @@ public class GreenFactory {
 
     private static final ByteBuddy BYTE_BUDDY = new ByteBuddy();
 
-    public static <T> T greenify(Class<T> target) throws Exception {
+    @SneakyThrows
+    public static <T> T greenify(Class<T> target) {
 
         AnnotationReader reader = new AnnotationReader();
         ClassContainer classContainer = reader.readingAnnotationsTo(target, ClassContainer.class);
@@ -24,7 +26,7 @@ public class GreenFactory {
                         .and(ElementMatchers.not(ElementMatchers.isEquals())
                         .and(ElementMatchers.not(ElementMatchers.isHashCode())
                         .and(ElementMatchers.not(ElementMatchers.isToString())))))
-                .intercept(MethodDelegation.to(new GreenMethodInterceptor(classContainer)))
+                .intercept(MethodDelegation.to(new GreenFieldInterceptor(classContainer)))
                 .make()
                 .load(target.getClassLoader(), ClassLoadingStrategy.Default.INJECTION)
                 .getLoaded()

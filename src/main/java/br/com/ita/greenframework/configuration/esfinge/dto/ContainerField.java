@@ -1,6 +1,5 @@
 package br.com.ita.greenframework.configuration.esfinge.dto;
 
-import br.com.ita.greenframework.configuration.esfinge.annotation.GreenReadAnnotation;
 import br.com.ita.greenframework.configuration.esfinge.annotation.GreenReadAttributesAnnotation;
 import br.com.ita.greenframework.configuration.esfinge.annotation.GreenReadFieldClassAnnotation;
 import lombok.Getter;
@@ -20,9 +19,6 @@ public class ContainerField {
 
     @ElementName
     private String attributeName;
-
-    @GreenReadAnnotation
-    private boolean hasGreenAnnotation;
 
     @GreenReadFieldClassAnnotation
     private String annotationField;

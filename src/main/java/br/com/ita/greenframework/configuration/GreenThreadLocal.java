@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class GreenThreadLocal {
@@ -23,15 +24,17 @@ public class GreenThreadLocal {
         }
     }
 
-    public static GreenDefaultConfiguration getValue(String configurationKey) {
-        if(Objects.nonNull(greenValue.get())) {
-            return greenValue.get().get(configurationKey);
-        }
-        return null;
-    }
-
-    public static ThreadLocal<Map<String, GreenDefaultConfiguration>> getGreenValue() {
-        return greenValue;
+    @SuppressWarnings("unchecked")
+    public static <T> T getValue(String configurationKey) {
+        return Optional.ofNullable(configurationKey)
+                .map(e->  {
+                    if(Objects.nonNull(greenValue.get())) {
+                        return (T) greenValue.get().get(configurationKey);
+                    } else {
+                        return null;
+                    }
+                })
+                .orElse(null);
     }
 
     public static void cleanThreadLocalValue() {

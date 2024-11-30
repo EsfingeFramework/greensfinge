@@ -1,6 +1,7 @@
 package br.com.ita.greenframework.configuration.interceptorprocessor;
 
 import br.com.ita.greenframework.annotation.GreenNumber;
+import br.com.ita.greenframework.configuration.GreenThreadLocal;
 import br.com.ita.greenframework.configuration.esfinge.dto.ContainerField;
 import br.com.ita.greenframework.dto.annotation.GreenNumberConfiguration;
 import lombok.SneakyThrows;
@@ -14,7 +15,7 @@ public class GreenNumberProcessor extends GreenStrategyProcessor {
     @Override
     public void process(Field field, ContainerField containerField, Object target) {
         GreenNumber annotation = field.getAnnotation(GreenNumber.class);
-        GreenNumberConfiguration configuration = getThreadLocalConfiguration(annotation.configurationKey());
+        GreenNumberConfiguration configuration = GreenThreadLocal.getValue(annotation.value().configurationKey());
 
         if(Objects.nonNull(configuration)) {
             setReflectionValue(field, target, configuration.getValue());

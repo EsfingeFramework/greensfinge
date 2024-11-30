@@ -1,7 +1,5 @@
 package br.com.ita.greenframework.configuration.interceptorprocessor;
 
-import br.com.ita.greenframework.annotation.GreenDefault;
-import br.com.ita.greenframework.configuration.GreenThreadLocal;
 import br.com.ita.greenframework.configuration.esfinge.dto.ContainerField;
 import br.com.ita.greenframework.exception.GreenException;
 import lombok.AccessLevel;
@@ -43,13 +41,6 @@ public abstract class GreenStrategyProcessor {
             }
         }
         return instance;
-    }
-
-    @SuppressWarnings("unchecked")
-    protected <T> T getThreadLocalConfiguration(GreenDefault configurationClass) {
-        return Optional.ofNullable(configurationClass)
-                .map(e-> (T) GreenThreadLocal.getValue(e.configurationKey()))
-                .orElse(null);
     }
 
     protected void setReflectionValue(Field field, Object target, Object value) throws IllegalAccessException {

@@ -1,7 +1,6 @@
 package br.com.ita.greenframework.annotation;
 
 import br.com.ita.greenframework.dto.annotation.GreenOptionalConfiguration;
-import br.com.ita.greenframework.util.GreenConstant;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -13,9 +12,6 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface GreenOptional {
 
-    GreenDefault configurationKey();
-
-    String strDefaultValue() default GreenConstant.STR_DEFAULT_VALUE;
-    int numberDefaultValue() default GreenConstant.INT_DEFAULT_VALUE;
+    GreenDefault value();
 
 }
