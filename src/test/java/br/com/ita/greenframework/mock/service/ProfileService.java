@@ -1,4 +1,4 @@
-package br.com.ita.greenframework.mockservice;
+package br.com.ita.greenframework.mock.service;
 
 import br.com.ita.greenframework.annotation.GreenDefaultReturn;
 import lombok.extern.slf4j.Slf4j;

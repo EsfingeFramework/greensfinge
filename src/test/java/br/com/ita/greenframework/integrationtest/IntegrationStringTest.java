@@ -3,13 +3,14 @@ package br.com.ita.greenframework.integrationtest;
 import br.com.ita.greenframework.configuration.GreenFactory;
 import br.com.ita.greenframework.configuration.facade.GreenConfigurationFacade;
 import br.com.ita.greenframework.dto.annotation.GreenOptionalConfiguration;
-import br.com.ita.greenframework.mockservice.UserService;
+import br.com.ita.greenframework.mock.dao.UserDao;
+import br.com.ita.greenframework.mock.entity.User;
+import br.com.ita.greenframework.mock.service.UserService;
 import org.junit.jupiter.api.Test;
 
 import java.util.Random;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 class IntegrationStringTest {
 
@@ -127,6 +128,60 @@ class IntegrationStringTest {
         Exception error = assertThrows(Exception.class,
                 userService::getProfileWithError);
         assertEquals("Should not invoke this exception method", error.getMessage());
+    }
+
+    @Test
+    void testShouldReturnComplexObjWithIgnore() {
+        GreenConfigurationFacade facade = new GreenConfigurationFacade();
+
+        String mockValue = "{\"name\":\"Mock\",\"countLogin\":5,\"proffile\":\"Mock Profile\"}";
+        facade.setGeneralConfiguration(GreenOptionalConfiguration.builder()
+                .ignore(true)
+                .configurationKey("keyUserDao")
+                .strDefaultValue(mockValue)
+                .build());
+
+        User user = userService.getUser();
+        assertNotNull(user);
+        assertEquals("Mock", user.getName());
+        assertEquals(5, user.getCountLogin());
+        assertNull(user.getProfile());
+    }
+
+    @Test
+    void testShouldReturnComplexObjWithoutIgnore() {
+        GreenConfigurationFacade facade = new GreenConfigurationFacade();
+
+        String mockValue = "{\"name\":\"Mock\",\"countLogin\":5,\"proffile\":\"Mock Profile\"}";
+        facade.setGeneralConfiguration(GreenOptionalConfiguration.builder()
+                .ignore(false)
+                .configurationKey("keyUserDao")
+                .strDefaultValue(mockValue)
+                .build());
+
+        User user = userService.getUser();
+        assertNotNull(user);
+        assertNull(user.getName());
+        assertNull(user.getCountLogin());
+        assertNull(user.getProfile());
+    }
+
+    @Test
+    void testShouldReturnComplexObjWithIgnoreAnnotation() {
+        GreenConfigurationFacade facade = new GreenConfigurationFacade();
+
+        String mockValue = "{\"name\":\"Mock\",\"countLogin\":5,\"proffile\":\"Mock Profile\"}";
+        facade.setGeneralConfiguration(GreenOptionalConfiguration.builder()
+                .ignore(true)
+                .configurationKey("keyUserDao")
+                .strDefaultValue(mockValue)
+                .build());
+
+        User user = userService.getUserWithAnnotation();
+        assertNotNull(user);
+        assertEquals("Mock Annotation", user.getName());
+        assertEquals(2 , user.getCountLogin());
+        assertEquals("Mock Profile Annotation", user.getProfile());
     }
 
 }
