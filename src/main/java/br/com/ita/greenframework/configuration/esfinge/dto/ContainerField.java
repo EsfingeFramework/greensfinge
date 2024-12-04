@@ -9,6 +9,7 @@ import net.sf.esfinge.metadata.annotation.container.ContainerFor;
 import net.sf.esfinge.metadata.annotation.container.ElementName;
 import net.sf.esfinge.metadata.container.ContainerTarget;
 
+import java.util.List;
 import java.util.Map;
 
 @Getter
@@ -21,7 +22,7 @@ public class ContainerField {
     private String attributeName;
 
     @GreenReadFieldClassAnnotation
-    private String annotationField;
+    private List<Class<?>> annotationField;
 
     @GreenReadAttributesAnnotation
     private Map<String, Object> annotationValue;

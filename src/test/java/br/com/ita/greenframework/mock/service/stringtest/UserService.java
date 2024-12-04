@@ -1,4 +1,4 @@
-package br.com.ita.greenframework.mock.service;
+package br.com.ita.greenframework.mock.service.stringtest;
 
 import br.com.ita.greenframework.annotation.GreenDefault;
 import br.com.ita.greenframework.annotation.GreenOptional;

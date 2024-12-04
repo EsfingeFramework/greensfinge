@@ -3,9 +3,8 @@ package br.com.ita.greenframework.integrationtest;
 import br.com.ita.greenframework.configuration.GreenFactory;
 import br.com.ita.greenframework.configuration.facade.GreenConfigurationFacade;
 import br.com.ita.greenframework.dto.annotation.GreenOptionalConfiguration;
-import br.com.ita.greenframework.mock.dao.UserDao;
 import br.com.ita.greenframework.mock.entity.User;
-import br.com.ita.greenframework.mock.service.UserService;
+import br.com.ita.greenframework.mock.service.stringtest.UserService;
 import org.junit.jupiter.api.Test;
 
 import java.util.Random;

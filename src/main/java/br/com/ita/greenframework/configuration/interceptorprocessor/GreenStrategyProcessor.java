@@ -1,32 +1,30 @@
 package br.com.ita.greenframework.configuration.interceptorprocessor;
 
+import br.com.ita.greenframework.annotation.GreenNumber;
+import br.com.ita.greenframework.annotation.GreenOptional;
 import br.com.ita.greenframework.configuration.esfinge.dto.ContainerField;
-import br.com.ita.greenframework.exception.GreenException;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 
 import java.lang.reflect.Field;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 public abstract class GreenStrategyProcessor {
 
     private static GreenOptionalProcessor instance;
-    private static final Map<String, GreenStrategyProcessor> processorTypes = new HashMap<>();
+    private static final Map<Class<?>, GreenStrategyProcessor> processorTypes = new HashMap<>();
 
     protected void populateData() {
-        processorTypes.put("GreenOptional", new GreenOptionalProcessor());
-        processorTypes.put("GreenNumber", new GreenNumberProcessor());
+        processorTypes.put(GreenOptional.class, new GreenOptionalProcessor());
+        processorTypes.put(GreenNumber.class, new GreenNumberProcessor());
     }
 
-    public GreenStrategyProcessor getProcessor(String nameGreenAnnotation) {
+    public GreenStrategyProcessor getProcessor(Class<?> nameGreenAnnotation) {
         return Optional.of(processorTypes)
                 .filter(typeProcessor -> typeProcessor.containsKey(nameGreenAnnotation))
                 .map(e -> e.get(nameGreenAnnotation))
-                .orElseThrow(() -> new GreenException(String.format("Green annotation '%s' not found", nameGreenAnnotation)));
+                .orElse(null);
     }
 
     public abstract void process(Field field, ContainerField containerField, Object target);

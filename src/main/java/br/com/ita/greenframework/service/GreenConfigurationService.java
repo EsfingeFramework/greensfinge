@@ -58,7 +58,7 @@ public class GreenConfigurationService {
                         configs.add(GreenConfiguration.builder()
                                 .className(clazz.getName())
                                 .fieldName(field.getAttributeName())
-                                .annotation(field.getAnnotationField())
+//                                .annotation(field.getAnnotationField())
                                 .configurationValues(field.getAnnotationValue())
                                 .build());
                     }

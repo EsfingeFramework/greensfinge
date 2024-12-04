@@ -10,8 +10,8 @@ import org.apache.commons.beanutils.BeanUtils;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.util.Objects;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class GreenReadFieldAnnotationProcessor extends GreenReadProcessor implements AnnotationReadingProcessor {
 
@@ -25,9 +25,10 @@ public class GreenReadFieldAnnotationProcessor extends GreenReadProcessor implem
     @SneakyThrows
     @Override
     public void read(AnnotatedElement elementWithMetadata, Object container, ContainerTarget target) throws AnnotationReadingException {
-        Annotation annotation = getGreenAnnotation(elementWithMetadata);
-        if (Objects.nonNull(annotation)) {
-            BeanUtils.setProperty(container, property, annotation.annotationType().getSimpleName());
-            }
+        List<Class<?>> types = getAllGreenAnnotations(elementWithMetadata).stream()
+                .map(Annotation::annotationType)
+                .collect(Collectors.toList());
+
+        BeanUtils.setProperty(container, property, types);
     }
 }

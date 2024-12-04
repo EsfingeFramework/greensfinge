@@ -33,7 +33,7 @@ public class GreenMockProcessor {
         processorTypes.put(GreenMetric.class, new MetricMockProcessor());
     }
 
-    public MockProcessor getProcessor(Class<? extends Annotation> clazz) {
+    public MockProcessor getProcessor(Class<?> clazz) {
         return Optional.of(processorTypes)
                 .filter(typeProcessor -> typeProcessor.containsKey(clazz))
                 .map(e -> e.get(clazz))

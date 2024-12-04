@@ -13,8 +13,8 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 public class GreenReadAttributesAnnotationProcessor extends GreenReadProcessor implements AnnotationReadingProcessor {
 
@@ -30,8 +30,8 @@ public class GreenReadAttributesAnnotationProcessor extends GreenReadProcessor i
     public void read(AnnotatedElement elementWithMetadata, Object container, ContainerTarget target) throws AnnotationReadingException {
         Map<String, Object> values = new HashMap<>();
 
-        Annotation annotation = getGreenAnnotation(elementWithMetadata);
-        if (Objects.nonNull(annotation)) {
+        List<Annotation> annotations = getAllGreenAnnotations(elementWithMetadata);
+        for (Annotation annotation : annotations) {
             for (Method method : annotation.annotationType().getMethods()) {
                 if (!method.getDeclaringClass().getName().startsWith("java.lang")) {
                     Object value = method.invoke(annotation);
@@ -40,13 +40,10 @@ public class GreenReadAttributesAnnotationProcessor extends GreenReadProcessor i
                     } else {
                         values.put(method.getName(), value);
                     }
-
                 }
             }
-
-            BeanUtils.setProperty(container, property, values);
         }
-
+        BeanUtils.setProperty(container, property, values);
     }
 
     private void processAnnotation(Object value, Map<String, Object> values) throws InvocationTargetException, IllegalAccessException {

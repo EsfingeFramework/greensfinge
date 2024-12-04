@@ -14,6 +14,7 @@ import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 import static br.com.ita.greenframework.util.GreenConstant.CONFIGURATION_KEY;
 
@@ -59,7 +60,9 @@ public class GreenReturnMockValue {
         } else if (method.getReturnType().equals(Void.TYPE)) {
             return null;
         } else if (Long.class.equals(method.getReturnType())) {
-            return getIntMockValue(greenDefaultReturn).longValue();
+            return Optional.ofNullable(getIntMockValue(greenDefaultReturn))
+                    .map(Long::valueOf)
+                    .orElse(null);
         }
         return null;
     }
@@ -69,17 +72,13 @@ public class GreenReturnMockValue {
         String configurationKey = (String) containerField.getAnnotationValue().get(CONFIGURATION_KEY);
         GreenOptionalConfiguration configuration = GreenThreadLocal.getValue(configurationKey);
 
-        if(Objects.nonNull(greenDefaultReturn) && !GreenConstant.STR_DEFAULT_VALUE.equals(greenDefaultReturn.strValue())) {
+        if(hasGreenDefaultAnnotationAndNotDefaultValue(greenDefaultReturn)) {
             return objectMapper.readValue(greenDefaultReturn.strValue(), returnType);
         } else if(Objects.nonNull(configuration)) {
             return objectMapper.readValue(configuration.getStrDefaultValue(), returnType);
         } else {
             return null;
         }
-    }
-
-    private boolean isPrimitiveOrWrapper(Class<?> clazz) {
-        return clazz.isPrimitive() || SIMPLE_TYPES.contains(clazz);
     }
 
     private Integer getIntMockValue(GreenDefaultReturn greenDefaultReturn) {
@@ -91,7 +90,7 @@ public class GreenReturnMockValue {
         } else if(GreenConstant.DOUBLE_DEFAULT_VALUE == greenDefaultReturn.numberValue()) {
             return configuration.getNumberDefaultValue().intValue();
         } else {
-            return 0;
+            return configuration.getNumberDefaultValue().intValue();
         }
     }
 
@@ -99,12 +98,24 @@ public class GreenReturnMockValue {
         String configurationKey = (String) containerField.getAnnotationValue().get(CONFIGURATION_KEY);
         GreenOptionalConfiguration configuration = GreenThreadLocal.getValue(configurationKey);
 
-        if(Objects.nonNull(greenDefaultReturn) && !GreenConstant.STR_DEFAULT_VALUE.equals(greenDefaultReturn.strValue())) {
+        if(hasGreenDefaultAnnotationAndNotDefaultValue(greenDefaultReturn)) {
             return greenDefaultReturn.strValue();
-        } else if(Objects.nonNull(configuration)) {
+        } else if(existsConfiguration(configuration)) {
             return configuration.getStrDefaultValue();
         } else {
             return null;
         }
+    }
+
+    private boolean existsConfiguration(GreenOptionalConfiguration configuration) {
+        return Objects.nonNull(configuration);
+    }
+
+    private boolean hasGreenDefaultAnnotationAndNotDefaultValue(GreenDefaultReturn greenDefaultReturn) {
+        return Objects.nonNull(greenDefaultReturn) && !GreenConstant.STR_DEFAULT_VALUE.equals(greenDefaultReturn.strValue());
+    }
+
+    private boolean isPrimitiveOrWrapper(Class<?> clazz) {
+        return clazz.isPrimitive() || SIMPLE_TYPES.contains(clazz);
     }
 }
