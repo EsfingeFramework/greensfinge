@@ -1,5 +1,6 @@
 package br.com.ita.greenframework.service;
 
+import br.com.ita.greenframework.annotation.EnergySavingCustomCalculation;
 import br.com.ita.greenframework.configuration.GreenThreadLocal;
 import br.com.ita.greenframework.configuration.esfinge.dto.ContainerField;
 import br.com.ita.greenframework.configuration.metriccalculate.EnergySavingsCalculator;
@@ -7,7 +8,7 @@ import br.com.ita.greenframework.configuration.metriccalculate.NoMetricCalculate
 import br.com.ita.greenframework.dao.GreenFactoryDao;
 import br.com.ita.greenframework.dao.contract.GreenMetricDao;
 import br.com.ita.greenframework.dao.memory.GreenMetricDaoImpl;
-import br.com.ita.greenframework.dto.annotation.GreenNumberConfiguration;
+import br.com.ita.greenframework.dto.annotation.GreenAdjustableNumberConfiguration;
 import br.com.ita.greenframework.dto.project.GreenMetric;
 import br.com.ita.greenframework.dto.project.GreenMetricCalculate;
 import lombok.SneakyThrows;
@@ -27,7 +28,7 @@ public class GreenMetricService {
     private final GreenMetricDao greenMetricDao = GreenFactoryDao.getInstance().create(GreenMetricDaoImpl.class);
 
     public void save(Field field, Method method, ContainerField containerField) {
-        br.com.ita.greenframework.annotation.GreenMetric annotation = getGreenMetricValue(field, method);
+        EnergySavingCustomCalculation annotation = getGreenMetricValue(field, method);
 
         if (Objects.isNull(annotation)) {
             log.debug("The {}#{} method is mocked, but does not contain the @GreenMetric annotation",
@@ -60,20 +61,20 @@ public class GreenMetricService {
         }
     }
 
-    private br.com.ita.greenframework.annotation.GreenMetric getGreenMetricValue(Field field, Method method) {
+    private EnergySavingCustomCalculation getGreenMetricValue(Field field, Method method) {
         if (Objects.nonNull(field)) {
-            return field.getAnnotation(br.com.ita.greenframework.annotation.GreenMetric.class);
+            return field.getAnnotation(EnergySavingCustomCalculation.class);
         } else {
-            return method.getAnnotation(br.com.ita.greenframework.annotation.GreenMetric.class);
+            return method.getAnnotation(EnergySavingCustomCalculation.class);
         }
     }
 
     @SneakyThrows
-    private Double setMetricSavedValue(Field field, Method method, ContainerField containerField, br.com.ita.greenframework.annotation.GreenMetric annotation) {
-        if (NoMetricCalculate.class.equals(annotation.classMetricValue())) {
-            return annotation.metricSavedValue();
+    private Double setMetricSavedValue(Field field, Method method, ContainerField containerField, EnergySavingCustomCalculation annotation) {
+        if (NoMetricCalculate.class.equals(annotation.implementation())) {
+            return annotation.energySavedValue();
         } else {
-            EnergySavingsCalculator instance = annotation.classMetricValue().getDeclaredConstructor().newInstance();
+            EnergySavingsCalculator instance = annotation.implementation().getDeclaredConstructor().newInstance();
             return instance.calculateSavedValue(GreenMetricCalculate.builder()
                             .field(field)
                             .method(method)
@@ -83,10 +84,10 @@ public class GreenMetricService {
         }
     }
 
-    private Map<String, Object> createMapGreenConfigurations(br.com.ita.greenframework.annotation.GreenMetric annotation) {
+    private Map<String, Object> createMapGreenConfigurations(EnergySavingCustomCalculation annotation) {
         Map<String, Object> map = new HashMap<>();
         for (String config : annotation.affectedByConfigurations()) {
-            GreenNumberConfiguration value = GreenThreadLocal.getValue(config);
+            GreenAdjustableNumberConfiguration value = GreenThreadLocal.getValue(config);
             map.put(value.getConfigurationKey(), value.getValue());
         }
         return map;

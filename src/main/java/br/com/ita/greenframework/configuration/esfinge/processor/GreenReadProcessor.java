@@ -1,6 +1,6 @@
 package br.com.ita.greenframework.configuration.esfinge.processor;
 
-import br.com.ita.greenframework.annotation.GreenDefault;
+import br.com.ita.greenframework.annotation.GreenConfigKey;
 import io.github.classgraph.ClassGraph;
 import io.github.classgraph.ScanResult;
 
@@ -24,7 +24,7 @@ public abstract class GreenReadProcessor {
         List<String> annotations;
         try (ScanResult scanResult = new ClassGraph()
                 .enableAllInfo()
-                .acceptPackages(GreenDefault.class.getPackage().getName())
+                .acceptPackages(GreenConfigKey.class.getPackage().getName())
                 .scan()) {
 
             annotations = new ArrayList<>(scanResult.getAllClasses().getNames());

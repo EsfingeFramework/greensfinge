@@ -11,7 +11,7 @@ import lombok.experimental.SuperBuilder;
 @Setter
 @ToString
 @SuperBuilder
-public class GreenOptionalConfiguration extends GreenDefaultConfiguration {
+public class GreenSwitchConfiguration extends GreenDefaultConfiguration {
 
     private boolean ignore;
 

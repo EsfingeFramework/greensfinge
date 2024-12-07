@@ -9,7 +9,7 @@ import lombok.experimental.SuperBuilder;
 @Setter
 @ToString
 @SuperBuilder
-public class GreenNumberConfiguration extends GreenDefaultConfiguration {
+public class GreenAdjustableNumberConfiguration extends GreenDefaultConfiguration {
 
     private Number value;
 

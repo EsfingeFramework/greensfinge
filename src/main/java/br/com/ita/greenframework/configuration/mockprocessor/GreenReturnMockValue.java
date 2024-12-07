@@ -1,9 +1,9 @@
 package br.com.ita.greenframework.configuration.mockprocessor;
 
-import br.com.ita.greenframework.annotation.GreenDefaultReturn;
+import br.com.ita.greenframework.annotation.GreenReturnWhenSwitchOff;
 import br.com.ita.greenframework.configuration.GreenThreadLocal;
 import br.com.ita.greenframework.configuration.esfinge.dto.ContainerField;
-import br.com.ita.greenframework.dto.annotation.GreenOptionalConfiguration;
+import br.com.ita.greenframework.dto.annotation.GreenSwitchConfiguration;
 import br.com.ita.greenframework.util.GreenConstant;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
-import static br.com.ita.greenframework.util.GreenConstant.CONFIGURATION_KEY;
+import static br.com.ita.greenframework.util.GreenConstant.GREEN_KEY_VALUE;
 
 @Slf4j
 public class GreenReturnMockValue {
@@ -34,33 +34,33 @@ public class GreenReturnMockValue {
     }
 
     public Object getReturnValue(Method method) {
-        GreenDefaultReturn greenDefaultReturn = method.getAnnotation(GreenDefaultReturn.class);
+        GreenReturnWhenSwitchOff greenReturnWhenSwitchOff = method.getAnnotation(GreenReturnWhenSwitchOff.class);
 
-        if(Objects.isNull(greenDefaultReturn)) {
+        if(Objects.isNull(greenReturnWhenSwitchOff)) {
             log.debug("The {}#{} method his mocked, but does not contain the @GreenDefaultValue annotation",
                     method.getDeclaringClass().getName(), method.getName());
         }
 
-        return processReturnByType(method, greenDefaultReturn);
+        return processReturnByType(method, greenReturnWhenSwitchOff);
     }
 
-    private Object processReturnByType(Method method, GreenDefaultReturn greenDefaultReturn) {
+    private Object processReturnByType(Method method, GreenReturnWhenSwitchOff greenReturnWhenSwitchOff) {
         if(isPrimitiveOrWrapper(method.getReturnType())) {
-            return processReturnMockValue(method,greenDefaultReturn);
+            return processReturnMockValue(method, greenReturnWhenSwitchOff);
         } else {
-            return getObjectMockValue(greenDefaultReturn, method.getReturnType());
+            return getObjectMockValue(greenReturnWhenSwitchOff, method.getReturnType());
         }
     }
 
-    private Object processReturnMockValue(Method method, GreenDefaultReturn greenDefaultReturn) {
+    private Object processReturnMockValue(Method method, GreenReturnWhenSwitchOff greenReturnWhenSwitchOff) {
         if (String.class.equals(method.getReturnType())) {
-            return getStrMockValue(greenDefaultReturn);
+            return getStrMockValue(greenReturnWhenSwitchOff);
         } else if (Integer.class.equals(method.getReturnType())) {
-            return getIntMockValue(greenDefaultReturn);
+            return getIntMockValue(greenReturnWhenSwitchOff);
         } else if (method.getReturnType().equals(Void.TYPE)) {
             return null;
         } else if (Long.class.equals(method.getReturnType())) {
-            return Optional.ofNullable(getIntMockValue(greenDefaultReturn))
+            return Optional.ofNullable(getIntMockValue(greenReturnWhenSwitchOff))
                     .map(Long::valueOf)
                     .orElse(null);
         }
@@ -68,12 +68,12 @@ public class GreenReturnMockValue {
     }
 
     @SneakyThrows
-    private Object getObjectMockValue(GreenDefaultReturn greenDefaultReturn, Class<?> returnType) {
-        String configurationKey = (String) containerField.getAnnotationValue().get(CONFIGURATION_KEY);
-        GreenOptionalConfiguration configuration = GreenThreadLocal.getValue(configurationKey);
+    private Object getObjectMockValue(GreenReturnWhenSwitchOff greenReturnWhenSwitchOff, Class<?> returnType) {
+        String configurationKey = (String) containerField.getAnnotationValue().get(GREEN_KEY_VALUE);
+        GreenSwitchConfiguration configuration = GreenThreadLocal.getValue(configurationKey);
 
-        if(hasGreenDefaultAnnotationAndNotDefaultValue(greenDefaultReturn)) {
-            return objectMapper.readValue(greenDefaultReturn.strValue(), returnType);
+        if(hasGreenDefaultAnnotationAndNotDefaultValue(greenReturnWhenSwitchOff)) {
+            return objectMapper.readValue(greenReturnWhenSwitchOff.strValue(), returnType);
         } else if(Objects.nonNull(configuration)) {
             return objectMapper.readValue(configuration.getStrDefaultValue(), returnType);
         } else {
@@ -81,25 +81,25 @@ public class GreenReturnMockValue {
         }
     }
 
-    private Integer getIntMockValue(GreenDefaultReturn greenDefaultReturn) {
-        String configurationKey = (String) containerField.getAnnotationValue().get(CONFIGURATION_KEY);
-        GreenOptionalConfiguration configuration = GreenThreadLocal.getValue(configurationKey);
+    private Integer getIntMockValue(GreenReturnWhenSwitchOff greenReturnWhenSwitchOff) {
+        String configurationKey = (String) containerField.getAnnotationValue().get(GREEN_KEY_VALUE);
+        GreenSwitchConfiguration configuration = GreenThreadLocal.getValue(configurationKey);
 
-        if(Objects.isNull(greenDefaultReturn) || Objects.isNull(configuration)) {
+        if(Objects.isNull(greenReturnWhenSwitchOff) || Objects.isNull(configuration)) {
             return (int) GreenConstant.DOUBLE_DEFAULT_VALUE;
-        } else if(GreenConstant.DOUBLE_DEFAULT_VALUE == greenDefaultReturn.numberValue()) {
+        } else if(GreenConstant.DOUBLE_DEFAULT_VALUE == greenReturnWhenSwitchOff.numberValue()) {
             return configuration.getNumberDefaultValue().intValue();
         } else {
             return configuration.getNumberDefaultValue().intValue();
         }
     }
 
-    private String getStrMockValue(GreenDefaultReturn greenDefaultReturn) {
-        String configurationKey = (String) containerField.getAnnotationValue().get(CONFIGURATION_KEY);
-        GreenOptionalConfiguration configuration = GreenThreadLocal.getValue(configurationKey);
+    private String getStrMockValue(GreenReturnWhenSwitchOff greenReturnWhenSwitchOff) {
+        String configurationKey = (String) containerField.getAnnotationValue().get(GREEN_KEY_VALUE);
+        GreenSwitchConfiguration configuration = GreenThreadLocal.getValue(configurationKey);
 
-        if(hasGreenDefaultAnnotationAndNotDefaultValue(greenDefaultReturn)) {
-            return greenDefaultReturn.strValue();
+        if(hasGreenDefaultAnnotationAndNotDefaultValue(greenReturnWhenSwitchOff)) {
+            return greenReturnWhenSwitchOff.strValue();
         } else if(existsConfiguration(configuration)) {
             return configuration.getStrDefaultValue();
         } else {
@@ -107,12 +107,12 @@ public class GreenReturnMockValue {
         }
     }
 
-    private boolean existsConfiguration(GreenOptionalConfiguration configuration) {
+    private boolean existsConfiguration(GreenSwitchConfiguration configuration) {
         return Objects.nonNull(configuration);
     }
 
-    private boolean hasGreenDefaultAnnotationAndNotDefaultValue(GreenDefaultReturn greenDefaultReturn) {
-        return Objects.nonNull(greenDefaultReturn) && !GreenConstant.STR_DEFAULT_VALUE.equals(greenDefaultReturn.strValue());
+    private boolean hasGreenDefaultAnnotationAndNotDefaultValue(GreenReturnWhenSwitchOff greenReturnWhenSwitchOff) {
+        return Objects.nonNull(greenReturnWhenSwitchOff) && !GreenConstant.STR_DEFAULT_VALUE.equals(greenReturnWhenSwitchOff.strValue());
     }
 
     private boolean isPrimitiveOrWrapper(Class<?> clazz) {

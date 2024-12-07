@@ -2,7 +2,7 @@ package br.com.ita.greenframework.integrationtest;
 
 import br.com.ita.greenframework.configuration.GreenFactory;
 import br.com.ita.greenframework.configuration.facade.GreenConfigurationFacade;
-import br.com.ita.greenframework.dto.annotation.GreenNumberConfiguration;
+import br.com.ita.greenframework.dto.annotation.GreenAdjustableNumberConfiguration;
 import br.com.ita.greenframework.mock.service.numbertest.FileService;
 import org.junit.jupiter.api.Test;
 
@@ -17,7 +17,7 @@ class IntegrationNumberTest {
         GreenConfigurationFacade facade = new GreenConfigurationFacade();
 
         Integer mockValue = 2;
-        facade.setGeneralConfiguration(GreenNumberConfiguration.builder()
+        facade.setGeneralConfiguration(GreenAdjustableNumberConfiguration.builder()
                 .configurationKey("keyCountTimes")
                 .value(mockValue)
                 .build());
@@ -31,7 +31,7 @@ class IntegrationNumberTest {
         GreenConfigurationFacade facade = new GreenConfigurationFacade();
 
         Integer mockValue = 2;
-        facade.setGeneralConfiguration(GreenNumberConfiguration.builder()
+        facade.setGeneralConfiguration(GreenAdjustableNumberConfiguration.builder()
                 .configurationKey("keyCountTimes")
                 .value(mockValue)
                 .build());
@@ -45,7 +45,7 @@ class IntegrationNumberTest {
         GreenConfigurationFacade facade = new GreenConfigurationFacade();
 
         Long mockValue = 2L;
-        facade.setGeneralConfiguration(GreenNumberConfiguration.builder()
+        facade.setGeneralConfiguration(GreenAdjustableNumberConfiguration.builder()
                 .configurationKey("keyFileLength")
                 .value(mockValue)
                 .build());
@@ -59,7 +59,7 @@ class IntegrationNumberTest {
         GreenConfigurationFacade facade = new GreenConfigurationFacade();
 
         Long mockValue = 2L;
-        facade.setGeneralConfiguration(GreenNumberConfiguration.builder()
+        facade.setGeneralConfiguration(GreenAdjustableNumberConfiguration.builder()
                 .configurationKey("keyFileLength")
                 .value(mockValue)
                 .build());

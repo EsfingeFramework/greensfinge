@@ -7,11 +7,11 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 @Retention(RetentionPolicy.RUNTIME)
-public @interface GreenMetric {
+public @interface EnergySavingCustomCalculation {
 
-    double metricSavedValue() default 0.0;
+    double energySavedValue() default 0.0;
 
-    Class<? extends EnergySavingsCalculator> classMetricValue() default NoMetricCalculate.class;
+    Class<? extends EnergySavingsCalculator> implementation() default NoMetricCalculate.class;
 
     String[] affectedByConfigurations() default {};
 }

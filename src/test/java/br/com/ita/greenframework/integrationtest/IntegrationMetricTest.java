@@ -3,8 +3,8 @@ package br.com.ita.greenframework.integrationtest;
 import br.com.ita.greenframework.configuration.GreenFactory;
 import br.com.ita.greenframework.configuration.facade.GreenConfigurationFacade;
 import br.com.ita.greenframework.configuration.facade.GreenMetricFacade;
-import br.com.ita.greenframework.dto.annotation.GreenNumberConfiguration;
-import br.com.ita.greenframework.dto.annotation.GreenOptionalConfiguration;
+import br.com.ita.greenframework.dto.annotation.GreenAdjustableNumberConfiguration;
+import br.com.ita.greenframework.dto.annotation.GreenSwitchConfiguration;
 import br.com.ita.greenframework.dto.project.GreenMetric;
 import br.com.ita.greenframework.mock.service.metrictest.MathService;
 import org.junit.jupiter.api.Order;
@@ -27,17 +27,17 @@ class IntegrationMetricTest {
         Integer mockValue2 = 8;
         int countCallMethod = 15;
 
-        facade.setGeneralConfiguration(GreenNumberConfiguration.builder()
+        facade.setGeneralConfiguration(GreenAdjustableNumberConfiguration.builder()
                 .configurationKey("keyNumber4")
                 .value(mockValue1)
                 .build());
 
-        facade.setGeneralConfiguration(GreenNumberConfiguration.builder()
+        facade.setGeneralConfiguration(GreenAdjustableNumberConfiguration.builder()
                 .configurationKey("keyNumber3")
                 .value(mockValue2)
                 .build());
 
-        facade.setGeneralConfiguration(GreenOptionalConfiguration.builder()
+        facade.setGeneralConfiguration(GreenSwitchConfiguration.builder()
                 .ignore(true)
                 .configurationKey("keySumService")
                 .numberDefaultValue(45D)

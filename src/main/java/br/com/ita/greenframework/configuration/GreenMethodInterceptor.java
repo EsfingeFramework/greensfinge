@@ -3,7 +3,7 @@ package br.com.ita.greenframework.configuration;
 import br.com.ita.greenframework.configuration.esfinge.dto.ContainerField;
 import br.com.ita.greenframework.configuration.mockprocessor.GreenMockProcessor;
 import br.com.ita.greenframework.configuration.mockprocessor.GreenReturnMockValue;
-import br.com.ita.greenframework.dto.annotation.GreenOptionalConfiguration;
+import br.com.ita.greenframework.dto.annotation.GreenSwitchConfiguration;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import net.bytebuddy.implementation.bind.annotation.*;
@@ -13,6 +13,8 @@ import java.lang.reflect.Method;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.Callable;
+
+import static br.com.ita.greenframework.util.GreenConstant.GREEN_KEY_VALUE;
 
 @Slf4j
 public class GreenMethodInterceptor {
@@ -29,8 +31,8 @@ public class GreenMethodInterceptor {
     public Object intercept(@This Object target, @AllArguments Object[] args, @Origin Method method, @SuperCall Callable<?> zuper) {
         log.debug("Intercepted method: {}#{} ", method.getDeclaringClass(), method.getName());
 
-        String configurationKey = (String) containerField.getAnnotationValue().get("configurationKey");
-        GreenOptionalConfiguration configuration = GreenThreadLocal.getValue(configurationKey);
+        String configurationKey = (String) containerField.getAnnotationValue().get(GREEN_KEY_VALUE);
+        GreenSwitchConfiguration configuration = GreenThreadLocal.getValue(configurationKey);
 
         if(Objects.isNull(configuration) || !configuration.isIgnore()) {
             return invokeMethod(method, args, target);

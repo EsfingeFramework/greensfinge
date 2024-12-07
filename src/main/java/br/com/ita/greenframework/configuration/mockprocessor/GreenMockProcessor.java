@@ -1,6 +1,6 @@
 package br.com.ita.greenframework.configuration.mockprocessor;
 
-import br.com.ita.greenframework.annotation.GreenMetric;
+import br.com.ita.greenframework.annotation.EnergySavingCustomCalculation;
 import br.com.ita.greenframework.configuration.interceptorprocessor.GreenStrategyProcessor;
 
 import java.lang.annotation.Annotation;
@@ -30,7 +30,7 @@ public class GreenMockProcessor {
     }
 
     protected void populateData() {
-        processorTypes.put(GreenMetric.class, new MetricMockProcessor());
+        processorTypes.put(EnergySavingCustomCalculation.class, new MetricMockProcessor());
     }
 
     public MockProcessor getProcessor(Class<?> clazz) {

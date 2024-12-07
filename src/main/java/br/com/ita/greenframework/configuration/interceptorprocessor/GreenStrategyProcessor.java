@@ -1,7 +1,7 @@
 package br.com.ita.greenframework.configuration.interceptorprocessor;
 
-import br.com.ita.greenframework.annotation.GreenNumber;
-import br.com.ita.greenframework.annotation.GreenOptional;
+import br.com.ita.greenframework.annotation.GreenAdjustableNumber;
+import br.com.ita.greenframework.annotation.GreenSwitch;
 import br.com.ita.greenframework.configuration.esfinge.dto.ContainerField;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -16,8 +16,8 @@ public abstract class GreenStrategyProcessor {
     private static final Map<Class<?>, GreenStrategyProcessor> processorTypes = new HashMap<>();
 
     protected void populateData() {
-        processorTypes.put(GreenOptional.class, new GreenOptionalProcessor());
-        processorTypes.put(GreenNumber.class, new GreenNumberProcessor());
+        processorTypes.put(GreenSwitch.class, new GreenOptionalProcessor());
+        processorTypes.put(GreenAdjustableNumber.class, new GreenNumberProcessor());
     }
 
     public GreenStrategyProcessor getProcessor(Class<?> nameGreenAnnotation) {

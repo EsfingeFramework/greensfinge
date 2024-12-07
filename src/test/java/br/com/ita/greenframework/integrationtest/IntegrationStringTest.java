@@ -2,7 +2,7 @@ package br.com.ita.greenframework.integrationtest;
 
 import br.com.ita.greenframework.configuration.GreenFactory;
 import br.com.ita.greenframework.configuration.facade.GreenConfigurationFacade;
-import br.com.ita.greenframework.dto.annotation.GreenOptionalConfiguration;
+import br.com.ita.greenframework.dto.annotation.GreenSwitchConfiguration;
 import br.com.ita.greenframework.mock.entity.User;
 import br.com.ita.greenframework.mock.service.stringtest.UserService;
 import org.junit.jupiter.api.Test;
@@ -20,7 +20,7 @@ class IntegrationStringTest {
         GreenConfigurationFacade facade = new GreenConfigurationFacade();
 
         String mockValue = "Mocking a random value";
-        facade.setGeneralConfiguration(GreenOptionalConfiguration.builder()
+        facade.setGeneralConfiguration(GreenSwitchConfiguration.builder()
                         .ignore(true)
                         .configurationKey("keyProfileService")
                         .strDefaultValue(mockValue)
@@ -35,7 +35,7 @@ class IntegrationStringTest {
         GreenConfigurationFacade facade = new GreenConfigurationFacade();
 
         String mockValue = "Mocking a random value";
-        facade.setGeneralConfiguration(GreenOptionalConfiguration.builder()
+        facade.setGeneralConfiguration(GreenSwitchConfiguration.builder()
                 .ignore(true)
                 .configurationKey("keyProfileService")
                 .strDefaultValue(mockValue)
@@ -50,7 +50,7 @@ class IntegrationStringTest {
         GreenConfigurationFacade facade = new GreenConfigurationFacade();
 
         String mockValue = "Mocking a random value";
-        facade.setGeneralConfiguration(GreenOptionalConfiguration.builder()
+        facade.setGeneralConfiguration(GreenSwitchConfiguration.builder()
                 .ignore(true)
                 .configurationKey("keyProfileService")
                 .strDefaultValue(mockValue)
@@ -65,7 +65,7 @@ class IntegrationStringTest {
         GreenConfigurationFacade facade = new GreenConfigurationFacade();
 
         String mockValue = "Mocking a random value";
-        facade.setGeneralConfiguration(GreenOptionalConfiguration.builder()
+        facade.setGeneralConfiguration(GreenSwitchConfiguration.builder()
                 .ignore(false)
                 .configurationKey("keyProfileService")
                 .strDefaultValue(mockValue)
@@ -82,7 +82,7 @@ class IntegrationStringTest {
         String mockValue = "Mocking a random value";
         for (int i = 0; i < 5; i++) {
             boolean random = new Random().nextBoolean();
-            facade.setGeneralConfiguration(GreenOptionalConfiguration.builder()
+            facade.setGeneralConfiguration(GreenSwitchConfiguration.builder()
                     .ignore(random)
                     .configurationKey("keyProfileService")
                     .strDefaultValue(mockValue)
@@ -102,7 +102,7 @@ class IntegrationStringTest {
         GreenConfigurationFacade facade = new GreenConfigurationFacade();
 
         String mockValue = "Mocking a random value";
-        facade.setGeneralConfiguration(GreenOptionalConfiguration.builder()
+        facade.setGeneralConfiguration(GreenSwitchConfiguration.builder()
                 .ignore(false)
                 .configurationKey("keyProfileService")
                 .strDefaultValue(mockValue)
@@ -118,7 +118,7 @@ class IntegrationStringTest {
         GreenConfigurationFacade facade = new GreenConfigurationFacade();
 
         String mockValue = "Mocking a random value";
-        facade.setGeneralConfiguration(GreenOptionalConfiguration.builder()
+        facade.setGeneralConfiguration(GreenSwitchConfiguration.builder()
                 .ignore(false)
                 .configurationKey("keyProfileService")
                 .strDefaultValue(mockValue)
@@ -134,7 +134,7 @@ class IntegrationStringTest {
         GreenConfigurationFacade facade = new GreenConfigurationFacade();
 
         String mockValue = "{\"name\":\"Mock\",\"countLogin\":5,\"proffile\":\"Mock Profile\"}";
-        facade.setGeneralConfiguration(GreenOptionalConfiguration.builder()
+        facade.setGeneralConfiguration(GreenSwitchConfiguration.builder()
                 .ignore(true)
                 .configurationKey("keyUserDao")
                 .strDefaultValue(mockValue)
@@ -152,7 +152,7 @@ class IntegrationStringTest {
         GreenConfigurationFacade facade = new GreenConfigurationFacade();
 
         String mockValue = "{\"name\":\"Mock\",\"countLogin\":5,\"proffile\":\"Mock Profile\"}";
-        facade.setGeneralConfiguration(GreenOptionalConfiguration.builder()
+        facade.setGeneralConfiguration(GreenSwitchConfiguration.builder()
                 .ignore(false)
                 .configurationKey("keyUserDao")
                 .strDefaultValue(mockValue)
@@ -170,7 +170,7 @@ class IntegrationStringTest {
         GreenConfigurationFacade facade = new GreenConfigurationFacade();
 
         String mockValue = "{\"name\":\"Mock\",\"countLogin\":5,\"proffile\":\"Mock Profile\"}";
-        facade.setGeneralConfiguration(GreenOptionalConfiguration.builder()
+        facade.setGeneralConfiguration(GreenSwitchConfiguration.builder()
                 .ignore(true)
                 .configurationKey("keyUserDao")
                 .strDefaultValue(mockValue)

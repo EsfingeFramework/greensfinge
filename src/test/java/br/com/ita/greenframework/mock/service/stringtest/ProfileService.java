@@ -1,6 +1,7 @@
 package br.com.ita.greenframework.mock.service.stringtest;
 
-import br.com.ita.greenframework.annotation.GreenDefaultReturn;
+import br.com.ita.greenframework.annotation.EnergySavingCustomCalculation;
+import br.com.ita.greenframework.annotation.GreenReturnWhenSwitchOff;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -12,14 +13,15 @@ public class ProfileService {
         return value;
     }
 
-    @GreenDefaultReturn
+    @GreenReturnWhenSwitchOff
+    @EnergySavingCustomCalculation(energySavedValue = 3.2)
     public String findProfileWithEmptyAnnotation() {
         String value = "ProfileService - findProfile";
         log.info(value);
         return value;
     }
 
-    @GreenDefaultReturn(strValue = "Mock value in annotation")
+    @GreenReturnWhenSwitchOff(strValue = "Mock value in annotation")
     public String findProfileWithValueAnnotation() {
         String value = "ProfileService - findProfile";
         log.info(value);
