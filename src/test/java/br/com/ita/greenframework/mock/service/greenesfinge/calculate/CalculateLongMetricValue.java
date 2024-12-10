@@ -7,6 +7,6 @@ public class CalculateLongMetricValue  implements EnergySavingsCalculator {
 
     @Override
     public Double calculateSavedValue(GreenMetricCalculate greenMetricCalculate) {
-        return 1.0;
+        return 2.3;
     }
 }

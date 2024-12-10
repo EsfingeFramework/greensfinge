@@ -1,6 +1,6 @@
 package br.com.ita.greenframework.mock.service.stringtest;
 
-import br.com.ita.greenframework.annotation.EnergySavingCustomCalculation;
+import br.com.ita.greenframework.annotation.EnergySavingFixedEstimation;
 import br.com.ita.greenframework.annotation.GreenReturnWhenSwitchOff;
 import lombok.extern.slf4j.Slf4j;
 
@@ -14,7 +14,7 @@ public class ProfileService {
     }
 
     @GreenReturnWhenSwitchOff
-    @EnergySavingCustomCalculation(energySavedValue = 3.2)
+    @EnergySavingFixedEstimation(energySavedValue = 3.2)
     public String findProfileWithEmptyAnnotation() {
         String value = "ProfileService - findProfile";
         log.info(value);

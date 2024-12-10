@@ -39,7 +39,7 @@ public class GreenMethodInterceptor {
         } else {
             for (Annotation annotation : method.getAnnotations()) {
                 Optional.ofNullable(GreenMockProcessor.getInstance().getProcessor(annotation.annotationType()))
-                        .ifPresent(processor -> processor.process(null, method, containerField));
+                        .ifPresent(processor -> processor.process(method, containerField));
             }
 
             return greenReturnMockValue.getReturnValue(method);

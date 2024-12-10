@@ -1,7 +1,7 @@
 package br.com.ita.greenframework.configuration.mockprocessor;
 
 import br.com.ita.greenframework.annotation.EnergySavingCustomCalculation;
-import br.com.ita.greenframework.configuration.interceptorprocessor.GreenStrategyProcessor;
+import br.com.ita.greenframework.annotation.EnergySavingFixedEstimation;
 
 import java.lang.annotation.Annotation;
 import java.util.HashMap;
@@ -20,7 +20,7 @@ public class GreenMockProcessor {
 
     public static GreenMockProcessor getInstance() {
         if (Objects.isNull(instance)) {
-            synchronized (GreenStrategyProcessor.class) {
+            synchronized (GreenMockProcessor.class) {
                 if (Objects.isNull(instance)) {
                     instance = new GreenMockProcessor();
                 }
@@ -30,7 +30,8 @@ public class GreenMockProcessor {
     }
 
     protected void populateData() {
-        processorTypes.put(EnergySavingCustomCalculation.class, new MetricMockProcessor());
+        processorTypes.put(EnergySavingCustomCalculation.class, new EnergySavingCustomCalculationProcessor());
+        processorTypes.put(EnergySavingFixedEstimation.class, new EnergySavingFixedEstimationProcessor());
     }
 
     public MockProcessor getProcessor(Class<?> clazz) {

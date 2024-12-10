@@ -1,6 +1,5 @@
 package br.com.ita.greenframework.mock.service.metrictest;
 
-import br.com.ita.greenframework.annotation.EnergySavingCustomCalculation;
 import br.com.ita.greenframework.annotation.GreenAdjustableNumber;
 import br.com.ita.greenframework.annotation.GreenConfigKey;
 import br.com.ita.greenframework.annotation.GreenSwitch;
@@ -33,10 +32,9 @@ public class MathService {
         return number1 + number2;
     }
 
-    @EnergySavingCustomCalculation(affectedByConfigurations = {"keyNumber3"})
-    public Integer countNumber3() {
-        log.info("Number3 value: {}", number3);
-        return number3;
+    public Integer minusOperation() {
+        log.info("Number3 value: {} | Number4 value: {}", number3, number4);
+        return sumService.minus(number3, number4.intValue());
     }
 
     public Long countNumber4() {

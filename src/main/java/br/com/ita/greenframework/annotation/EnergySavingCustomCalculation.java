@@ -9,8 +9,6 @@ import java.lang.annotation.RetentionPolicy;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface EnergySavingCustomCalculation {
 
-    double energySavedValue() default 0.0;
-
     Class<? extends EnergySavingsCalculator> implementation() default NoMetricCalculate.class;
 
     String[] affectedByConfigurations() default {};

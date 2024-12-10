@@ -85,12 +85,12 @@ public class GreenReturnMockValue {
         String configurationKey = (String) containerField.getAnnotationValue().get(GREEN_KEY_VALUE);
         GreenSwitchConfiguration configuration = GreenThreadLocal.getValue(configurationKey);
 
-        if(Objects.isNull(greenReturnWhenSwitchOff) || Objects.isNull(configuration)) {
-            return (int) GreenConstant.DOUBLE_DEFAULT_VALUE;
-        } else if(GreenConstant.DOUBLE_DEFAULT_VALUE == greenReturnWhenSwitchOff.numberValue()) {
+        if(Objects.nonNull(configuration) && GreenConstant.DOUBLE_DEFAULT_VALUE != configuration.getNumberDefaultValue()) {
             return configuration.getNumberDefaultValue().intValue();
+        } else if(Objects.nonNull(greenReturnWhenSwitchOff)) {
+            return(int) greenReturnWhenSwitchOff.numberValue();
         } else {
-            return configuration.getNumberDefaultValue().intValue();
+            return (int) GreenConstant.DOUBLE_DEFAULT_VALUE;
         }
     }
 

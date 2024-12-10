@@ -3,7 +3,6 @@ package br.com.ita.greenframework.integrationtest;
 import br.com.ita.greenframework.configuration.GreenFactory;
 import br.com.ita.greenframework.configuration.facade.GreenConfigurationFacade;
 import br.com.ita.greenframework.configuration.facade.GreenMetricFacade;
-import br.com.ita.greenframework.dto.annotation.GreenAdjustableNumberConfiguration;
 import br.com.ita.greenframework.dto.annotation.GreenSwitchConfiguration;
 import br.com.ita.greenframework.dto.project.GreenMetric;
 import br.com.ita.greenframework.mock.service.metrictest.MathService;
@@ -19,32 +18,22 @@ class IntegrationMetricTest {
 
     @Test
     @Order(1)
-    void testShouldMetricSeveralCall() {
+    void testShouldMetricCustomEnergyWithSeveralCall() {
         GreenConfigurationFacade facade = new GreenConfigurationFacade();
         GreenMetricFacade metricFacade = new GreenMetricFacade();
 
-        Long mockValue1 = 2L;
-        Integer mockValue2 = 8;
+        Double mockMethodReturn = 45D;
+
         int countCallMethod = 15;
-
-        facade.setGeneralConfiguration(GreenAdjustableNumberConfiguration.builder()
-                .configurationKey("keyNumber4")
-                .value(mockValue1)
-                .build());
-
-        facade.setGeneralConfiguration(GreenAdjustableNumberConfiguration.builder()
-                .configurationKey("keyNumber3")
-                .value(mockValue2)
-                .build());
 
         facade.setGeneralConfiguration(GreenSwitchConfiguration.builder()
                 .ignore(true)
                 .configurationKey("keySumService")
-                .numberDefaultValue(45D)
+                .numberDefaultValue(mockMethodReturn)
                 .build());
 
         for (int i = 0; i < countCallMethod; i++) {
-            assertEquals(45, mathService.countNumber4());
+            assertEquals(mockMethodReturn.intValue(), mathService.countNumber4());
         }
 
         GreenMetric greenMetric = metricFacade.getSavedEnergy().stream().filter(
@@ -53,7 +42,36 @@ class IntegrationMetricTest {
                 .orElse(null);
         assertNotNull(greenMetric);
         assertEquals(countCallMethod , greenMetric.getCountCalled());
-        assertEquals(15.0 , greenMetric.getSavedValue());
-        assertEquals(1.0 , greenMetric.getMetricSavedValue());
+        //Value from CalculateLongMetricValue
+        assertEquals(countCallMethod * 2.3 , greenMetric.getSavedValue());
+        assertEquals(2.3 , greenMetric.getMetricSavedValue());
+    }
+
+    @Test
+    @Order(1)
+    void testShouldMetricFixedEnergyWithSeveralCall() {
+        GreenConfigurationFacade facade = new GreenConfigurationFacade();
+        GreenMetricFacade metricFacade = new GreenMetricFacade();
+
+        int countCallMethod = 15;
+
+        facade.setGeneralConfiguration(GreenSwitchConfiguration.builder()
+                .ignore(true)
+                .configurationKey("keySumService")
+                .build());
+
+        for (int i = 0; i < countCallMethod; i++) {
+            assertEquals(8, mathService.minusOperation());
+        }
+
+        GreenMetric greenMetric = metricFacade.getSavedEnergy().stream().filter(
+                        saved -> "br.com.ita.greenframework.mock.service.metrictest.SumService#minus".equals(saved.getMethod())
+                ).findFirst()
+                .orElse(null);
+        assertNotNull(greenMetric);
+        assertEquals(countCallMethod , greenMetric.getCountCalled());
+        //Value from CalculateLongMetricValue
+        assertEquals(countCallMethod * 4.9 , greenMetric.getSavedValue());
+        assertEquals(4.9 , greenMetric.getMetricSavedValue());
     }
 }
