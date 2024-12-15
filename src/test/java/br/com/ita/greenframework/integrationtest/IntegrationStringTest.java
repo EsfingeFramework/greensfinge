@@ -183,4 +183,12 @@ class IntegrationStringTest {
         assertEquals("Mock Profile Annotation", user.getProfile());
     }
 
+    @Test
+    void testShouldReturnGreenValueInsideMethod() {
+        String returnStr = userService.geGreenValueInsideMethodClass();
+
+        assertNotNull(returnStr);
+        assertEquals("Method inside class return", returnStr);
+    }
+
 }

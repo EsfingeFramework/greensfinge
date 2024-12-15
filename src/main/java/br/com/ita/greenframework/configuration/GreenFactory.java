@@ -26,7 +26,7 @@ public class GreenFactory {
                         .and(ElementMatchers.not(ElementMatchers.isEquals())
                         .and(ElementMatchers.not(ElementMatchers.isHashCode())
                         .and(ElementMatchers.not(ElementMatchers.isToString())))))
-                .intercept(MethodDelegation.to(new GreenFieldInterceptor(classContainer)))
+                .intercept(MethodDelegation.to(new GreenProxyInterceptor(classContainer)))
                 .make()
                 .load(target.getClassLoader(), ClassLoadingStrategy.Default.INJECTION)
                 .getLoaded()

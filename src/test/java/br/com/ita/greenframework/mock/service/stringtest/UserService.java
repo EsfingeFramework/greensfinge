@@ -1,6 +1,7 @@
 package br.com.ita.greenframework.mock.service.stringtest;
 
 import br.com.ita.greenframework.annotation.GreenConfigKey;
+import br.com.ita.greenframework.annotation.GreenReturnWhenSwitchOff;
 import br.com.ita.greenframework.annotation.GreenSwitch;
 import br.com.ita.greenframework.mock.dao.UserDao;
 import br.com.ita.greenframework.mock.entity.User;
@@ -43,6 +44,11 @@ public class UserService {
 
     public User getUserWithAnnotation() {
         return userDao.getUserWithAnnotation();
+    }
+
+    @GreenReturnWhenSwitchOff(strValue = "Method inside class return")
+    public String geGreenValueInsideMethodClass() {
+        return "";
     }
 
 }

@@ -2,6 +2,7 @@ package br.com.ita.greenframework.mock.service.numbertest;
 
 import br.com.ita.greenframework.annotation.GreenAdjustableNumber;
 import br.com.ita.greenframework.annotation.GreenConfigKey;
+import br.com.ita.greenframework.annotation.GreenReturnWhenSwitchOff;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -46,5 +47,13 @@ public class FileService {
         return count;
     }
 
+    @GreenReturnWhenSwitchOff(numberValue = 6458)
+    public Integer getGreenValueInsideMethodClass1() {
+        return 0;
+    }
 
+    @GreenReturnWhenSwitchOff(numberValue = 6459)
+    public Integer getGreenValueInsideMethodClass2() {
+        return 0;
+    }
 }

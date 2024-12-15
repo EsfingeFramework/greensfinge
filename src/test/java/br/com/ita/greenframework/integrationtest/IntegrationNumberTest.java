@@ -7,6 +7,7 @@ import br.com.ita.greenframework.mock.service.numbertest.FileService;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class IntegrationNumberTest {
 
@@ -66,5 +67,18 @@ class IntegrationNumberTest {
 
         Long countTry = fileService.getDefaultFileLength();
         assertEquals(5, countTry);
+    }
+
+    @Test
+    void testShouldReturnGreenValueInsideMethod() {
+        Integer returnInt1 = fileService.getGreenValueInsideMethodClass1();
+
+        assertNotNull(returnInt1);
+        assertEquals(6458, returnInt1);
+
+        Integer returnInt2 = fileService.getGreenValueInsideMethodClass2();
+
+        assertNotNull(returnInt2);
+        assertEquals(6459, returnInt2);
     }
 }
