@@ -7,7 +7,7 @@ The idea of this project is to transform the software into a sustainable tool us
 
 2. Create the class to execute the rules in the "br.com.ita.greenframework.configuration.interceptorprocessor" package
 
-3. Add the class created in br.com.ita.greenframework.configuration.interceptorprocessor.GreenStrategyProcessor#populateData
+3. Add the class created in GreenStrategyProcessor#populateData
 
 4. Now just write down the annotation in the correct place and test.
 
@@ -44,8 +44,8 @@ First, we annotated the attributes in the class, below is an example of use.
 
 ```java
 import br.com.ita.greenframework.annotation.GreenDefault;
-import br.com.ita.greenframework.annotation.GreenAdjustableNumber;
-import br.com.ita.greenframework.annotation.GreenSwitch;
+import GreenAdjustableNumber;
+import GreenSwitch;
 
 public class UserService {
     @GreenSwitch(value = @GreenDefault(configurationKey = "keyProfileService"))
@@ -74,7 +74,7 @@ public class UserService {
     }
 }
 
-import br.com.ita.greenframework.annotation.EnergySavingCustomCalculation;
+import EnergySavingCustomCalculation;
 
 public class ProfileService {
 
@@ -86,7 +86,7 @@ public class ProfileService {
     }
 }
 
-import br.com.ita.greenframework.annotation.EnergySavingCustomCalculation;
+import EnergySavingCustomCalculation;
 
 public class GroupService {
 
@@ -99,7 +99,7 @@ public class GroupService {
 
 }
 
-import br.com.ita.greenframework.annotation.EnergySavingCustomCalculation;
+import EnergySavingCustomCalculation;
 
 public class MathService {
 
@@ -124,9 +124,9 @@ public class MathService {
 Then we create the configurations, it is important that the "configurationKey" information is the **same value as both the configuration and the annotation**, an example below
 
 ```java
-import br.com.ita.greenframework.configuration.facade.GreenConfigurationFacade;
 
-GreenConfigurationFacade facade = new GreenConfigurationFacade();
+
+GreenConfigurationFacade facade=new GreenConfigurationFacade();
 
 //@GreenOptional
         facade.setGeneralConfiguration(GreenOptionalConfiguration.builder()
@@ -145,21 +145,19 @@ And finally, create the object instance using 'GreenFactory.greenify' and call t
 
 ```java
 import UserService;
-import br.com.ita.greenframework.configuration.GreenFactory;
-import br.com.ita.greenframework.configuration.facade.GreenMetricFacade;
 
-UserService service = GreenFactory.greenify(UserService.class);
+UserService service=GreenFactory.greenify(UserService.class);
         service.createUser();
 
-        GreenMetricFacade metricFacade = new GreenMetricFacade();
-        metricFacade.getSavedEnergy().forEach(metric -> System.out.println(metric.toString()));
+        GreenMetricFacade metricFacade=new GreenMetricFacade();
+        metricFacade.getSavedEnergy().forEach(metric->System.out.println(metric.toString()));
 ```
 The output should be something similar to
 
-GreenMetric(method=MathService#countPrimesInRange, containerField=ContainerField(attributeName=mathService, hasGreenAnnotation=true, annotationField=GreenOptional, annotationValue={configurationKey=keyMathService, strDefaultValue=greenReturnWhenSwitchOff, numberDefaultValue=999999999}), greenMetricAnnotation=@br.com.ita.greenframework.annotation.EnergySavingCustomCalculation(metricSavedValue=7.89), countCalled=1, getSavedValue=7.89)
+GreenMetric(method=MathService#countPrimesInRange, containerField=ContainerField(attributeName=mathService, hasGreenAnnotation=true, annotationField=GreenOptional, annotationValue={configurationKey=keyMathService, strDefaultValue=greenReturnWhenSwitchOff, numberDefaultValue=999999999}), greenMetricAnnotation=@EnergySavingCustomCalculation(metricSavedValue=7.89), countCalled=1, getSavedValue=7.89)
 
 
-GreenMetric(method=GroupService#doSomething2, containerField=ContainerField(attributeName=groupService, hasGreenAnnotation=true, annotationField=GreenOptional, annotationValue={configurationKey=keyGroupService, strDefaultValue=greenReturnWhenSwitchOff, numberDefaultValue=999999999}), greenMetricAnnotation=@br.com.ita.greenframework.annotation.EnergySavingCustomCalculation(metricSavedValue=2.788), countCalled=3, getSavedValue=8.363999999999999)
+GreenMetric(method=GroupService#doSomething2, containerField=ContainerField(attributeName=groupService, hasGreenAnnotation=true, annotationField=GreenOptional, annotationValue={configurationKey=keyGroupService, strDefaultValue=greenReturnWhenSwitchOff, numberDefaultValue=999999999}), greenMetricAnnotation=@EnergySavingCustomCalculation(metricSavedValue=2.788), countCalled=3, getSavedValue=8.363999999999999)
 
 
-GreenMetric(method=ProfileService#doSomething6, containerField=ContainerField(attributeName=profileService, hasGreenAnnotation=true, annotationField=GreenOptional, annotationValue={configurationKey=keyProfileService, numberDefaultValue=999999999}), greenMetricAnnotation=@br.com.ita.greenframework.annotation.EnergySavingCustomCalculation(metricSavedValue=5.78), countCalled=1, getSavedValue=5.78)
+GreenMetric(method=ProfileService#doSomething6, containerField=ContainerField(attributeName=profileService, hasGreenAnnotation=true, annotationField=GreenOptional, annotationValue={configurationKey=keyProfileService, numberDefaultValue=999999999}), greenMetricAnnotation=@EnergySavingCustomCalculation(metricSavedValue=5.78), countCalled=1, getSavedValue=5.78)
