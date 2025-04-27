@@ -46,7 +46,8 @@ public class GreenMethodInterceptor {
     }
 
     @SneakyThrows
-    private Object invokeMethod(Method method, Object[] args, Object target) {
+    //TODO Better code refactoring in a UtilClass
+    public static Object invokeMethod(Method method, Object[] args, Object target) {
         //TODO Better code for when you have several constructors
         Object objectInvoke = target.getClass().getSuperclass().getDeclaredConstructor().newInstance();
         try {

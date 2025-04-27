@@ -185,10 +185,30 @@ class IntegrationStringTest {
 
     @Test
     void testShouldReturnGreenValueInsideMethod() {
-        String returnStr = userService.geGreenValueInsideMethodClass();
+        GreenConfigurationFacade facade = new GreenConfigurationFacade();
 
+        facade.setGeneralConfiguration(GreenSwitchConfiguration.builder()
+                .ignore(true)
+                .configurationKey("keyMethodConfig")
+                .build());
+
+        String returnStr = userService.geGreenValueInsideMethodClass();
         assertNotNull(returnStr);
         assertEquals("Method inside class return", returnStr);
+    }
+
+    @Test
+    void testShouldReturnGreenValueInsideMethodNotIgnoreExecution() {
+        GreenConfigurationFacade facade = new GreenConfigurationFacade();
+
+        facade.setGeneralConfiguration(GreenSwitchConfiguration.builder()
+                .ignore(false)
+                .configurationKey("keyMethodConfig")
+                .build());
+
+        String returnStr = userService.geGreenValueInsideMethodClass();
+        assertNotNull(returnStr);
+        assertEquals("", returnStr);
     }
 
 }

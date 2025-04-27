@@ -46,6 +46,7 @@ public class UserService {
         return userDao.getUserWithAnnotation();
     }
 
+    @GreenConfigKey("keyMethodConfig")
     @GreenReturnWhenSwitchOff(strValue = "Method inside class return")
     public String geGreenValueInsideMethodClass() {
         return "";

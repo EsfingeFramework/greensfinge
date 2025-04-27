@@ -3,6 +3,7 @@ package net.sf.esfinge.greenframework.integrationtest;
 import net.sf.esfinge.greenframework.configuration.GreenFactory;
 import net.sf.esfinge.greenframework.configuration.facade.GreenConfigurationFacade;
 import net.sf.esfinge.greenframework.dto.annotation.GreenAdjustableNumberConfiguration;
+import net.sf.esfinge.greenframework.dto.annotation.GreenSwitchConfiguration;
 import net.sf.esfinge.greenframework.mock.service.numbertest.FileService;
 import org.junit.jupiter.api.Test;
 
@@ -71,6 +72,18 @@ class IntegrationNumberTest {
 
     @Test
     void testShouldReturnGreenValueInsideMethod() {
+        GreenConfigurationFacade facade = new GreenConfigurationFacade();
+
+        facade.setGeneralConfiguration(GreenSwitchConfiguration.builder()
+                .ignore(true)
+                .configurationKey("method1KeyConfiguration")
+                .build());
+
+        facade.setGeneralConfiguration(GreenSwitchConfiguration.builder()
+                .ignore(true)
+                .configurationKey("method2KeyConfiguration")
+                .build());
+
         Integer returnInt1 = fileService.getGreenValueInsideMethodClass1();
 
         assertNotNull(returnInt1);
@@ -80,5 +93,30 @@ class IntegrationNumberTest {
 
         assertNotNull(returnInt2);
         assertEquals(6459, returnInt2);
+    }
+
+    @Test
+    void testShouldReturnGreenValueInsideMethodWithoutIgnoreExecution() {
+        GreenConfigurationFacade facade = new GreenConfigurationFacade();
+
+        facade.setGeneralConfiguration(GreenSwitchConfiguration.builder()
+                .ignore(false)
+                .configurationKey("method1KeyConfiguration")
+                .build());
+
+        facade.setGeneralConfiguration(GreenSwitchConfiguration.builder()
+                .ignore(false)
+                .configurationKey("method2KeyConfiguration")
+                .build());
+
+        Integer returnInt1 = fileService.getGreenValueInsideMethodClass1();
+
+        assertNotNull(returnInt1);
+        assertEquals(0, returnInt1);
+
+        Integer returnInt2 = fileService.getGreenValueInsideMethodClass2();
+
+        assertNotNull(returnInt2);
+        assertEquals(0, returnInt2);
     }
 }

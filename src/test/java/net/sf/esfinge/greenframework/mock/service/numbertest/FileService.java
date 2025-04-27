@@ -47,11 +47,13 @@ public class FileService {
         return count;
     }
 
+    @GreenConfigKey("method1KeyConfiguration")
     @GreenReturnWhenSwitchOff(numberValue = 6458)
     public Integer getGreenValueInsideMethodClass1() {
         return 0;
     }
 
+    @GreenConfigKey("method2KeyConfiguration")
     @GreenReturnWhenSwitchOff(numberValue = 6459)
     public Integer getGreenValueInsideMethodClass2() {
         return 0;
