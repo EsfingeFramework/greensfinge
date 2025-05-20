@@ -1,7 +1,7 @@
 package net.sf.esfinge.greenframework.mock.service.stringtest;
 
 import net.sf.esfinge.greenframework.annotation.GreenConfigKey;
-import net.sf.esfinge.greenframework.annotation.GreenReturnWhenSwitchOff;
+import net.sf.esfinge.greenframework.annotation.GreenDefaultReturn;
 import net.sf.esfinge.greenframework.annotation.GreenSwitch;
 import net.sf.esfinge.greenframework.mock.dao.UserDao;
 import net.sf.esfinge.greenframework.mock.entity.User;
@@ -47,7 +47,7 @@ public class UserService {
     }
 
     @GreenConfigKey("keyMethodConfig")
-    @GreenReturnWhenSwitchOff(strValue = "Method inside class return")
+    @GreenDefaultReturn(strValue = "Method inside class return")
     public String geGreenValueInsideMethodClass() {
         return "";
     }

@@ -1,7 +1,7 @@
 package net.sf.esfinge.greenframework.mock.service.stringtest;
 
 import net.sf.esfinge.greenframework.annotation.EnergySavingFixedEstimation;
-import net.sf.esfinge.greenframework.annotation.GreenReturnWhenSwitchOff;
+import net.sf.esfinge.greenframework.annotation.GreenDefaultReturn;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -13,7 +13,7 @@ public class ProfileService {
         return value;
     }
 
-    @GreenReturnWhenSwitchOff
+    @GreenDefaultReturn
     @EnergySavingFixedEstimation(energySavedValue = 3.2)
     public String findProfileWithEmptyAnnotation() {
         String value = "ProfileService - findProfile";
@@ -21,7 +21,7 @@ public class ProfileService {
         return value;
     }
 
-    @GreenReturnWhenSwitchOff(strValue = "Mock value in annotation")
+    @GreenDefaultReturn(strValue = "Mock value in annotation")
     public String findProfileWithValueAnnotation() {
         String value = "ProfileService - findProfile";
         log.info(value);

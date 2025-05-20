@@ -2,7 +2,7 @@ package net.sf.esfinge.greenframework.mock.service.numbertest;
 
 import net.sf.esfinge.greenframework.annotation.GreenAdjustableNumber;
 import net.sf.esfinge.greenframework.annotation.GreenConfigKey;
-import net.sf.esfinge.greenframework.annotation.GreenReturnWhenSwitchOff;
+import net.sf.esfinge.greenframework.annotation.GreenDefaultReturn;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -48,13 +48,13 @@ public class FileService {
     }
 
     @GreenConfigKey("method1KeyConfiguration")
-    @GreenReturnWhenSwitchOff(numberValue = 6458)
+    @GreenDefaultReturn(numberValue = 6458)
     public Integer getGreenValueInsideMethodClass1() {
         return 0;
     }
 
     @GreenConfigKey("method2KeyConfiguration")
-    @GreenReturnWhenSwitchOff(numberValue = 6459)
+    @GreenDefaultReturn(numberValue = 6459)
     public Integer getGreenValueInsideMethodClass2() {
         return 0;
     }

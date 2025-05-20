@@ -33,16 +33,21 @@ public class GreenMethodInterceptor {
         String configurationKey = (String) containerField.getAnnotationValue().get(GreenConstant.GREEN_KEY_VALUE);
         GreenSwitchConfiguration configuration = GreenThreadLocal.getValue(configurationKey);
 
-        if(Objects.isNull(configuration) || !configuration.isIgnore()) {
+        if(Objects.isNull(configuration)) {
             return invokeMethod(method, args, target);
+        } else if (configuration.isIgnore()) {
+            return processConfiguration(method);
         } else {
-            for (Annotation annotation : method.getAnnotations()) {
-                Optional.ofNullable(GreenMockProcessor.getInstance().getProcessor(annotation.annotationType()))
-                        .ifPresent(processor -> processor.process(method, containerField));
-            }
-
-            return greenReturnMockValue.getReturnValue(method);
+            return invokeMethod(method, args, target);
         }
+    }
+
+    private Object processConfiguration(Method method) {
+        for (Annotation annotation : method.getAnnotations()) {
+            Optional.ofNullable(GreenMockProcessor.getInstance().getProcessor(annotation.annotationType()))
+                    .ifPresent(processor -> processor.process(method, containerField));
+        }
+        return greenReturnMockValue.getReturnValue(method);
     }
 
     @SneakyThrows

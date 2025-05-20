@@ -1,8 +1,8 @@
 package net.sf.esfinge.greenframework.mock.service.voidtest;
 
 import net.sf.esfinge.greenframework.annotation.GreenConfigKey;
-import net.sf.esfinge.greenframework.annotation.GreenReturnWhenSwitchOff;
 import net.sf.esfinge.greenframework.annotation.GreenSwitch;
+import net.sf.esfinge.greenframework.annotation.GreenSwitchOff;
 
 public class UserService {
 
@@ -16,8 +16,8 @@ public class UserService {
                 " final value ";
     }
 
+    @GreenSwitchOff
     @GreenConfigKey("methodKeyConfig")
-    @GreenReturnWhenSwitchOff
     public void doSomethingWithHighConsumeEnergy(StringBuilder strParameter) {
         strParameter.append("something very high");
     }

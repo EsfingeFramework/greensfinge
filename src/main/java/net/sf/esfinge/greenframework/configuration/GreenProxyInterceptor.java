@@ -1,7 +1,8 @@
 package net.sf.esfinge.greenframework.configuration;
 
 import net.sf.esfinge.greenframework.annotation.GreenConfigKey;
-import net.sf.esfinge.greenframework.annotation.GreenReturnWhenSwitchOff;
+import net.sf.esfinge.greenframework.annotation.GreenDefaultReturn;
+import net.sf.esfinge.greenframework.annotation.GreenSwitchOff;
 import net.sf.esfinge.greenframework.configuration.esfinge.dto.ClassContainer;
 import net.sf.esfinge.greenframework.configuration.esfinge.dto.ContainerField;
 import net.sf.esfinge.greenframework.configuration.interceptorprocessor.GreenStrategyProcessor;
@@ -43,19 +44,21 @@ public class GreenProxyInterceptor {
 
     private Object interceptGreenMethodAnnotations(Object target, Object[] args, Method method, Callable<?> zuper) throws Exception {
         for (Annotation annotation : method.getAnnotations()) {
-            if(GreenReturnWhenSwitchOff.class.equals(annotation.annotationType())) {
+            if(GreenDefaultReturn.class.equals(annotation.annotationType()) || GreenSwitchOff.class.equals(annotation.annotationType())) {
                 GreenConfigKey configKey = method.getAnnotation(GreenConfigKey.class);
-                GreenReturnWhenSwitchOff greenReturnWhenSwitchOff = method.getAnnotation(GreenReturnWhenSwitchOff.class);
+                GreenDefaultReturn greenDefaultReturn = method.getAnnotation(GreenDefaultReturn.class);
 
                 if(Objects.isNull(configKey)) {
                     log.debug("The {}#{} method his mocked, but does not contain the @GreenConfigKey annotation",
                             method.getDeclaringClass().getName(), method.getName());
                 } else {
                     GreenSwitchConfiguration configuration = GreenThreadLocal.getValue(configKey.value());
-                    if(Objects.nonNull(configuration) && !configuration.isIgnore()) {
+                    if(Objects.isNull(configuration)) {
                         return GreenMethodInterceptor.invokeMethod(method, args, target);
+                    } else if (configuration.isIgnore()) {
+                        return greenReturnMockValue.getReturnValueByMethod(configKey, greenDefaultReturn, method);
                     } else {
-                        return greenReturnMockValue.getReturnValueByMethod(configKey, greenReturnWhenSwitchOff, method);
+                        return GreenMethodInterceptor.invokeMethod(method, args, target);
                     }
                 }
             }
