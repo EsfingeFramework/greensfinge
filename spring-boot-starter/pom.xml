@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <parent>
+        <groupId>net.sf.esfinge</groupId>
+        <artifactId>greenframework</artifactId>
+        <version>0.0.4</version>
+    </parent>
+
     <modelVersion>4.0.0</modelVersion>
-    <groupId>net.sf.esfinge</groupId>
-    <artifactId>greenframework</artifactId>
+    <artifactId>greenframework-spring-boot-starter</artifactId>
     <version>0.0.4</version>
-    <packaging>pom</packaging>
 
-    <modules>
-        <module>core</module>
-        <module>spring-boot-starter</module>
-    </modules>
-
-    <name>green-framework</name>
-    <description>Green Framework</description>
+    <name>greenframework-spring-boot-starter</name>
+    <description>Green Framework Spring Starter</description>
     <url>https://esfinge.sourceforge.net/</url>
 
     <licenses>
@@ -45,21 +45,24 @@
         <url>http://github.com/EsfingeFramework/greensfinge</url>
     </scm>
 
-    <properties>
-        <java.version>8</java.version>
-    </properties>
+    <dependencies>
+        <dependency>
+            <groupId>net.sf.esfinge</groupId>
+            <artifactId>greenframework-core</artifactId>
+            <version>0.0.4</version>
+        </dependency>
 
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-dependencies</artifactId>
-                <version>3.2.5</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-autoconfigure</artifactId>
+        </dependency>
+
+    </dependencies>
 
     <build>
         <plugins>
@@ -112,8 +115,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.8.1</version>
                 <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
                 </configuration>
             </plugin>
             <plugin>
