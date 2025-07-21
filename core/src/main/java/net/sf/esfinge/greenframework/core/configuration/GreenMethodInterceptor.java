@@ -24,11 +24,14 @@ public class GreenMethodInterceptor {
 
     @RuntimeType
     public Object intercept(@This Object target, @AllArguments Object[] args, @Origin Method method, @SuperCall Callable<?> zuper) throws Exception {
-        log.debug("Intercepted method: {}#{} ", method.getDeclaringClass(), method.getName());
+        log.debug("Before method execution: {}", method.toGenericString());
 
         Field originalBean = target.getClass().getDeclaredField(FIELD_ORIGINAL_BEAN);
 
-        return greenProxyResolverService.resolveMethodInterceptCall(originalBean.get(target), method, args, containerField);
+        Object result = greenProxyResolverService.resolveMethodInterceptCall(originalBean.get(target), method, args, containerField);
+
+        log.debug("After method execution: {}", method.toGenericString());
+        return result;
     }
 
 }

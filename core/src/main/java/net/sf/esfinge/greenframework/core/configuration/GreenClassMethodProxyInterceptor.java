@@ -9,6 +9,7 @@ import net.sf.esfinge.greenframework.core.configuration.esfinge.dto.ClassContain
 import net.sf.esfinge.greenframework.core.configuration.esfinge.dto.ContainerField;
 import net.sf.esfinge.greenframework.core.configuration.interceptorprocessor.GreenStrategyProcessor;
 import net.sf.esfinge.greenframework.core.service.GreenProxyResolverService;
+import net.sf.esfinge.greenframework.core.util.GreenReflectionUtil;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
@@ -19,25 +20,23 @@ import java.util.concurrent.Callable;
 import static net.sf.esfinge.greenframework.core.util.GreenConstant.FIELD_ORIGINAL_BEAN;
 
 @Slf4j
-public class GreenProxyInterceptor {
+public class GreenClassMethodProxyInterceptor {
 
+    private final GreenProxyResolverService greenProxyResolverService = new GreenProxyResolverService();
     private final ClassContainer classContainer;
-    private final GreenProxyResolverService greenProxyResolverService;
 
-    protected GreenProxyInterceptor(ClassContainer classContainer) {
+    public GreenClassMethodProxyInterceptor(ClassContainer classContainer) {
         this.classContainer = classContainer;
-        this.greenProxyResolverService = new GreenProxyResolverService();
     }
 
     @RuntimeType
     public Object intercept(@This Object target, @AllArguments Object[] args, @Origin Method method, @SuperCall Callable<?> zuper) throws Exception {
-        log.debug("Before field execution: {}", method.toGenericString());
+        log.debug("Before class method execution: {}", method.toGenericString());
 
         interceptGreenFieldsAnnotations(target);
         Object result = interceptGreenMethodAnnotations(target, args, method, zuper);
 
-        log.debug("After field execution: {}", method.toGenericString());
-
+        log.debug("After class method execution: {}", method.toGenericString());
         return result;
     }
 
@@ -57,7 +56,8 @@ public class GreenProxyInterceptor {
     @SneakyThrows
     private void interceptGreenFieldsAnnotations(Object target) {
         for (ContainerField containerField : classContainer.getFields()) {
-            Field field = target.getClass().getSuperclass().getDeclaredField(containerField.getAttributeName());
+            Object resolvedTarget = GreenReflectionUtil.resolveInjectionTarget(target);
+            Field field = resolvedTarget.getClass().getDeclaredField(containerField.getAttributeName());
 
             containerField.getAnnotationField().forEach(annotationField -> {
                 GreenStrategyProcessor strategyProcessor = GreenStrategyProcessor.getInstance()

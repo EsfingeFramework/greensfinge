@@ -1,4 +1,4 @@
-package net.sf.esfinge.greenframework.core.configuration.mockprocessor;
+package net.sf.esfinge.greenframework.core.configuration.energyestimation;
 
 import net.sf.esfinge.greenframework.core.annotation.EnergySavingFixedEstimation;
 import net.sf.esfinge.greenframework.core.configuration.esfinge.dto.ContainerField;

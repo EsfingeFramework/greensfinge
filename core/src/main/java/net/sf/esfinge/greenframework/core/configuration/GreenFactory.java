@@ -33,7 +33,7 @@ public class GreenFactory {
                         .and(ElementMatchers.not(ElementMatchers.isEquals())
                         .and(ElementMatchers.not(ElementMatchers.isHashCode())
                         .and(ElementMatchers.not(ElementMatchers.isToString())))))
-                .intercept(MethodDelegation.to(new GreenProxyInterceptor(classContainer)))
+                .intercept(MethodDelegation.to(new GreenClassMethodProxyInterceptor(classContainer)))
                 .make()
                 .load(target.getClassLoader(), ClassLoadingStrategy.Default.INJECTION)
                 .getLoaded()
@@ -55,7 +55,7 @@ public class GreenFactory {
                         .and(ElementMatchers.not(ElementMatchers.isEquals()))
                         .and(ElementMatchers.not(ElementMatchers.isHashCode()))
                         .and(ElementMatchers.not(ElementMatchers.isToString())))
-                .intercept(MethodDelegation.to(new GreenProxyInterceptor(classContainer)))
+                .intercept(MethodDelegation.to(new GreenClassMethodProxyInterceptor(classContainer)))
                 .make()
                 .load(targetClass.getClassLoader(), ClassLoadingStrategy.Default.WRAPPER)
                 .getLoaded();
@@ -67,4 +67,5 @@ public class GreenFactory {
 
         return proxy;
     }
+
 }

@@ -4,8 +4,8 @@ import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import net.sf.esfinge.greenframework.core.annotation.GreenConfigKey;
 import net.sf.esfinge.greenframework.core.configuration.esfinge.dto.ContainerField;
-import net.sf.esfinge.greenframework.core.configuration.mockprocessor.GreenEnergyMetricsProcessor;
-import net.sf.esfinge.greenframework.core.configuration.mockprocessor.GreenReturnMockValue;
+import net.sf.esfinge.greenframework.core.configuration.energyestimation.GreenEnergyMetricsProcessor;
+import net.sf.esfinge.greenframework.core.configuration.energyestimation.GreenReturnMockValue;
 import net.sf.esfinge.greenframework.core.dto.annotation.GreenSwitchConfiguration;
 
 import java.lang.annotation.Annotation;
@@ -21,23 +21,23 @@ public class GreenProxyResolverService {
 
     @SneakyThrows
     public Object resolveMethodInterceptCall(Object originalBean, Method method, Object[] args, ContainerField containerField) {
-        GreenSwitchConfiguration configuration = null;
+        GreenSwitchConfiguration greenConfiguration = null;
         GreenConfigKey configKey = method.getAnnotation(GreenConfigKey.class);
 
         if(Objects.isNull(configKey)) {
             log.debug("The {}#{} method his mocked, but does not contain the @GreenConfigKey annotation",
                     method.getDeclaringClass().getName(), method.getName());
         } else {
-            configuration = configurationService.getConfigurationByType(configKey.value(), GreenSwitchConfiguration.class);
+            greenConfiguration = configurationService.getConfigurationByType(configKey.value(), GreenSwitchConfiguration.class);
         }
 
-        if(Objects.isNull(configKey) || Objects.isNull(configuration) || !configuration.isIgnore()) {
+        if(Objects.isNull(configKey) || Objects.isNull(greenConfiguration) || !greenConfiguration.isIgnore()) {
             return method.invoke(originalBean , args);
         }
 
         processEnergyMetric(method, containerField);
 
-        return greenReturnMockValue.getReturnValue(method, configuration);
+        return greenReturnMockValue.getReturnValue(method, greenConfiguration);
     }
 
     private void processEnergyMetric(Method method, ContainerField containerField) {
