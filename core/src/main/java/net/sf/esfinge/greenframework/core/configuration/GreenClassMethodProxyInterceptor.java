@@ -34,23 +34,24 @@ public class GreenClassMethodProxyInterceptor {
         log.debug("Before class method execution: {}", method.toGenericString());
 
         interceptGreenFieldsAnnotations(target);
-        Object result = interceptGreenMethodAnnotations(target, args, method, zuper);
+        Object result = interceptGreenMethodAnnotations(target, args, method);
 
         log.debug("After class method execution: {}", method.toGenericString());
         return result;
     }
 
-    private Object interceptGreenMethodAnnotations(Object target, Object[] args, Method method, Callable<?> zuper) throws Exception {
+    private Object interceptGreenMethodAnnotations(Object target, Object[] args, Method method) throws Exception {
+        //Dynamic attribute created from GreenFactory
+        Field originalBean = target.getClass().getDeclaredField(FIELD_ORIGINAL_BEAN);
+
         for (Annotation annotation : method.getAnnotations()) {
             if(GreenDefaultReturn.class.equals(annotation.annotationType()) || GreenSwitchOff.class.equals(annotation.annotationType())) {
-                //Dynamic attribute created from GreenFactory
-                Field originalBean = target.getClass().getDeclaredField(FIELD_ORIGINAL_BEAN);
-
                 return greenProxyResolverService.resolveMethodInterceptCall(originalBean.get(target), method, args, null);
             }
         }
 
-        return zuper.call();
+        //Need to invoke the original bean for the other attribute dependencies
+        return method.invoke(originalBean.get(target), args);
     }
 
     @SneakyThrows
