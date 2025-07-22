@@ -1,11 +1,11 @@
 package net.sf.esfinge.greenframework.core.configuration.energyestimation;
 
+import lombok.extern.slf4j.Slf4j;
 import net.sf.esfinge.greenframework.core.annotation.EnergySavingCustomCalculation;
 import net.sf.esfinge.greenframework.core.configuration.GreenThreadLocal;
 import net.sf.esfinge.greenframework.core.configuration.esfinge.dto.ContainerField;
 import net.sf.esfinge.greenframework.core.dto.annotation.GreenAdjustableNumberConfiguration;
 import net.sf.esfinge.greenframework.core.service.GreenMetricService;
-import lombok.extern.slf4j.Slf4j;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
