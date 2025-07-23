@@ -1,11 +1,10 @@
 package net.sf.esfinge.greenframework.core.service;
 
-import net.sf.esfinge.greenframework.core.configuration.esfinge.dto.ContainerField;
+import lombok.extern.slf4j.Slf4j;
 import net.sf.esfinge.greenframework.core.dao.GreenFactoryDao;
 import net.sf.esfinge.greenframework.core.dao.contract.GreenMetricDao;
 import net.sf.esfinge.greenframework.core.dao.memory.GreenMetricDaoImpl;
 import net.sf.esfinge.greenframework.core.dto.project.GreenMetric;
-import lombok.extern.slf4j.Slf4j;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -16,18 +15,18 @@ public class GreenMetricService {
 
     private final GreenMetricDao greenMetricDao = GreenFactoryDao.getInstance().create(GreenMetricDaoImpl.class);
 
-    public void save(Double savedValue, String key, ContainerField containerField) {
+    public void save(Double savedValue, String key) {
         GreenMetric metric = greenMetricDao.findById(key);
 
         if (Objects.isNull(metric)) {
-            metric = GreenMetric.builder().
-                    method(key)
+            metric = GreenMetric.builder()
+                    .method(key)
                     .metricSavedValue(savedValue)
-                    .containerField(containerField)
                     .countCalled(1)
-                    .measuredTime(LocalDateTime.now())
+                    .beginMeasuredTime(LocalDateTime.now())
                     .build();
         } else {
+            metric.setEndMeasuredTime(LocalDateTime.now());
             metric.setCountCalled(metric.getCountCalled() + 1);
         }
         greenMetricDao.save(metric);

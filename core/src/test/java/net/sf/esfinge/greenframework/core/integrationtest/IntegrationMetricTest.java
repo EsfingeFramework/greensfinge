@@ -43,7 +43,7 @@ class IntegrationMetricTest {
         assertNotNull(greenMetric);
         assertEquals(countCallMethod , greenMetric.getCountCalled());
         //Value from CalculateLongMetricValue
-        assertEquals(countCallMethod * 2.3 , greenMetric.getSavedValue());
+        assertEquals(countCallMethod * 2.3 , greenMetric.getTotalSavedValue());
         assertEquals(2.3 , greenMetric.getMetricSavedValue());
     }
 
@@ -71,7 +71,7 @@ class IntegrationMetricTest {
         assertNotNull(greenMetric);
         assertEquals(countCallMethod , greenMetric.getCountCalled());
         //Value from CalculateLongMetricValue
-        assertEquals(countCallMethod * 4.9 , greenMetric.getSavedValue());
+        assertEquals(countCallMethod * 4.9 , greenMetric.getTotalSavedValue());
         assertEquals(4.9 , greenMetric.getMetricSavedValue());
     }
 }

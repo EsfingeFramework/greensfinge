@@ -3,19 +3,19 @@ package net.sf.esfinge.greenframework.core.service;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import net.sf.esfinge.greenframework.core.annotation.GreenConfigKey;
-import net.sf.esfinge.greenframework.core.configuration.esfinge.dto.ContainerField;
 import net.sf.esfinge.greenframework.core.configuration.energyestimation.GreenEnergyMetricsProcessor;
 import net.sf.esfinge.greenframework.core.configuration.energyestimation.GreenReturnMockValue;
+import net.sf.esfinge.greenframework.core.configuration.esfinge.dto.ContainerField;
 import net.sf.esfinge.greenframework.core.dto.annotation.GreenSwitchConfiguration;
 
-import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
+import java.util.Arrays;
 import java.util.Objects;
-import java.util.Optional;
 
 @Slf4j
 public class GreenProxyResolverService {
 
+    protected final GreenMetricService greenMetricService = new GreenMetricService();
     private final GreenConfigurationService configurationService = new GreenConfigurationService();
     private final GreenReturnMockValue greenReturnMockValue = new GreenReturnMockValue();
 
@@ -31,19 +31,27 @@ public class GreenProxyResolverService {
             greenConfiguration = configurationService.getConfigurationByType(configKey.value(), GreenSwitchConfiguration.class);
         }
 
-        if(Objects.isNull(configKey) || Objects.isNull(greenConfiguration) || !greenConfiguration.isIgnore()) {
+        boolean realCall = Objects.isNull(configKey) || Objects.isNull(greenConfiguration) || !greenConfiguration.isIgnore();
+
+        if(realCall) {
             return method.invoke(originalBean , args);
         }
 
-        processEnergyMetric(method, containerField);
+        processEnergyMetric(method);
 
         return greenReturnMockValue.getReturnValue(method, greenConfiguration);
     }
 
-    private void processEnergyMetric(Method method, ContainerField containerField) {
-        for (Annotation annotation : method.getAnnotations()) {
-            Optional.ofNullable(GreenEnergyMetricsProcessor.getInstance().getMetricProcessor(annotation.annotationType()))
-                    .ifPresent(metricProcessor -> metricProcessor.processEnergyEstimation(method, containerField));
-        }
+    private void processEnergyMetric(Method method) {
+        String key = String.format("%s#%s", method.getDeclaringClass().getName(), method.getName());
+
+        Double savedValue = Arrays.stream(method.getAnnotations())
+                .map(annotation -> GreenEnergyMetricsProcessor.getInstance().getMetricProcessor(annotation.annotationType()))
+                .filter(Objects::nonNull)
+                .map(processor -> processor.processEnergyEstimation(method))
+                .findFirst()
+                .orElse(0.0);
+
+        greenMetricService.save(savedValue, key);
     }
 }

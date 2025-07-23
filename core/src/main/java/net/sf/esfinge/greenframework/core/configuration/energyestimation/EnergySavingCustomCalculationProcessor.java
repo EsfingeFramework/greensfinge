@@ -1,10 +1,9 @@
 package net.sf.esfinge.greenframework.core.configuration.energyestimation;
 
+import lombok.SneakyThrows;
 import net.sf.esfinge.greenframework.core.annotation.EnergySavingCustomCalculation;
-import net.sf.esfinge.greenframework.core.configuration.esfinge.dto.ContainerField;
 import net.sf.esfinge.greenframework.core.configuration.metriccalculate.EnergySavingsCalculator;
 import net.sf.esfinge.greenframework.core.dto.project.GreenMetricCalculate;
-import lombok.SneakyThrows;
 
 import java.lang.reflect.Method;
 
@@ -12,13 +11,12 @@ public class EnergySavingCustomCalculationProcessor extends EnergyEstimationProc
 
     @Override
     @SneakyThrows
-    protected Double calculateSavedValue(Method method, ContainerField containerField) {
+    protected Double calculateSavedValue(Method method) {
         EnergySavingCustomCalculation annotation = method.getAnnotation(EnergySavingCustomCalculation.class);
 
         EnergySavingsCalculator instance = annotation.implementation().getDeclaredConstructor().newInstance();
         return instance.calculateSavedValue(GreenMetricCalculate.builder()
                 .method(method)
-                .containerField(containerField)
                 .greenConfigurations(createMapGreenConfigurations(annotation))
                 .build());
     }

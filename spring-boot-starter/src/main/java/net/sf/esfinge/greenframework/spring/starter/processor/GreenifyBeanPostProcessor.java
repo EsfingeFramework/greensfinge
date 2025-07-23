@@ -18,7 +18,7 @@ public class GreenifyBeanPostProcessor implements BeanPostProcessor {
 
     @Override
     public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
-        if(greensfingeConfiguration.isEnabled() && (hasGreenAnnotations(bean.getClass()))) {
+        if(greensfingeConfiguration.isEnable() && (hasGreenAnnotations(bean.getClass()))) {
             return GreenFactory.greenify(bean);
         }
 

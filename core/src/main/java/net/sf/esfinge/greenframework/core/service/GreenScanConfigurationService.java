@@ -31,7 +31,7 @@ public class GreenScanConfigurationService {
     }
 
     private List<ScanGreenConfiguration> scanForConfigurations() {
-        String scanPackage = GreenEnvironment.getPackage();
+        String scanPackage = GreenEnvironment.getDefaultPackage();
         log.info("Scanning package: {}", scanPackage);
 
         List<ScanGreenConfiguration> configs = new ArrayList<>();

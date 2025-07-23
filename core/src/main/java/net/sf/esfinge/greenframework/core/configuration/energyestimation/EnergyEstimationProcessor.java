@@ -3,9 +3,7 @@ package net.sf.esfinge.greenframework.core.configuration.energyestimation;
 import lombok.extern.slf4j.Slf4j;
 import net.sf.esfinge.greenframework.core.annotation.EnergySavingCustomCalculation;
 import net.sf.esfinge.greenframework.core.configuration.GreenThreadLocal;
-import net.sf.esfinge.greenframework.core.configuration.esfinge.dto.ContainerField;
 import net.sf.esfinge.greenframework.core.dto.annotation.GreenAdjustableNumberConfiguration;
-import net.sf.esfinge.greenframework.core.service.GreenMetricService;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
@@ -18,15 +16,10 @@ import java.util.Objects;
 @Slf4j
 public abstract class EnergyEstimationProcessor<T extends Annotation> {
 
-    protected final GreenMetricService greenMetricService = new GreenMetricService();
-
-    public void processEnergyEstimation(Method method, ContainerField containerField) {
+    public Double processEnergyEstimation(Method method) {
         logHasAnnotation(method);
 
-        Double savedValue = calculateSavedValue(method, containerField);
-        String key = String.format("%s#%s", method.getDeclaringClass().getName(), method.getName());
-
-        greenMetricService.save(savedValue, key, containerField);
+        return calculateSavedValue(method);
     }
 
     @SuppressWarnings("unchecked")
@@ -52,5 +45,5 @@ public abstract class EnergyEstimationProcessor<T extends Annotation> {
         return map;
     }
 
-    protected abstract Double calculateSavedValue(Method method, ContainerField containerField);
+    protected abstract Double calculateSavedValue(Method method);
 }
