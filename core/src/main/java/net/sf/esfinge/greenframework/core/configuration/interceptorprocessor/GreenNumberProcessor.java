@@ -1,5 +1,6 @@
 package net.sf.esfinge.greenframework.core.configuration.interceptorprocessor;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
 import net.sf.esfinge.greenframework.core.annotation.GreenConfigKey;
 import net.sf.esfinge.greenframework.core.configuration.esfinge.dto.ContainerField;
@@ -12,6 +13,7 @@ import java.util.Objects;
 
 public class GreenNumberProcessor extends GreenStrategyProcessor {
 
+    private final ObjectMapper objectMapper = new ObjectMapper();
     private final GreenConfigurationService configurationService = new GreenConfigurationService();
 
     @SneakyThrows
@@ -22,7 +24,8 @@ public class GreenNumberProcessor extends GreenStrategyProcessor {
 
         if (Objects.nonNull(configuration)) {
             Object injectionTarget = GreenReflectionUtil.resolveInjectionTarget(target);
-            GreenReflectionUtil.injectValue(field, injectionTarget, configuration.getValue());
+            Object convertValue = objectMapper.convertValue(configuration.getValue() , field.getType());
+            GreenReflectionUtil.injectValue(field, injectionTarget, convertValue);
         }
     }
 

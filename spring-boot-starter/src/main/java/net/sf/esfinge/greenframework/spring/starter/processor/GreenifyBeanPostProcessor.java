@@ -2,7 +2,7 @@ package net.sf.esfinge.greenframework.spring.starter.processor;
 
 import net.sf.esfinge.greenframework.core.annotation.GreenConfigKey;
 import net.sf.esfinge.greenframework.core.configuration.GreenFactory;
-import net.sf.esfinge.greenframework.spring.starter.configuration.GreensfingeConfiguration;
+import net.sf.esfinge.greenframework.spring.starter.properties.GreensfingeProperties;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanPostProcessor;
@@ -14,11 +14,11 @@ import java.util.Arrays;
 public class GreenifyBeanPostProcessor implements BeanPostProcessor {
 
     @Autowired
-    private GreensfingeConfiguration greensfingeConfiguration;
+    private GreensfingeProperties greensfingeProperties;
 
     @Override
     public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
-        if(greensfingeConfiguration.isEnable() && (hasGreenAnnotations(bean.getClass()))) {
+        if(greensfingeProperties.isEnable() && (hasGreenAnnotations(bean.getClass()))) {
             return GreenFactory.greenify(bean);
         }
 

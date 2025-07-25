@@ -1,4 +1,4 @@
-package net.sf.esfinge.greenframework.spring.starter.configuration;
+package net.sf.esfinge.greenframework.spring.starter.properties;
 
 import jakarta.annotation.PostConstruct;
 import lombok.Getter;
@@ -8,7 +8,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @Getter
 @Setter
 @ConfigurationProperties(prefix = "green.framework")
-public class GreensfingeConfiguration {
+public class GreensfingeProperties {
 
     private boolean enable;
     private Double pricePerKwh;
