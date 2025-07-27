@@ -6,11 +6,9 @@ import net.sf.esfinge.greenframework.spring.starter.properties.GreenFrameworkPro
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanPostProcessor;
-import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
 
-@Component
 public class GreenifyBeanPostProcessor implements BeanPostProcessor {
 
     @Autowired
