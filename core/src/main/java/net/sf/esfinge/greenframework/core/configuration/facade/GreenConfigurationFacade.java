@@ -4,6 +4,8 @@ import lombok.Getter;
 import net.sf.esfinge.greenframework.core.dto.annotation.GreenDefaultConfiguration;
 import net.sf.esfinge.greenframework.core.service.GreenConfigurationService;
 
+import java.util.List;
+
 @Getter
 public class GreenConfigurationFacade {
 
@@ -14,7 +16,10 @@ public class GreenConfigurationFacade {
     }
 
     public void setPersonalConfiguration(GreenDefaultConfiguration config) {
-        throw new IllegalArgumentException();
+        configurationService.setPersonalConfiguration(config.getConfigurationKey(), config);
     }
 
+    public List<GreenDefaultConfiguration> getAllConfigurations() {
+        return configurationService.getAllConfigurations();
+    }
 }

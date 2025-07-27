@@ -1,9 +1,10 @@
 package net.sf.esfinge.greenframework.core.dto.annotation;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
-import java.util.HashMap;
 import java.util.Map;
 
 @Getter
@@ -18,18 +19,11 @@ public class GreenAdjustableNumberConfiguration extends GreenDefaultConfiguratio
 
     @Override
     public Map<String, Object> toMap() {
-        Map<String, Object> map = new HashMap<>();
-
-        map.put("type", "GreenAdjustableNumberConfiguration");
-        map.put("configurationKey", this.getConfigurationKey());
-        map.put("value", this.value);
-
-        return map;
+        return new ObjectMapper().convertValue(this, new TypeReference<>() {});
     }
 
     @Override
-    public void toObject(Map<String, Object> map) {
-        this.value = (Number) map.get("value");
-        this.setConfigurationKey(map.get("configurationKey").toString());
+    public GreenDefaultConfiguration toObject(Map<String, Object> map) {
+        return new ObjectMapper().convertValue(map, GreenAdjustableNumberConfiguration.class);
     }
 }

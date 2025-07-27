@@ -1,10 +1,11 @@
 package net.sf.esfinge.greenframework.core.dto.annotation;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import net.sf.esfinge.greenframework.core.util.GreenConstant;
 
-import java.util.HashMap;
 import java.util.Map;
 
 @Getter
@@ -24,23 +25,12 @@ public class GreenSwitchConfiguration extends GreenDefaultConfiguration {
 
     @Override
     public Map<String, Object> toMap() {
-        Map<String, Object> map = new HashMap<>();
-
-        map.put("type", "GreenSwitchConfiguration");
-        map.put("configurationKey", this.getConfigurationKey());
-        map.put("ignore", this.ignore);
-        map.put("strDefaultValue", this.strDefaultValue);
-        map.put("numberDefaultValue", this.numberDefaultValue);
-
-        return map;
+        return new ObjectMapper().convertValue(this, new TypeReference<>() {});
     }
 
     @Override
-    public void toObject(Map<String, Object> map) {
-        this.ignore = Boolean.parseBoolean(map.get("ignore").toString());
-        this.setConfigurationKey(map.get("configurationKey").toString());
-        this.strDefaultValue = map.get("strDefaultValue").toString();
-        this.numberDefaultValue = Double.valueOf(map.get("numberDefaultValue").toString());
+    public GreenDefaultConfiguration toObject(Map<String, Object> map) {
+        return new ObjectMapper().convertValue(map, GreenSwitchConfiguration.class);
     }
 
 }

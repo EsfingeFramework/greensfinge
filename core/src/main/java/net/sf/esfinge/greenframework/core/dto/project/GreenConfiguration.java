@@ -10,6 +10,7 @@ import lombok.ToString;
 public class GreenConfiguration {
 
     private String key;
+    private String keyContext;
     private String configurations;
 
 }

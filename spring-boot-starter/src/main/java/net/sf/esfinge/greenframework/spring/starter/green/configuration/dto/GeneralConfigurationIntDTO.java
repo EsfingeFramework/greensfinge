@@ -7,7 +7,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class ConfigurationIntDTO {
+public class GeneralConfigurationIntDTO {
 
     @NotBlank
     private String key;
