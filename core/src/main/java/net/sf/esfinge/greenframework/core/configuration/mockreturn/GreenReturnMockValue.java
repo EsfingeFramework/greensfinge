@@ -1,11 +1,11 @@
-package net.sf.esfinge.greenframework.core.configuration.energyestimation;
+package net.sf.esfinge.greenframework.core.configuration.mockreturn;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import net.sf.esfinge.greenframework.core.annotation.GreenDefaultReturn;
-import net.sf.esfinge.greenframework.core.configuration.esfinge.dto.ContainerField;
+import net.sf.esfinge.greenframework.core.dto.annotation.GreenCustomMockConfiguration;
 import net.sf.esfinge.greenframework.core.dto.annotation.GreenSwitchConfiguration;
 
 import java.lang.reflect.Method;
@@ -26,7 +26,7 @@ public class GreenReturnMockValue {
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
     }
 
-    public Object getReturnValue(Method method, GreenSwitchConfiguration greenConfiguration) {
+    public Object getReturnValue(Method method, GreenSwitchConfiguration greenConfiguration, GreenCustomMockConfiguration customMockConfiguration) {
         GreenDefaultReturn greenDefaultReturn = method.getAnnotation(GreenDefaultReturn.class);
 
         if (Objects.isNull(greenDefaultReturn)) {
@@ -34,14 +34,14 @@ public class GreenReturnMockValue {
                     method.getDeclaringClass().getName(), method.getName());
         }
 
-        return processReturnByType(method, greenDefaultReturn, greenConfiguration);
+        return processReturnByType(method, greenDefaultReturn, greenConfiguration, customMockConfiguration);
     }
 
-    private Object processReturnByType(Method method, GreenDefaultReturn greenDefaultReturn, GreenSwitchConfiguration greenConfiguration) {
+    private Object processReturnByType(Method method, GreenDefaultReturn greenDefaultReturn, GreenSwitchConfiguration greenConfiguration, GreenCustomMockConfiguration customMockConfiguration) {
         if (isPrimitiveOrWrapper(method.getReturnType())) {
             return processReturnMockValue(method, greenDefaultReturn, greenConfiguration);
         } else {
-            return getObjectMockValue(greenDefaultReturn, method.getReturnType(), greenConfiguration);
+            return getObjectMockValue(greenDefaultReturn, method.getReturnType(), greenConfiguration, customMockConfiguration);
         }
     }
 
@@ -61,8 +61,8 @@ public class GreenReturnMockValue {
     }
 
     @SneakyThrows
-    private Object getObjectMockValue(GreenDefaultReturn greenDefaultReturn, Class<?> returnType, GreenSwitchConfiguration greenConfiguration) {
-        if(Objects.nonNull(greenConfiguration)) {
+    private Object getObjectMockValue(GreenDefaultReturn greenDefaultReturn, Class<?> returnType, GreenSwitchConfiguration greenConfiguration, GreenCustomMockConfiguration customMockConfiguration) {
+        if(Objects.nonNull(greenConfiguration) && Objects.isNull(customMockConfiguration)) {
             return objectMapper.readValue(greenConfiguration.getStrDefaultValue(), returnType);
         }
 
@@ -70,7 +70,31 @@ public class GreenReturnMockValue {
             return objectMapper.readValue(greenDefaultReturn.strValue(), returnType);
         }
 
+
+        if(Objects.nonNull(customMockConfiguration)) {
+            return processCustomMockReturn(customMockConfiguration);
+        }
+
         return null;
+    }
+
+    @SneakyThrows
+    private Object processCustomMockReturn(GreenCustomMockConfiguration customMockConfiguration) {
+        Object customMockProvider = Class.forName(customMockConfiguration.getCustomClass())
+                .getDeclaredConstructor().newInstance();
+
+        if (customMockProvider instanceof GreenCustomMockProvider provider) {
+            Object customMockObject = provider.processCustomMockReturn(customMockConfiguration, customMockConfiguration.toMap());
+
+            Class<?> expectedType = Class.forName(customMockConfiguration.getReturnType());
+            if (expectedType.isInstance(customMockObject)) {
+                return customMockObject;
+            } else {
+                throw new IllegalStateException("Returned object is not of expected type: " + expectedType.getName());
+            }
+        } else {
+            throw new IllegalStateException("Classe deve implementar GreenMockProvider");
+        }
     }
 
     private Integer getIntMockValue(GreenDefaultReturn greenDefaultReturn, GreenSwitchConfiguration greenConfiguration) {

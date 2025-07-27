@@ -1,6 +1,7 @@
 package net.sf.esfinge.greenframework.core.dao;
 
 import net.sf.esfinge.greenframework.core.dao.memory.GreenConfigurationDaoImpl;
+import net.sf.esfinge.greenframework.core.dao.memory.GreenCustomMockDaoImpl;
 import net.sf.esfinge.greenframework.core.dao.memory.GreenMetricDaoImpl;
 import net.sf.esfinge.greenframework.core.dao.memory.GreenScanConfigurationDaoImpl;
 import net.sf.esfinge.greenframework.core.exception.GreenException;
@@ -24,6 +25,7 @@ public class GreenFactoryDao {
         daoMemory.put(GreenMetricDaoImpl.class, new GreenMetricDaoImpl());
         daoMemory.put(GreenScanConfigurationDaoImpl.class, new GreenScanConfigurationDaoImpl());
         daoMemory.put(GreenConfigurationDaoImpl.class, new GreenConfigurationDaoImpl());
+        daoMemory.put(GreenCustomMockDaoImpl.class, new GreenCustomMockDaoImpl());
     }
 
     public static GreenFactoryDao getInstance() {

@@ -6,9 +6,11 @@ import net.sf.esfinge.greenframework.spring.starter.properties.GreenFrameworkPro
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanPostProcessor;
+import org.springframework.context.annotation.Configuration;
 
 import java.util.Arrays;
 
+@Configuration
 public class GreenifyBeanPostProcessor implements BeanPostProcessor {
 
     @Autowired
@@ -25,7 +27,10 @@ public class GreenifyBeanPostProcessor implements BeanPostProcessor {
 
     private boolean hasGreenAnnotations(Class<?> clazz) {
         return Arrays.stream(clazz.getDeclaredFields())
-                .anyMatch(f -> f.isAnnotationPresent(GreenConfigKey.class));
+                .anyMatch(f -> f.isAnnotationPresent(GreenConfigKey.class)) ||
+                Arrays.stream(clazz.getDeclaredMethods())
+                        .anyMatch(m -> m.isAnnotationPresent(GreenConfigKey.class));
     }
+
 
 }

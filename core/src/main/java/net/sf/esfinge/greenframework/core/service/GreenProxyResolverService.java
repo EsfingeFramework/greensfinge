@@ -4,8 +4,9 @@ import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import net.sf.esfinge.greenframework.core.annotation.GreenConfigKey;
 import net.sf.esfinge.greenframework.core.configuration.energyestimation.GreenEnergyMetricsProcessor;
-import net.sf.esfinge.greenframework.core.configuration.energyestimation.GreenReturnMockValue;
+import net.sf.esfinge.greenframework.core.configuration.mockreturn.GreenReturnMockValue;
 import net.sf.esfinge.greenframework.core.configuration.esfinge.dto.ContainerField;
+import net.sf.esfinge.greenframework.core.dto.annotation.GreenCustomMockConfiguration;
 import net.sf.esfinge.greenframework.core.dto.annotation.GreenSwitchConfiguration;
 
 import java.lang.reflect.Method;
@@ -18,11 +19,13 @@ public class GreenProxyResolverService {
     protected final GreenMetricService greenMetricService = new GreenMetricService();
     private final GreenConfigurationService configurationService = new GreenConfigurationService();
     private final GreenReturnMockValue greenReturnMockValue = new GreenReturnMockValue();
+    private final GreenCustomMockService greenCustomMockService = new GreenCustomMockService();
 
     @SneakyThrows
     public Object resolveMethodInterceptCall(Object originalBean, Method method, Object[] args, ContainerField containerField) {
         GreenSwitchConfiguration greenConfiguration = null;
         GreenConfigKey configKey = method.getAnnotation(GreenConfigKey.class);
+        GreenCustomMockConfiguration customMockConfiguration = greenCustomMockService.findByReturnType(method.getReturnType().getTypeName());
 
         if(Objects.isNull(configKey)) {
             log.debug("The {}#{} method his mocked, but does not contain the @GreenConfigKey annotation",
@@ -39,7 +42,7 @@ public class GreenProxyResolverService {
 
         processEnergyMetric(method);
 
-        return greenReturnMockValue.getReturnValue(method, greenConfiguration);
+        return greenReturnMockValue.getReturnValue(method, greenConfiguration, customMockConfiguration);
     }
 
     private void processEnergyMetric(Method method) {

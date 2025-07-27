@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/configurations")
+@RequestMapping("/green/configurations")
 public class ConfigurationController {
 
     @Autowired
