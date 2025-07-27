@@ -9,6 +9,7 @@ import net.sf.esfinge.greenframework.spring.starter.green.configuration.dto.Gene
 import net.sf.esfinge.greenframework.spring.starter.green.configuration.dto.GeneralConfigurationStrDTO;
 import net.sf.esfinge.greenframework.spring.starter.green.configuration.dto.PersonalConfigurationIntDTO;
 import net.sf.esfinge.greenframework.spring.starter.green.configuration.dto.PersonalConfigurationStrDTO;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,7 +18,8 @@ import java.util.List;
 @RequestMapping("/configurations")
 public class ConfigurationController {
 
-    private final GreenConfigurationFacade facade = new GreenConfigurationFacade();
+    @Autowired
+    private GreenConfigurationFacade facade;
 
     @PostMapping("/general/str")
     public void createGeneralStrConfiguration(@RequestBody @Valid GeneralConfigurationStrDTO configurationDTO) {

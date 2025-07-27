@@ -8,7 +8,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @Getter
 @Setter
 @ConfigurationProperties(prefix = "green.framework")
-public class GreensfingeProperties {
+public class GreenFrameworkProperties {
 
     private boolean enable;
     private Double pricePerKwh;
