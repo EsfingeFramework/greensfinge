@@ -4,7 +4,8 @@ import lombok.extern.slf4j.Slf4j;
 import net.sf.esfinge.greenframework.core.dao.GreenFactoryDao;
 import net.sf.esfinge.greenframework.core.dao.contract.GreenMetricDao;
 import net.sf.esfinge.greenframework.core.dao.memory.GreenMetricDaoImpl;
-import net.sf.esfinge.greenframework.core.dto.project.GreenMetric;
+import net.sf.esfinge.greenframework.core.entity.GreenMetric;
+import net.sf.esfinge.greenframework.core.mapper.MetricMapper;
 
 import java.time.LocalDateTime;
 import java.util.List;

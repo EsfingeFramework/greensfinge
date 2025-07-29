@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
 import net.sf.esfinge.greenframework.core.dao.contract.GreenConfigurationDao;
 import net.sf.esfinge.greenframework.core.dto.annotation.GreenDefaultConfiguration;
-import net.sf.esfinge.greenframework.core.dto.project.GreenConfiguration;
+import net.sf.esfinge.greenframework.core.entity.GreenConfiguration;
 
 import java.util.List;
 import java.util.Objects;

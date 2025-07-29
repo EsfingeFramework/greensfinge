@@ -1,6 +1,6 @@
 package net.sf.esfinge.greenframework.core.dao.contract;
 
-import net.sf.esfinge.greenframework.core.dto.project.GreenMetric;
+import net.sf.esfinge.greenframework.core.entity.GreenMetric;
 
 import java.util.List;
 

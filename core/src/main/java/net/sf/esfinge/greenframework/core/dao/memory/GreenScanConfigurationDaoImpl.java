@@ -1,7 +1,7 @@
 package net.sf.esfinge.greenframework.core.dao.memory;
 
 import net.sf.esfinge.greenframework.core.dao.contract.GreenScanConfigurationDao;
-import net.sf.esfinge.greenframework.core.dto.project.ScanGreenConfiguration;
+import net.sf.esfinge.greenframework.core.entity.ScanGreenConfiguration;
 
 import java.util.ArrayList;
 import java.util.List;

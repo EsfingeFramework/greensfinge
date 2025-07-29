@@ -6,7 +6,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class CustomMockDTO {
+public class CustomMockRequest {
 
     @NotBlank
     private String key;

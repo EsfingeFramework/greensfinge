@@ -1,7 +1,7 @@
 package net.sf.esfinge.greenframework.core.mock.service.greenesfinge.calculate;
 
 import net.sf.esfinge.greenframework.core.configuration.metriccalculate.EnergySavingsCalculator;
-import net.sf.esfinge.greenframework.core.dto.project.GreenMetricCalculate;
+import net.sf.esfinge.greenframework.core.entity.GreenMetricCalculate;
 
 public class CalculateLongMetricValue  implements EnergySavingsCalculator {
 

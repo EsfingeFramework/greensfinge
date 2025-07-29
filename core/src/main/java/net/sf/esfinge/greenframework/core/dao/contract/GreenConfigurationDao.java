@@ -1,7 +1,7 @@
 package net.sf.esfinge.greenframework.core.dao.contract;
 
 import net.sf.esfinge.greenframework.core.dto.annotation.GreenDefaultConfiguration;
-import net.sf.esfinge.greenframework.core.dto.project.GreenConfiguration;
+import net.sf.esfinge.greenframework.core.entity.GreenConfiguration;
 
 import java.util.List;
 import java.util.Optional;

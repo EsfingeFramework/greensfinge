@@ -8,7 +8,7 @@ import net.sf.esfinge.greenframework.core.configuration.esfinge.dto.ContainerFie
 import net.sf.esfinge.greenframework.core.dao.GreenFactoryDao;
 import net.sf.esfinge.greenframework.core.dao.contract.GreenScanConfigurationDao;
 import net.sf.esfinge.greenframework.core.dao.memory.GreenScanConfigurationDaoImpl;
-import net.sf.esfinge.greenframework.core.dto.project.ScanGreenConfiguration;
+import net.sf.esfinge.greenframework.core.entity.ScanGreenConfiguration;
 import net.sf.esfinge.greenframework.core.util.GreenEnvironment;
 import net.sf.esfinge.metadata.AnnotationReader;
 

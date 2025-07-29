@@ -16,7 +16,9 @@ import org.springframework.context.annotation.Configuration;
 public class GreenFrameworkAutoConfiguration {
 
     @PostConstruct
-    public void init() {}
+    public void init() {
+        // Post Constructor
+    }
 
     @Bean
     public GreenConfigurationFacade greenConfigurationFacade() {

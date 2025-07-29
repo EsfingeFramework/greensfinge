@@ -1,7 +1,7 @@
 package net.sf.esfinge.greenframework.core.configuration.facade;
 
 import lombok.Getter;
-import net.sf.esfinge.greenframework.core.dto.project.ScanGreenConfiguration;
+import net.sf.esfinge.greenframework.core.entity.ScanGreenConfiguration;
 import net.sf.esfinge.greenframework.core.service.GreenScanConfigurationService;
 
 import java.util.List;

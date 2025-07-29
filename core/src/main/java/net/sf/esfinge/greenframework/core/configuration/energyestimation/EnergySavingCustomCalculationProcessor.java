@@ -4,7 +4,7 @@ import lombok.SneakyThrows;
 import net.sf.esfinge.greenframework.core.annotation.EnergySavingCustomCalculation;
 import net.sf.esfinge.greenframework.core.configuration.metriccalculate.EnergySavingsCalculator;
 import net.sf.esfinge.greenframework.core.dto.annotation.GreenAdjustableNumberConfiguration;
-import net.sf.esfinge.greenframework.core.dto.project.GreenMetricCalculate;
+import net.sf.esfinge.greenframework.core.entity.GreenMetricCalculate;
 import net.sf.esfinge.greenframework.core.service.GreenConfigurationService;
 
 import java.lang.reflect.Method;

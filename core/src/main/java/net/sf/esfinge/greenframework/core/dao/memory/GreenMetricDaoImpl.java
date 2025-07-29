@@ -1,7 +1,7 @@
 package net.sf.esfinge.greenframework.core.dao.memory;
 
 import net.sf.esfinge.greenframework.core.dao.contract.GreenMetricDao;
-import net.sf.esfinge.greenframework.core.dto.project.GreenMetric;
+import net.sf.esfinge.greenframework.core.entity.GreenMetric;
 
 import java.util.ArrayList;
 import java.util.HashMap;

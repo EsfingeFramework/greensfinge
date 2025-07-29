@@ -8,13 +8,12 @@ import net.sf.esfinge.greenframework.core.dao.GreenFactoryDao;
 import net.sf.esfinge.greenframework.core.dao.contract.GreenConfigurationDao;
 import net.sf.esfinge.greenframework.core.dao.memory.GreenConfigurationDaoImpl;
 import net.sf.esfinge.greenframework.core.dto.annotation.GreenDefaultConfiguration;
-import net.sf.esfinge.greenframework.core.dto.project.GreenConfiguration;
+import net.sf.esfinge.greenframework.core.entity.GreenConfiguration;
 import net.sf.esfinge.greenframework.core.identity.GreenIdentityHolder;
 import net.sf.esfinge.greenframework.core.identity.GreenIdentityProvider;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Optional;
 
 @Slf4j

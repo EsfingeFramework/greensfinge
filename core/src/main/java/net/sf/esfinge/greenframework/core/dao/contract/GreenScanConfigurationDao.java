@@ -1,6 +1,6 @@
 package net.sf.esfinge.greenframework.core.dao.contract;
 
-import net.sf.esfinge.greenframework.core.dto.project.ScanGreenConfiguration;
+import net.sf.esfinge.greenframework.core.entity.ScanGreenConfiguration;
 
 import java.util.List;
 

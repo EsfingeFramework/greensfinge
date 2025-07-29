@@ -7,12 +7,14 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class PersonalConfigurationIntDTO {
+public class PersonalConfigurationStrRequest {
 
     @NotBlank
     private String key;
     @NotNull
-    private Number defaultValue;
+    private Boolean ignore;
+    @NotBlank
+    private String defaultValue;
     @NotBlank
     private String keyContext;
 }

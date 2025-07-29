@@ -1,6 +1,6 @@
 package net.sf.esfinge.greenframework.core.configuration.metriccalculate;
 
-import net.sf.esfinge.greenframework.core.dto.project.GreenMetricCalculate;
+import net.sf.esfinge.greenframework.core.entity.GreenMetricCalculate;
 
 public class NoMetricCalculate implements EnergySavingsCalculator {
 

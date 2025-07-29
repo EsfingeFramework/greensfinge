@@ -3,7 +3,8 @@ package net.sf.esfinge.greenframework.spring.starter.green.custommock;
 import jakarta.validation.Valid;
 import net.sf.esfinge.greenframework.core.configuration.facade.GreenCustomMockFacade;
 import net.sf.esfinge.greenframework.core.dto.annotation.GreenCustomMockConfiguration;
-import net.sf.esfinge.greenframework.spring.starter.green.custommock.dto.CustomMockDTO;
+import net.sf.esfinge.greenframework.spring.starter.green.custommock.dto.CustomMockRequest;
+import net.sf.esfinge.greenframework.spring.starter.green.custommock.dto.CustomMockResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,18 +18,25 @@ public class CustomMockController {
     private GreenCustomMockFacade facade;
 
     @PostMapping
-    public void createCustomMock(@RequestBody @Valid CustomMockDTO customMockDTO) {
+    public void createCustomMock(@RequestBody @Valid CustomMockRequest customMockRequest) {
         facade.createCustomMock(GreenCustomMockConfiguration.builder()
-                .key(customMockDTO.getKey())
-                .customClass(customMockDTO.getCustomClass())
-                .defaultValue(customMockDTO.getDefaultValue())
-                .returnType(customMockDTO.getReturnType())
+                .key(customMockRequest.getKey())
+                .customClass(customMockRequest.getCustomClass())
+                .defaultValue(customMockRequest.getDefaultValue())
+                .returnType(customMockRequest.getReturnType())
                 .build()
         );
     }
 
     @GetMapping
-    public List<GreenCustomMockConfiguration> getAllConfigurations() {
-        return facade.getAllConfigurations();
+    public List<CustomMockResponse> getAllConfigurations() {
+        return facade.getAllConfigurations()
+                .stream().map(config -> CustomMockResponse.builder()
+                        .customClass(config.getCustomClass())
+                        .key(config.getKey())
+                        .defaultValue(config.getDefaultValue())
+                        .returnType(config.getReturnType())
+                        .build())
+                .toList();
     }
 }
