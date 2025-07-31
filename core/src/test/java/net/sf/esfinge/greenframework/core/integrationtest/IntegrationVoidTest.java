@@ -19,7 +19,7 @@ class IntegrationVoidTest {
         facade.setGeneralConfiguration(GreenSwitchConfiguration.builder()
                 .ignore(true)
                 .configurationKey("keyProfileService")
-                .strDefaultValue("")
+                .defaultValue("")
                 .build());
 
         String profile = userService.findUser();
@@ -33,7 +33,7 @@ class IntegrationVoidTest {
         facade.setGeneralConfiguration(GreenSwitchConfiguration.builder()
                 .ignore(true)
                 .configurationKey("keyProfileService")
-                .strDefaultValue("some value in the middle")
+                .defaultValue("some value in the middle")
                 .build());
 
         String profile = userService.findUser();

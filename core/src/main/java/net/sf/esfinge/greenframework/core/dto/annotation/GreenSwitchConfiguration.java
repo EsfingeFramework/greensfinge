@@ -19,9 +19,7 @@ public class GreenSwitchConfiguration extends GreenDefaultConfiguration {
     private boolean ignore;
 
     @Builder.Default
-    private String strDefaultValue = GreenConstant.STR_DEFAULT_VALUE;
-    @Builder.Default
-    private Double numberDefaultValue = GreenConstant.DOUBLE_DEFAULT_VALUE;
+    private String defaultValue = GreenConstant.STR_DEFAULT_VALUE;
 
     @Override
     public Map<String, Object> toMap() {

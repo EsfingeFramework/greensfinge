@@ -68,7 +68,7 @@ public class GreenConfigurationService {
     private GreenDefaultConfiguration getConfigurationByType(GreenConfiguration configuration) {
         Map<String, Object> hashMap = new ObjectMapper().readValue(
                 configuration.getConfigurations(), new TypeReference<Map<String, Object>>() {} );
-        GreenDefaultConfiguration greenConfigClass = Class.forName(hashMap.get("type").toString())
+        GreenDefaultConfiguration greenConfigClass = Class.forName(hashMap.get("configType").toString())
                 .asSubclass(GreenDefaultConfiguration.class)
                 .getConstructor()
                 .newInstance();

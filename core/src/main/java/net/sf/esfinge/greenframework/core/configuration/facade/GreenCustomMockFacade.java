@@ -2,6 +2,8 @@ package net.sf.esfinge.greenframework.core.configuration.facade;
 
 import lombok.Getter;
 import net.sf.esfinge.greenframework.core.dto.annotation.GreenCustomMockConfiguration;
+import net.sf.esfinge.greenframework.core.dto.project.CustomMockResponse;
+import net.sf.esfinge.greenframework.core.mapper.GreenCustomMockMapper;
 import net.sf.esfinge.greenframework.core.service.GreenCustomMockService;
 
 import java.util.List;
@@ -15,7 +17,7 @@ public class GreenCustomMockFacade {
         service.createCustomMock(mockConfiguration);
     }
 
-    public List<GreenCustomMockConfiguration> getAllConfigurations() {
-        return service.getAllConfigurations();
+    public List<CustomMockResponse> getAllConfigurations() {
+        return GreenCustomMockMapper.INSTANCE.toResponse(service.getAllConfigurations());
     }
 }

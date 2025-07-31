@@ -29,7 +29,7 @@ class IntegrationMetricTest {
         facade.setGeneralConfiguration(GreenSwitchConfiguration.builder()
                 .ignore(true)
                 .configurationKey("keySumService")
-                .numberDefaultValue(mockMethodReturn)
+                .defaultValue(mockMethodReturn.toString())
                 .build());
 
         for (int i = 0; i < countCallMethod; i++) {

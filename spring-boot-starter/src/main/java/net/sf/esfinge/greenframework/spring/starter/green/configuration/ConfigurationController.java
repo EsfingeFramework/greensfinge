@@ -4,12 +4,15 @@ import jakarta.validation.Valid;
 import net.sf.esfinge.greenframework.core.configuration.facade.GreenConfigurationFacade;
 import net.sf.esfinge.greenframework.core.dto.annotation.GreenAdjustableNumberConfiguration;
 import net.sf.esfinge.greenframework.core.dto.annotation.GreenSwitchConfiguration;
-import net.sf.esfinge.greenframework.spring.starter.green.configuration.dto.*;
+import net.sf.esfinge.greenframework.core.dto.project.ConfigurationResponse;
+import net.sf.esfinge.greenframework.spring.starter.green.configuration.dto.GeneralConfigurationIntRequest;
+import net.sf.esfinge.greenframework.spring.starter.green.configuration.dto.GeneralConfigurationStrRequest;
+import net.sf.esfinge.greenframework.spring.starter.green.configuration.dto.PersonalConfigurationIntRequest;
+import net.sf.esfinge.greenframework.spring.starter.green.configuration.dto.PersonalConfigurationStrRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/green/configurations")
@@ -23,7 +26,7 @@ public class ConfigurationController {
         facade.setGeneralConfiguration(GreenSwitchConfiguration.builder()
                 .ignore(configurationRequest.getIgnore())
                 .configurationKey(configurationRequest.getKey())
-                .strDefaultValue(configurationRequest.getDefaultValue())
+                .defaultValue(configurationRequest.getDefaultValue())
                 .build()
         );
     }
@@ -42,7 +45,7 @@ public class ConfigurationController {
         facade.setPersonalConfiguration(GreenSwitchConfiguration.builder()
                 .ignore(configurationRequest.getIgnore())
                 .configurationKey(configurationRequest.getKey())
-                .strDefaultValue(configurationRequest.getDefaultValue())
+                .defaultValue(configurationRequest.getDefaultValue())
                 .keyContext(configurationRequest.getKeyContext())
                 .build()
         );
@@ -60,16 +63,6 @@ public class ConfigurationController {
 
     @GetMapping
     public List<ConfigurationResponse> getAllConfigurations() {
-        return facade.getAllConfigurations().stream()
-                .map(config -> {
-                    Map<String, Object> configMap = config.toMap();
-                    return ConfigurationResponse.builder()
-                            .configType(configMap.get("type") == null ? null : configMap.get("type").toString())
-                            .configurationKey(config.getConfigurationKey())
-                            .keyContext(config.getKeyContext())
-                            .defaultValue(configMap.get("type") == null ? null : configMap.get("type").toString())
-                            .build();
-                })
-                .toList();
+        return facade.getAllConfigurations();
     }
 }

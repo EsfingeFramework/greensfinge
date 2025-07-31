@@ -1,12 +1,10 @@
-package net.sf.esfinge.greenframework.spring.starter.green.custommock.dto;
+package net.sf.esfinge.greenframework.core.dto.project;
 
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-@Builder
 public class CustomMockResponse {
 
     private String key;

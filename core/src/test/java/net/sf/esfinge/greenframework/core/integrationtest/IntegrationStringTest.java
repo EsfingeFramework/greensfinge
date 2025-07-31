@@ -23,7 +23,7 @@ class IntegrationStringTest {
         facade.setGeneralConfiguration(GreenSwitchConfiguration.builder()
                         .ignore(true)
                         .configurationKey("keyProfileService")
-                        .strDefaultValue(mockValue)
+                        .defaultValue(mockValue)
                 .build());
 
         String profile = userService.getUserProfileEmptyAnnotation();
@@ -38,7 +38,7 @@ class IntegrationStringTest {
         facade.setGeneralConfiguration(GreenSwitchConfiguration.builder()
                 .ignore(true)
                 .configurationKey("keyProfileService")
-                .strDefaultValue(mockValue)
+                .defaultValue(mockValue)
                 .build());
 
         String profile = userService.getUserProfile();
@@ -53,7 +53,7 @@ class IntegrationStringTest {
         facade.setGeneralConfiguration(GreenSwitchConfiguration.builder()
                 .ignore(true)
                 .configurationKey("keyProfileService")
-                .strDefaultValue(mockValue)
+                .defaultValue(mockValue)
                 .build());
 
         String profile = userService.getUserProfileWithValueAnnotation();
@@ -68,7 +68,7 @@ class IntegrationStringTest {
         facade.setGeneralConfiguration(GreenSwitchConfiguration.builder()
                 .ignore(false)
                 .configurationKey("keyProfileService")
-                .strDefaultValue(mockValue)
+                .defaultValue(mockValue)
                 .build());
 
         String profile = userService.getUserProfile();
@@ -85,7 +85,7 @@ class IntegrationStringTest {
             facade.setGeneralConfiguration(GreenSwitchConfiguration.builder()
                     .ignore(random)
                     .configurationKey("keyProfileService")
-                    .strDefaultValue(mockValue)
+                    .defaultValue(mockValue)
                     .build());
 
             String returnProfile = userService.getUserProfile();
@@ -105,7 +105,7 @@ class IntegrationStringTest {
         facade.setGeneralConfiguration(GreenSwitchConfiguration.builder()
                 .ignore(false)
                 .configurationKey("keyProfileService")
-                .strDefaultValue(mockValue)
+                .defaultValue(mockValue)
                 .build());
 
         IllegalArgumentException error = assertThrows(IllegalArgumentException.class,
@@ -121,7 +121,7 @@ class IntegrationStringTest {
         facade.setGeneralConfiguration(GreenSwitchConfiguration.builder()
                 .ignore(false)
                 .configurationKey("keyProfileService")
-                .strDefaultValue(mockValue)
+                .defaultValue(mockValue)
                 .build());
 
         Exception error = assertThrows(Exception.class,
@@ -137,7 +137,7 @@ class IntegrationStringTest {
         facade.setGeneralConfiguration(GreenSwitchConfiguration.builder()
                 .ignore(true)
                 .configurationKey("keyUserDao")
-                .strDefaultValue(mockValue)
+                .defaultValue(mockValue)
                 .build());
 
         User user = userService.getUser();
@@ -155,7 +155,7 @@ class IntegrationStringTest {
         facade.setGeneralConfiguration(GreenSwitchConfiguration.builder()
                 .ignore(false)
                 .configurationKey("keyUserDao")
-                .strDefaultValue(mockValue)
+                .defaultValue(mockValue)
                 .build());
 
         User user = userService.getUser();
@@ -173,7 +173,7 @@ class IntegrationStringTest {
         facade.setGeneralConfiguration(GreenSwitchConfiguration.builder()
                 .ignore(true)
                 .configurationKey("keyUserDao")
-                .strDefaultValue(mockValue)
+                .defaultValue(mockValue)
                 .build());
 
         User user = userService.getUserWithAnnotation();

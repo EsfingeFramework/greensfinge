@@ -3,8 +3,8 @@ package net.sf.esfinge.greenframework.spring.starter.green.custommock;
 import jakarta.validation.Valid;
 import net.sf.esfinge.greenframework.core.configuration.facade.GreenCustomMockFacade;
 import net.sf.esfinge.greenframework.core.dto.annotation.GreenCustomMockConfiguration;
+import net.sf.esfinge.greenframework.core.dto.project.CustomMockResponse;
 import net.sf.esfinge.greenframework.spring.starter.green.custommock.dto.CustomMockRequest;
-import net.sf.esfinge.greenframework.spring.starter.green.custommock.dto.CustomMockResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,13 +30,6 @@ public class CustomMockController {
 
     @GetMapping
     public List<CustomMockResponse> getAllConfigurations() {
-        return facade.getAllConfigurations()
-                .stream().map(config -> CustomMockResponse.builder()
-                        .customClass(config.getCustomClass())
-                        .key(config.getKey())
-                        .defaultValue(config.getDefaultValue())
-                        .returnType(config.getReturnType())
-                        .build())
-                .toList();
+        return facade.getAllConfigurations();
     }
 }

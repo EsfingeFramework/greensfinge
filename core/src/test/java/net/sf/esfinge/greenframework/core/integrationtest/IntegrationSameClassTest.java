@@ -78,19 +78,19 @@ class IntegrationSameClassTest {
         facade.setGeneralConfiguration(GreenSwitchConfiguration.builder()
                 .ignore(true)
                 .configurationKey("keyConfigProduct")
-                .strDefaultValue("configurationFromProduct")
+                .defaultValue("configurationFromProduct")
                 .build());
 
         facade.setGeneralConfiguration(GreenSwitchConfiguration.builder()
                 .ignore(true)
                 .configurationKey("keyConfigVisits")
-                .numberDefaultValue(26101990D)
+                .defaultValue("26101990")
                 .build());
 
         facade.setGeneralConfiguration(GreenSwitchConfiguration.builder()
                 .ignore(true)
                 .configurationKey("keyConfigOtherProduct")
-                .strDefaultValue("configurationFromOtherProduct")
+                .defaultValue("configurationFromOtherProduct")
                 .build());
 
         StringBuilder sb = new StringBuilder();

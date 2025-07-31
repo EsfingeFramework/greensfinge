@@ -8,9 +8,9 @@ import org.mapstruct.factory.Mappers;
 import java.util.List;
 
 @Mapper
-public interface MetricMapper {
+public interface GreenMetricMapper {
 
-    MetricMapper INSTANCE = Mappers.getMapper(MetricMapper.class);
+    GreenMetricMapper INSTANCE = Mappers.getMapper(GreenMetricMapper.class);
 
     GreenMetricResponse toResponse(GreenMetric config);
 

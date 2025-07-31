@@ -64,7 +64,7 @@ public class GreenReturnMockValue {
     private Object getObjectMockValue(GreenDefaultReturn greenDefaultReturn, Class<?> returnType, GreenSwitchConfiguration greenConfiguration, GreenCustomMockConfiguration customMockConfiguration) {
         if(Objects.nonNull(greenConfiguration)) {
             if(Objects.isNull(customMockConfiguration)) {
-                return objectMapper.readValue(greenConfiguration.getStrDefaultValue(), returnType);
+                return objectMapper.readValue(greenConfiguration.getDefaultValue(), returnType);
             } else {
                 return processCustomMockReturn(customMockConfiguration);
             }
@@ -107,7 +107,7 @@ public class GreenReturnMockValue {
 
     private Integer getIntMockValue(GreenDefaultReturn greenDefaultReturn, GreenSwitchConfiguration greenConfiguration) {
         if(Objects.nonNull(greenConfiguration)) {
-            return greenConfiguration.getNumberDefaultValue().intValue();
+            return Integer.valueOf(greenConfiguration.getDefaultValue());
         }
 
         if(Objects.nonNull(greenDefaultReturn)) {
@@ -118,8 +118,8 @@ public class GreenReturnMockValue {
     }
 
     private String getStrMockValue(GreenDefaultReturn greenDefaultReturn, GreenSwitchConfiguration greenConfiguration) {
-        if(Objects.nonNull(greenConfiguration) && Objects.nonNull(greenConfiguration.getStrDefaultValue())) {
-            return greenConfiguration.getStrDefaultValue();
+        if(Objects.nonNull(greenConfiguration) && Objects.nonNull(greenConfiguration.getDefaultValue())) {
+            return greenConfiguration.getDefaultValue();
         }
 
         if(Objects.nonNull(greenDefaultReturn)) {
