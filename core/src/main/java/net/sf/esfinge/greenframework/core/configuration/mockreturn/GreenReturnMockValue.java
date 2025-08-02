@@ -79,30 +79,10 @@ public class GreenReturnMockValue {
 
     @SneakyThrows
     private Object processCustomMockReturn(GreenCustomMockConfiguration customMockConfiguration) {
-        Object customMockProvider = Class.forName(customMockConfiguration.getCustomClass())
+        GreenCustomMockProvider provider = (GreenCustomMockProvider) Class.forName(customMockConfiguration.getCustomClass())
                 .getDeclaredConstructor().newInstance();
 
-        if (customMockProvider instanceof GreenCustomMockProvider provider) {
-            return processCustomMockReturnInstance(provider, customMockConfiguration);
-        } else {
-            throw new IllegalStateException("Your custom mock implementation '%s' does not extend the 'GreenCustomMockProvider'!".formatted(customMockProvider.getClass()));
-        }
-    }
-
-    @SneakyThrows
-    private Object processCustomMockReturnInstance(GreenCustomMockProvider provider, GreenCustomMockConfiguration customMockConfiguration) {
-        Object customMockObject = provider.processCustomMockReturn(customMockConfiguration, customMockConfiguration.toMap());
-
-        Class<?> expectedType = Class.forName(customMockConfiguration.getReturnType());
-        if (expectedType.isInstance(customMockObject)) {
-            return customMockObject;
-        } else {
-            throw new IllegalStateException("The provided configuration is of type '%s' and the return of method processCustomMockReturn is '%s'. Please adjust your implementation to return '%s' !"
-                    .formatted(customMockConfiguration.getReturnType(),
-                    customMockObject == null ? "null" : customMockObject.getClass().getName(),
-                    expectedType.getName()
-            ));
-        }
+        return provider.processCustomMockReturn(customMockConfiguration, customMockConfiguration.toMap());
     }
 
     private Integer getIntMockValue(GreenDefaultReturn greenDefaultReturn, GreenSwitchConfiguration greenConfiguration) {

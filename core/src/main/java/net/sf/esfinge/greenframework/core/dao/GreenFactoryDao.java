@@ -4,7 +4,8 @@ import net.sf.esfinge.greenframework.core.dao.memory.GreenConfigurationDaoImpl;
 import net.sf.esfinge.greenframework.core.dao.memory.GreenCustomMockDaoImpl;
 import net.sf.esfinge.greenframework.core.dao.memory.GreenMetricDaoImpl;
 import net.sf.esfinge.greenframework.core.dao.memory.GreenScanConfigurationDaoImpl;
-import net.sf.esfinge.greenframework.core.exception.GreenException;
+import net.sf.esfinge.greenframework.core.entity.enuns.Messages;
+import net.sf.esfinge.greenframework.core.exception.GreenBusinessException;
 import net.sf.esfinge.greenframework.core.util.GreenConstant;
 import net.sf.esfinge.greenframework.core.util.GreenEnvironment;
 
@@ -46,7 +47,7 @@ public class GreenFactoryDao {
         if (GreenConstant.PERSISTENCE_TYPE_MEMORY.equals(persistenceType)) {
             return (T) daoMemory.get(greenDaoClass);
         }
-        throw new GreenException(String.format("Persistence type '%s' not implemented", persistenceType));
+        throw new GreenBusinessException(Messages.ERROR_PERSISTENCE_TYPE, persistenceType);
     }
 }
 
