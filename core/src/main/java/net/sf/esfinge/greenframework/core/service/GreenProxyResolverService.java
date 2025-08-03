@@ -34,15 +34,30 @@ public class GreenProxyResolverService {
             greenConfiguration = configurationService.getConfigurationByType(configKey.value(), GreenSwitchConfiguration.class);
         }
 
+        return processResolveMethodIntercept(configKey , greenConfiguration, originalBean, args, customMockConfiguration, method);
+    }
+
+    @SneakyThrows
+    private Object processResolveMethodIntercept(GreenConfigKey configKey, GreenSwitchConfiguration greenConfiguration, Object originalBean,
+                                                 Object[] args, GreenCustomMockConfiguration customMockConfiguration, Method method) {
+        Object objReturn = null;
+
         boolean realCall = Objects.isNull(configKey) || Objects.isNull(greenConfiguration) || !greenConfiguration.isIgnore();
 
+        long begin = System.currentTimeMillis();
+
         if(realCall) {
-            return method.invoke(originalBean , args);
+            objReturn = method.invoke(originalBean , args);
+        } else {
+            objReturn = greenReturnMockValue.getReturnValue(method, greenConfiguration, customMockConfiguration);
         }
+
+        long end = System.currentTimeMillis();
 
         processEnergyMetric(method);
 
-        return greenReturnMockValue.getReturnValue(method, greenConfiguration, customMockConfiguration);
+        return objReturn;
+
     }
 
     private void processEnergyMetric(Method method) {

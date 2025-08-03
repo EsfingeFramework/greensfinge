@@ -29,6 +29,24 @@ public class GreenEnvironment {
                 .orElse(0.0);
     }
 
+    public static Double getCo2PerKMCar() {
+        return Optional.ofNullable(getEnv("green.framework.co2-per-km-car"))
+                .map(Double::valueOf)
+                .orElse(0.0);
+    }
+
+    public static Double getCo2AbsorbedPerTree() {
+        return Optional.ofNullable(getEnv("green.framework.co2-absorbed-per-tree-year"))
+                .map(Double::valueOf)
+                .orElse(0.0);
+    }
+
+    public static Double getPowerLampLed() {
+        return Optional.ofNullable(getEnv("green.framework.power-lamp-led-watts"))
+                .map(Double::valueOf)
+                .orElse(0.0);
+    }
+
     private static String getEnv(String env) {
         String value = System.getProperty(env);
         if (value == null) {
