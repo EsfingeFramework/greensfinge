@@ -8,6 +8,7 @@ import net.sf.esfinge.greenframework.core.configuration.mockreturn.GreenReturnMo
 import net.sf.esfinge.greenframework.core.configuration.esfinge.dto.ContainerField;
 import net.sf.esfinge.greenframework.core.dto.annotation.GreenCustomMockConfiguration;
 import net.sf.esfinge.greenframework.core.dto.annotation.GreenSwitchConfiguration;
+import net.sf.esfinge.greenframework.core.dto.project.ResolverMetricDTO;
 
 import java.lang.reflect.Method;
 import java.util.Arrays;
@@ -42,6 +43,8 @@ public class GreenProxyResolverService {
                                                  Object[] args, GreenCustomMockConfiguration customMockConfiguration, Method method) {
         Object objReturn = null;
 
+        ResolverMetricDTO dto = new ResolverMetricDTO();
+
         boolean realCall = Objects.isNull(configKey) || Objects.isNull(greenConfiguration) || !greenConfiguration.isIgnore();
 
         long begin = System.currentTimeMillis();
@@ -54,13 +57,19 @@ public class GreenProxyResolverService {
 
         long end = System.currentTimeMillis();
 
-        processEnergyMetric(method);
+        dto.setRealCall(realCall);
+        dto.setBegin(begin);
+        dto.setEnd(end);
+        dto.setConfiguration(greenConfiguration);
+        dto.setMockConfiguration(customMockConfiguration);
+
+        processEnergyMetric(method, dto);
 
         return objReturn;
 
     }
 
-    private void processEnergyMetric(Method method) {
+    private void processEnergyMetric(Method method, ResolverMetricDTO dto) {
         String key = String.format("%s#%s", method.getDeclaringClass().getName(), method.getName());
 
         Double savedValue = Arrays.stream(method.getAnnotations())
@@ -70,6 +79,9 @@ public class GreenProxyResolverService {
                 .findFirst()
                 .orElse(0.0);
 
-        greenMetricService.save(savedValue, key);
+        dto.setKey(key);
+        dto.setSavedValue(savedValue);
+
+        greenMetricService.save(dto);
     }
 }

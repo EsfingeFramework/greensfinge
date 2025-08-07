@@ -4,9 +4,11 @@ import lombok.extern.slf4j.Slf4j;
 import net.sf.esfinge.greenframework.core.dao.GreenFactoryDao;
 import net.sf.esfinge.greenframework.core.dao.contract.GreenMetricDao;
 import net.sf.esfinge.greenframework.core.dao.memory.GreenMetricDaoImpl;
+import net.sf.esfinge.greenframework.core.dto.project.ResolverMetricDTO;
 import net.sf.esfinge.greenframework.core.entity.GreenMetric;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -15,21 +17,30 @@ public class GreenMetricService {
 
     private final GreenMetricDao greenMetricDao = GreenFactoryDao.getInstance().create(GreenMetricDaoImpl.class);
 
-    public void save(Double savedValue, String key) {
-        GreenMetric metric = greenMetricDao.findById(key);
+    public void save(ResolverMetricDTO dto) {
+        processValues(dto);
+        GreenMetric metric = greenMetricDao.findById(dto.getKey());
 
         if (Objects.isNull(metric)) {
             metric = GreenMetric.builder()
-                    .method(key)
-                    .metricSavedValue(savedValue)
-                    .countCalled(1)
+                    .method(dto.getKey())
+                    .averageSavedValue(dto.getSavedValue())
+                    .totalSavedValue(dto.getSavedValue())
                     .beginMeasuredTime(LocalDateTime.now())
+                    .traces(new ArrayList<>())
                     .build();
+            metric.createQtys(dto.getRealCall());
+            metric.addTrace(dto);
         } else {
-            metric.setEndMeasuredTime(LocalDateTime.now());
-            metric.setCountCalled(metric.getCountCalled() + 1);
+            metric.updateMetricValues(LocalDateTime.now(), dto);
         }
         greenMetricDao.save(metric);
+    }
+
+    private void processValues(ResolverMetricDTO dto) {
+        if(dto.getRealCall()) {
+            dto.setSavedValue(0.0);
+        }
     }
 
     public List<GreenMetric> getSavedEnergy() {
