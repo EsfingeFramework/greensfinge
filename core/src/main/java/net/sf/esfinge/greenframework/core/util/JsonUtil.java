@@ -4,8 +4,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 
-import java.io.IOException;
-
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class JsonUtil {
 
@@ -13,7 +11,7 @@ public class JsonUtil {
         boolean isValid = true;
         try {
             new ObjectMapper().readTree(jsonString);
-        } catch (IOException e) {
+        } catch (Exception e) {
             isValid = false;
         }
         return isValid;
