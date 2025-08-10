@@ -13,7 +13,7 @@ public class GreenConstant {
     public static final String DEFAULT_UNIT_JOULE = "joule";
 
     public static final double JOULES_PER_KWH = 3_600_000.0;
-    public static final String STR_DEFAULT_VALUE = "greenDefaultValue";
+    public static final String STR_DEFAULT_VALUE = "__NULL__";
     public static final double DOUBLE_DEFAULT_VALUE = 999999999.9;
     public static final String FIELD_ORIGINAL_BEAN = "originalBean";
 }

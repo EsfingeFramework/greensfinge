@@ -13,4 +13,8 @@ public class StringUtil {
                 .map(Object::toString)
                 .orElse(null);
     }
+
+    public static boolean isNumber(String str) {
+        return str != null && str.matches("-?\\d+(\\.\\d+)?");
+    }
 }

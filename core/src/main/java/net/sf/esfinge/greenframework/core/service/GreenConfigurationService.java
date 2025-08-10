@@ -74,4 +74,8 @@ public class GreenConfigurationService {
                 .newInstance();
         return greenConfigClass.toObject(hashMap);
     }
+
+    public void clearAllConfigurations() {
+        configurationDao.clearAllConfigurations();
+    }
 }

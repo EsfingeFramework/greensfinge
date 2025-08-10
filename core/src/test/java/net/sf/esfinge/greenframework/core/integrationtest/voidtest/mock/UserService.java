@@ -1,4 +1,4 @@
-package net.sf.esfinge.greenframework.core.mock.service.voidtest;
+package net.sf.esfinge.greenframework.core.integrationtest.voidtest.mock;
 
 import net.sf.esfinge.greenframework.core.annotation.GreenConfigKey;
 import net.sf.esfinge.greenframework.core.annotation.GreenSwitch;

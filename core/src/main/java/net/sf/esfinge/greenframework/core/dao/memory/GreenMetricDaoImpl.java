@@ -33,4 +33,5 @@ public class GreenMetricDaoImpl extends GreenMemoryDaoImpl<Map<String, GreenMetr
     public List<GreenMetric> getSavedEnergy() {
         return new ArrayList<>(storage.get(keyName).values());
     }
+
 }

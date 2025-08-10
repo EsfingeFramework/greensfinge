@@ -124,4 +124,9 @@ public class GreenConfigurationDaoImpl extends GreenMemoryDaoImpl<GreenConfigura
                                 .ifPresent(i -> list.set(i, config))
                 );
     }
+
+    @Override
+    public void clearAllConfigurations() {
+        listStorage.clear();
+    }
 }

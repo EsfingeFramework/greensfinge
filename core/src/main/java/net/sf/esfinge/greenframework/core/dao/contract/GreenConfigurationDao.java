@@ -23,4 +23,6 @@ public interface GreenConfigurationDao {
     void insertPersonalConfiguration(GreenDefaultConfiguration greenConfiguration);
 
     void updatePersonalConfiguration(GreenDefaultConfiguration greenConfiguration);
+
+    void clearAllConfigurations();
 }

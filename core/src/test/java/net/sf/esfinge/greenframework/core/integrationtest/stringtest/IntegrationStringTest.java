@@ -1,10 +1,10 @@
-package net.sf.esfinge.greenframework.core.integrationtest;
+package net.sf.esfinge.greenframework.core.integrationtest.stringtest;
 
 import net.sf.esfinge.greenframework.core.configuration.GreenFactory;
 import net.sf.esfinge.greenframework.core.configuration.facade.GreenConfigurationFacade;
 import net.sf.esfinge.greenframework.core.dto.annotation.GreenSwitchConfiguration;
-import net.sf.esfinge.greenframework.core.mock.entity.User;
-import net.sf.esfinge.greenframework.core.mock.service.stringtest.UserService;
+import net.sf.esfinge.greenframework.core.integrationtest.stringtest.mock.UserService;
+import net.sf.esfinge.greenframework.core.integrationtest.stringtest.mock.User;
 import org.junit.jupiter.api.Test;
 
 import java.util.Random;
@@ -22,7 +22,7 @@ class IntegrationStringTest {
         String mockValue = "Mocking a random value";
         facade.setGeneralConfiguration(GreenSwitchConfiguration.builder()
                         .ignore(true)
-                        .configurationKey("keyProfileService")
+                        .configurationKey("ProfileService#findProfileWithEmptyAnnotation")
                         .defaultValue(mockValue)
                 .build());
 
@@ -37,7 +37,7 @@ class IntegrationStringTest {
         String mockValue = "Mocking a random value";
         facade.setGeneralConfiguration(GreenSwitchConfiguration.builder()
                 .ignore(true)
-                .configurationKey("keyProfileService")
+                .configurationKey("ProfileService#findProfile")
                 .defaultValue(mockValue)
                 .build());
 
@@ -49,11 +49,9 @@ class IntegrationStringTest {
     void testShouldIgnoreCallWithValueInAnnotationGreenAnnotation() {
         GreenConfigurationFacade facade = new GreenConfigurationFacade();
 
-        String mockValue = "Mocking a random value";
         facade.setGeneralConfiguration(GreenSwitchConfiguration.builder()
                 .ignore(true)
-                .configurationKey("keyProfileService")
-                .defaultValue(mockValue)
+                .configurationKey("ProfileService#findProfileWithValueAnnotation")
                 .build());
 
         String profile = userService.getUserProfileWithValueAnnotation();
@@ -67,7 +65,7 @@ class IntegrationStringTest {
         String mockValue = "Mocking a random value";
         facade.setGeneralConfiguration(GreenSwitchConfiguration.builder()
                 .ignore(false)
-                .configurationKey("keyProfileService")
+                .configurationKey("ProfileService#findProfile")
                 .defaultValue(mockValue)
                 .build());
 
@@ -84,7 +82,7 @@ class IntegrationStringTest {
             boolean random = new Random().nextBoolean();
             facade.setGeneralConfiguration(GreenSwitchConfiguration.builder()
                     .ignore(random)
-                    .configurationKey("keyProfileService")
+                    .configurationKey("ProfileService#findProfile")
                     .defaultValue(mockValue)
                     .build());
 
@@ -136,7 +134,7 @@ class IntegrationStringTest {
         String mockValue = "{\"name\":\"Mock\",\"countLogin\":5,\"proffile\":\"Mock Profile\"}";
         facade.setGeneralConfiguration(GreenSwitchConfiguration.builder()
                 .ignore(true)
-                .configurationKey("keyUserDao")
+                .configurationKey("UserDao#getUser")
                 .defaultValue(mockValue)
                 .build());
 
@@ -169,11 +167,9 @@ class IntegrationStringTest {
     void testShouldReturnComplexObjWithIgnoreAnnotation() {
         GreenConfigurationFacade facade = new GreenConfigurationFacade();
 
-        String mockValue = "{\"name\":\"Mock\",\"countLogin\":5,\"proffile\":\"Mock Profile\"}";
         facade.setGeneralConfiguration(GreenSwitchConfiguration.builder()
                 .ignore(true)
-                .configurationKey("keyUserDao")
-                .defaultValue(mockValue)
+                .configurationKey("UserDao#getUserWithAnnotation")
                 .build());
 
         User user = userService.getUserWithAnnotation();
@@ -192,7 +188,7 @@ class IntegrationStringTest {
                 .configurationKey("keyMethodConfig")
                 .build());
 
-        String returnStr = userService.geGreenValueInsideMethodClass();
+        String returnStr = userService.greenValueInsideMethodClass();
         assertNotNull(returnStr);
         assertEquals("Method inside class return", returnStr);
     }
@@ -206,7 +202,7 @@ class IntegrationStringTest {
                 .configurationKey("keyMethodConfig")
                 .build());
 
-        String returnStr = userService.geGreenValueInsideMethodClass();
+        String returnStr = userService.greenValueInsideMethodClass();
         assertNotNull(returnStr);
         assertEquals("", returnStr);
     }

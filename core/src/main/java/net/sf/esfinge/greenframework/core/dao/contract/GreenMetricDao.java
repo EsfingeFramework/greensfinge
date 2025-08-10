@@ -11,4 +11,5 @@ public interface GreenMetricDao {
     void save(GreenMetric metric);
 
     List<GreenMetric> getSavedEnergy();
+
 }

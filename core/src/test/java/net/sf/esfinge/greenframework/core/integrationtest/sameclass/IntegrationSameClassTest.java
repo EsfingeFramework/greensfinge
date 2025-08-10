@@ -1,8 +1,8 @@
-package net.sf.esfinge.greenframework.core.integrationtest;
+package net.sf.esfinge.greenframework.core.integrationtest.sameclass;
 
 import net.sf.esfinge.greenframework.core.configuration.facade.GreenConfigurationFacade;
 import net.sf.esfinge.greenframework.core.dto.annotation.GreenSwitchConfiguration;
-import net.sf.esfinge.greenframework.core.mock.service.sameclasstest.RecommendationService;
+import net.sf.esfinge.greenframework.core.integrationtest.sameclass.mock.RecommendationService;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -11,12 +11,13 @@ class IntegrationSameClassTest {
 
     @Test
     void testShouldFindRecommendationWithoutGreenConfiguration() {
+        new GreenConfigurationFacade().clearAllConfigurations();
         RecommendationService recommendationService = new RecommendationService();
 
         StringBuilder sb = new StringBuilder();
         recommendationService.findRecommendation(sb);
 
-        assertEquals("null received null visits this month.\n Also check out null!", sb.toString());
+        assertEquals("product received 0 visits this month.\n Also check out otherProduct!", sb.toString());
     }
 
     @Test
@@ -67,7 +68,7 @@ class IntegrationSameClassTest {
         StringBuilder sb = new StringBuilder();
         recommendationService.findRecommendation(sb);
 
-        assertEquals("null received null visits this month.\n Also check out null!", sb.toString());
+        assertEquals("__NULL__ received 999999999 visits this month.\n Also check out __NULL__!", sb.toString());
     }
 
     @Test

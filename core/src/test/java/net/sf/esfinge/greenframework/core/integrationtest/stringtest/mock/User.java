@@ -1,4 +1,4 @@
-package net.sf.esfinge.greenframework.core.mock.entity;
+package net.sf.esfinge.greenframework.core.integrationtest.stringtest.mock;
 
 import lombok.Getter;
 import lombok.Setter;

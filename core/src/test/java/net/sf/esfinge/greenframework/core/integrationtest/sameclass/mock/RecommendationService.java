@@ -1,10 +1,10 @@
-package net.sf.esfinge.greenframework.core.mock.service.sameclasstest;
+package net.sf.esfinge.greenframework.core.integrationtest.sameclass.mock;
 
 import net.sf.esfinge.greenframework.core.configuration.GreenFactory;
 
 public class RecommendationService {
 
-    private RecommendationDAO userDao = GreenFactory.greenify(RecommendationDAO.class);
+    private final RecommendationDAO userDao = GreenFactory.greenify(RecommendationDAO.class);
 
     public void findRecommendation(StringBuilder sb) {
         sb.append(userDao.findProduct())

@@ -1,4 +1,4 @@
-package net.sf.esfinge.greenframework.core.mock.service.metrictest;
+package net.sf.esfinge.greenframework.core.integrationtest.metrictest.mock;
 
 import net.sf.esfinge.greenframework.core.annotation.GreenAdjustableNumber;
 import net.sf.esfinge.greenframework.core.annotation.GreenConfigKey;

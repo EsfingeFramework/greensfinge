@@ -1,12 +1,11 @@
-package net.sf.esfinge.greenframework.core.integrationtest;
+package net.sf.esfinge.greenframework.core.integrationtest.metrictest;
 
 import net.sf.esfinge.greenframework.core.configuration.GreenFactory;
 import net.sf.esfinge.greenframework.core.configuration.facade.GreenConfigurationFacade;
 import net.sf.esfinge.greenframework.core.configuration.facade.GreenMetricFacade;
 import net.sf.esfinge.greenframework.core.dto.annotation.GreenSwitchConfiguration;
-import net.sf.esfinge.greenframework.core.entity.GreenMetric;
-import net.sf.esfinge.greenframework.core.mock.service.metrictest.MathService;
-import org.junit.jupiter.api.Order;
+import net.sf.esfinge.greenframework.core.dto.project.GreenMetricResponse;
+import net.sf.esfinge.greenframework.core.integrationtest.metrictest.mock.MathService;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -17,7 +16,6 @@ class IntegrationMetricTest {
     private final MathService mathService = GreenFactory.greenify(MathService.class);
 
     @Test
-    @Order(1)
     void testShouldMetricCustomEnergyWithSeveralCall() {
         GreenConfigurationFacade facade = new GreenConfigurationFacade();
         GreenMetricFacade metricFacade = new GreenMetricFacade();
@@ -28,7 +26,7 @@ class IntegrationMetricTest {
 
         facade.setGeneralConfiguration(GreenSwitchConfiguration.builder()
                 .ignore(true)
-                .configurationKey("keySumService")
+                .configurationKey("SumService#sum")
                 .defaultValue(mockMethodReturn.toString())
                 .build());
 
@@ -36,19 +34,19 @@ class IntegrationMetricTest {
             assertEquals(mockMethodReturn.intValue(), mathService.countNumber4());
         }
 
-//        GreenMetric greenMetric = metricFacade.getSavedEnergy().stream().filter(
-//                        saved -> "net.sf.esfinge.greenframework.mock.service.metrictest.SumService#sum".equals(saved.getMethod())
-//                ).findFirst()
-//                .orElse(null);
-//        assertNotNull(greenMetric);
-//        assertEquals(countCallMethod , greenMetric.getCountCalled());
-//        //Value from CalculateLongMetricValue
-//        assertEquals(countCallMethod * 2.3 , greenMetric.getTotalSavedValue());
-//        assertEquals(2.3 , greenMetric.getMetricSavedValue());
+        GreenMetricResponse greenMetric = metricFacade.getSavedEnergy(true).getMethods().stream().filter(
+                        saved -> "net.sf.esfinge.greenframework.core.integrationtest.metrictest.mock.SumService#sum".equals(saved.getMethod())
+                ).findFirst()
+                .orElse(null);
+        assertNotNull(greenMetric);
+        assertEquals(countCallMethod , greenMetric.getCountCalled());
+        assertEquals(countCallMethod * 2.3 , greenMetric.getTotalSavedValue());
+        assertEquals(countCallMethod , greenMetric.getTraces().size());
+        assertEquals(2.3 , greenMetric.getTraces().get(0).getMetricSavedValue());
+
     }
 
     @Test
-    @Order(1)
     void testShouldMetricFixedEnergyWithSeveralCall() {
         GreenConfigurationFacade facade = new GreenConfigurationFacade();
         GreenMetricFacade metricFacade = new GreenMetricFacade();
@@ -57,21 +55,22 @@ class IntegrationMetricTest {
 
         facade.setGeneralConfiguration(GreenSwitchConfiguration.builder()
                 .ignore(true)
-                .configurationKey("keySumService")
+                .configurationKey("SumService#minus")
                 .build());
 
         for (int i = 0; i < countCallMethod; i++) {
             assertEquals(8, mathService.minusOperation());
         }
 
-//        GreenMetric greenMetric = metricFacade.getSavedEnergy().stream().filter(
-//                        saved -> "net.sf.esfinge.greenframework.mock.service.metrictest.SumService#minus".equals(saved.getMethod())
-//                ).findFirst()
-//                .orElse(null);
-//        assertNotNull(greenMetric);
-//        assertEquals(countCallMethod , greenMetric.getCountCalled());
-//        //Value from CalculateLongMetricValue
-//        assertEquals(countCallMethod * 4.9 , greenMetric.getTotalSavedValue());
-//        assertEquals(4.9 , greenMetric.getMetricSavedValue());
+        GreenMetricResponse greenMetric = metricFacade.getSavedEnergy(true).getMethods().stream().filter(
+                        saved -> "net.sf.esfinge.greenframework.core.integrationtest.metrictest.mock.SumService#minus".equals(saved.getMethod())
+                ).findFirst()
+                .orElse(null);
+        assertNotNull(greenMetric);
+        assertEquals(countCallMethod , greenMetric.getCountCalled());
+        //Value from CalculateLongMetricValue
+        assertEquals(countCallMethod * 4.9 , greenMetric.getTotalSavedValue());
+        assertEquals(countCallMethod , greenMetric.getTraces().size());
+        assertEquals(4.9 , greenMetric.getTraces().get(0).getMetricSavedValue());
     }
 }

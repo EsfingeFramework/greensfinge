@@ -1,10 +1,10 @@
-package net.sf.esfinge.greenframework.core.integrationtest;
+package net.sf.esfinge.greenframework.core.integrationtest.numbertest;
 
 import net.sf.esfinge.greenframework.core.configuration.GreenFactory;
 import net.sf.esfinge.greenframework.core.configuration.facade.GreenConfigurationFacade;
 import net.sf.esfinge.greenframework.core.dto.annotation.GreenAdjustableNumberConfiguration;
 import net.sf.esfinge.greenframework.core.dto.annotation.GreenSwitchConfiguration;
-import net.sf.esfinge.greenframework.core.mock.service.numbertest.FileService;
+import net.sf.esfinge.greenframework.core.integrationtest.numbertest.mock.FileService;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

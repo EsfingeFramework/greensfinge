@@ -13,6 +13,10 @@ public class GreenConfigurationFacade {
 
     private final GreenConfigurationService configurationService = new GreenConfigurationService();
 
+    public void clearAllConfigurations() {
+        configurationService.clearAllConfigurations();
+    }
+
     public void setGeneralConfiguration(GreenDefaultConfiguration config) {
         configurationService.setGeneralConfiguration(config.getConfigurationKey(), config);
     }

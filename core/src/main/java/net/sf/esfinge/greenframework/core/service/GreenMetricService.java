@@ -46,4 +46,5 @@ public class GreenMetricService {
     public List<GreenMetric> getSavedEnergy() {
         return greenMetricDao.getSavedEnergy();
     }
+
 }

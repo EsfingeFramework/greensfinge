@@ -1,11 +1,10 @@
-package net.sf.esfinge.greenframework.core.mock.service.numbertest;
+package net.sf.esfinge.greenframework.core.integrationtest.numbertest.mock;
 
 import net.sf.esfinge.greenframework.core.annotation.GreenAdjustableNumber;
 import net.sf.esfinge.greenframework.core.annotation.GreenConfigKey;
 import net.sf.esfinge.greenframework.core.annotation.GreenDefaultReturn;
-import lombok.extern.slf4j.Slf4j;
+import net.sf.esfinge.greenframework.core.annotation.GreenSwitchOff;
 
-@Slf4j
 public class FileService {
 
     @GreenAdjustableNumber
@@ -41,7 +40,6 @@ public class FileService {
 
         for (int i = 0; i < countTimes; i++) {
             count++;
-            log.info("Try to access the external file {}...", i+1);
         }
 
         return count;
@@ -49,12 +47,14 @@ public class FileService {
 
     @GreenConfigKey("method1KeyConfiguration")
     @GreenDefaultReturn(numberValue = 6458)
+    @GreenSwitchOff
     public Integer getGreenValueInsideMethodClass1() {
         return 0;
     }
 
     @GreenConfigKey("method2KeyConfiguration")
     @GreenDefaultReturn(numberValue = 6459)
+    @GreenSwitchOff
     public Integer getGreenValueInsideMethodClass2() {
         return 0;
     }

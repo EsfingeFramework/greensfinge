@@ -7,6 +7,7 @@ import org.mapstruct.factory.Mappers;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 
 @Mapper
 public interface GreenMetricMapper {
@@ -33,10 +34,10 @@ public interface GreenMetricMapper {
             totalQtyMockCall += response.getQtyMockCall();
             totalQtyRealCall += response.getQtyRealCall();
 
-            if (begin == null || response.getBeginMeasuredTime().isBefore(begin)) {
+            if (Objects.isNull(begin) || response.getBeginMeasuredTime().isBefore(begin)) {
                 begin = response.getBeginMeasuredTime();
             }
-            if (end == null || response.getEndMeasuredTime().isAfter(end)) {
+            if (Objects.isNull(end) || (Objects.nonNull(response.getEndMeasuredTime()) && response.getEndMeasuredTime().isAfter(end))) {
                 end = response.getEndMeasuredTime();
             }
         }

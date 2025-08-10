@@ -13,6 +13,7 @@ import net.sf.esfinge.greenframework.core.util.GreenReflectionUtil;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Optional;
 import java.util.concurrent.Callable;
@@ -51,8 +52,12 @@ public class GreenClassMethodProxyInterceptor {
             }
         }
 
-        //Need to invoke the original bean for the other attribute dependencies
-        return method.invoke(originalBean.get(target), args);
+        try {
+            //Need to invoke the original bean for the other attribute dependencies
+            return method.invoke(originalBean.get(target), args);
+        } catch (InvocationTargetException e) {
+            throw e.getCause(); // preserva a exception real
+        }
     }
 
     @SneakyThrows

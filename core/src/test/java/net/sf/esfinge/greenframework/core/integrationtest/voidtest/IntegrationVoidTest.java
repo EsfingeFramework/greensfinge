@@ -1,16 +1,31 @@
-package net.sf.esfinge.greenframework.core.integrationtest;
+package net.sf.esfinge.greenframework.core.integrationtest.voidtest;
 
 import net.sf.esfinge.greenframework.core.configuration.GreenFactory;
 import net.sf.esfinge.greenframework.core.configuration.facade.GreenConfigurationFacade;
 import net.sf.esfinge.greenframework.core.dto.annotation.GreenSwitchConfiguration;
-import net.sf.esfinge.greenframework.core.mock.service.voidtest.UserService;
+import net.sf.esfinge.greenframework.core.integrationtest.voidtest.mock.UserService;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.verify;
 
 class IntegrationVoidTest {
 
     private final UserService userService = GreenFactory.greenify(UserService.class);
+
+    @Test
+    void testShouldNotIgnoreExecution() {
+        GreenConfigurationFacade facade = new GreenConfigurationFacade();
+
+        facade.setGeneralConfiguration(GreenSwitchConfiguration.builder()
+                .ignore(false)
+                .configurationKey("ProfileService#findProfile")
+                .defaultValue("")
+                .build());
+
+        String profile = userService.findUser();
+        assertEquals(" initial value Some profile final value ", profile);
+    }
 
     @Test
     void testShouldIgnoreExecution() {
@@ -18,21 +33,7 @@ class IntegrationVoidTest {
 
         facade.setGeneralConfiguration(GreenSwitchConfiguration.builder()
                 .ignore(true)
-                .configurationKey("keyProfileService")
-                .defaultValue("")
-                .build());
-
-        String profile = userService.findUser();
-        assertEquals(" initial value  final value ", profile);
-    }
-
-    @Test
-    void testShouldExecuteWithMockValue() {
-        GreenConfigurationFacade facade = new GreenConfigurationFacade();
-
-        facade.setGeneralConfiguration(GreenSwitchConfiguration.builder()
-                .ignore(true)
-                .configurationKey("keyProfileService")
+                .configurationKey("ProfileService#findProfile")
                 .defaultValue("some value in the middle")
                 .build());
 
@@ -41,20 +42,7 @@ class IntegrationVoidTest {
     }
 
     @Test
-    void testShouldExecuteWithNoIgnore() {
-        GreenConfigurationFacade facade = new GreenConfigurationFacade();
-
-        facade.setGeneralConfiguration(GreenSwitchConfiguration.builder()
-                .ignore(false)
-                .configurationKey("keyProfileService")
-                .build());
-
-        String profile = userService.findUser();
-        assertEquals(" initial value Some profile final value ", profile);
-    }
-
-    @Test
-    void testShouldExecutionHighConsumeEnergy() {
+    void testShouldNotMockExecutionHighConsumeEnergy() {
         GreenConfigurationFacade facade = new GreenConfigurationFacade();
 
         facade.setGeneralConfiguration(GreenSwitchConfiguration.builder()
@@ -66,7 +54,20 @@ class IntegrationVoidTest {
         sbParam.append("testValue");
         userService.doSomethingWithHighConsumeEnergy(sbParam);
         assertEquals("testValuesomething very high", sbParam.toString());
+    }
 
-        System.out.println(sbParam.toString());
+    @Test
+    void testShouldMockExecutionHighConsumeEnergy() {
+        GreenConfigurationFacade facade = new GreenConfigurationFacade();
+
+        facade.setGeneralConfiguration(GreenSwitchConfiguration.builder()
+                .ignore(true)
+                .configurationKey("methodKeyConfig")
+                .build());
+
+        StringBuilder sbParam = new StringBuilder();
+        sbParam.append("testValue");
+        userService.doSomethingWithHighConsumeEnergy(sbParam);
+        assertEquals("testValue", sbParam.toString());
     }
 }

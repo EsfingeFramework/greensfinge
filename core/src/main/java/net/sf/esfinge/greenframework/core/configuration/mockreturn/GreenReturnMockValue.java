@@ -7,6 +7,8 @@ import lombok.extern.slf4j.Slf4j;
 import net.sf.esfinge.greenframework.core.annotation.GreenDefaultReturn;
 import net.sf.esfinge.greenframework.core.dto.annotation.GreenCustomMockConfiguration;
 import net.sf.esfinge.greenframework.core.dto.annotation.GreenSwitchConfiguration;
+import net.sf.esfinge.greenframework.core.util.GreenConstant;
+import net.sf.esfinge.greenframework.core.util.StringUtil;
 
 import java.lang.reflect.Method;
 import java.util.Arrays;
@@ -53,8 +55,8 @@ public class GreenReturnMockValue {
         } else if (method.getReturnType().equals(Void.TYPE)) {
             return null;
         } else if (Long.class.equals(method.getReturnType())) {
-            return Optional.ofNullable(getIntMockValue(greenDefaultReturn, greenConfiguration))
-                    .map(Long::valueOf)
+            return Optional.ofNullable(getDoubleMockValue(greenDefaultReturn, greenConfiguration))
+                    .map(Double::longValue)
                     .orElse(null);
         }
         return null;
@@ -62,7 +64,7 @@ public class GreenReturnMockValue {
 
     @SneakyThrows
     private Object getObjectMockValue(GreenDefaultReturn greenDefaultReturn, Class<?> returnType, GreenSwitchConfiguration greenConfiguration, GreenCustomMockConfiguration customMockConfiguration) {
-        if(Objects.nonNull(greenConfiguration)) {
+        if(Objects.nonNull(greenConfiguration) && !GreenConstant.STR_DEFAULT_VALUE.equals(greenConfiguration.getDefaultValue())) {
             if(Objects.isNull(customMockConfiguration)) {
                 return objectMapper.readValue(greenConfiguration.getDefaultValue(), returnType);
             } else {
@@ -85,8 +87,22 @@ public class GreenReturnMockValue {
         return provider.processCustomMockReturn(customMockConfiguration, customMockConfiguration.toMap());
     }
 
+    private Double getDoubleMockValue(GreenDefaultReturn greenDefaultReturn, GreenSwitchConfiguration greenConfiguration) {
+        if(Objects.nonNull(greenConfiguration) && StringUtil.isNumber(greenConfiguration.getDefaultValue()) &&
+                GreenConstant.DOUBLE_DEFAULT_VALUE != Double.parseDouble(greenConfiguration.getDefaultValue())) {
+            return Double.valueOf(greenConfiguration.getDefaultValue());
+        }
+
+        if(Objects.nonNull(greenDefaultReturn)) {
+            return (double) greenDefaultReturn.numberValue();
+        }
+
+        return null;
+    }
+
     private Integer getIntMockValue(GreenDefaultReturn greenDefaultReturn, GreenSwitchConfiguration greenConfiguration) {
-        if(Objects.nonNull(greenConfiguration)) {
+        if(Objects.nonNull(greenConfiguration) && StringUtil.isNumber(greenConfiguration.getDefaultValue()) &&
+                GreenConstant.DOUBLE_DEFAULT_VALUE != Double.parseDouble(greenConfiguration.getDefaultValue())) {
             return Integer.valueOf(greenConfiguration.getDefaultValue());
         }
 
@@ -98,7 +114,7 @@ public class GreenReturnMockValue {
     }
 
     private String getStrMockValue(GreenDefaultReturn greenDefaultReturn, GreenSwitchConfiguration greenConfiguration) {
-        if(Objects.nonNull(greenConfiguration) && Objects.nonNull(greenConfiguration.getDefaultValue())) {
+        if(Objects.nonNull(greenConfiguration) && !GreenConstant.STR_DEFAULT_VALUE.equals(greenConfiguration.getDefaultValue())) {
             return greenConfiguration.getDefaultValue();
         }
 
