@@ -4,7 +4,7 @@ import jakarta.validation.Valid;
 import net.sf.esfinge.greenframework.core.configuration.facade.GreenConfigurationFacade;
 import net.sf.esfinge.greenframework.core.dto.annotation.GreenAdjustableNumberConfiguration;
 import net.sf.esfinge.greenframework.core.dto.annotation.GreenSwitchConfiguration;
-import net.sf.esfinge.greenframework.core.dto.project.ConfigurationResponse;
+import net.sf.esfinge.greenframework.core.dto.project.response.ConfigurationResponse;
 import net.sf.esfinge.greenframework.spring.starter.green.configuration.dto.GeneralConfigurationIntRequest;
 import net.sf.esfinge.greenframework.spring.starter.green.configuration.dto.GeneralConfigurationStrRequest;
 import net.sf.esfinge.greenframework.spring.starter.green.configuration.dto.PersonalConfigurationIntRequest;

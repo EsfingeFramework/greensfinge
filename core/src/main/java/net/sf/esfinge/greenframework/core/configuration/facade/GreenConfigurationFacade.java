@@ -2,7 +2,7 @@ package net.sf.esfinge.greenframework.core.configuration.facade;
 
 import lombok.Getter;
 import net.sf.esfinge.greenframework.core.dto.annotation.GreenDefaultConfiguration;
-import net.sf.esfinge.greenframework.core.dto.project.ConfigurationResponse;
+import net.sf.esfinge.greenframework.core.dto.project.response.ConfigurationResponse;
 import net.sf.esfinge.greenframework.core.mapper.GreenConfigurationMapper;
 import net.sf.esfinge.greenframework.core.service.GreenConfigurationService;
 

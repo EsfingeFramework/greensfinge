@@ -1,4 +1,4 @@
-package net.sf.esfinge.greenframework.core.dto.project;
+package net.sf.esfinge.greenframework.core.dto.project.response;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;

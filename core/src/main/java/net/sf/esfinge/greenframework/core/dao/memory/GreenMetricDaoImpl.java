@@ -1,8 +1,12 @@
 package net.sf.esfinge.greenframework.core.dao.memory;
 
 import net.sf.esfinge.greenframework.core.dao.contract.GreenMetricDao;
+import net.sf.esfinge.greenframework.core.dto.project.request.GreenMetricFilterRequest;
 import net.sf.esfinge.greenframework.core.entity.GreenMetric;
+import net.sf.esfinge.greenframework.core.entity.GreenMetricTrace;
+import org.apache.commons.beanutils.BeanUtils;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -30,8 +34,25 @@ public class GreenMetricDaoImpl extends GreenMemoryDaoImpl<Map<String, GreenMetr
     }
 
     @Override
-    public List<GreenMetric> getSavedEnergy() {
-        return new ArrayList<>(storage.get(keyName).values());
+    public List<GreenMetric> getSavedEnergy(GreenMetricFilterRequest filter) {
+        List<GreenMetric> metrics = new ArrayList<>(storage.get(keyName).values());
+
+        if (!filter.isShowTrace()) {
+            return metrics.stream().map(original -> {
+                GreenMetric copy = GreenMetric.builder().build();
+                try {
+                    BeanUtils.copyProperties(copy, original);
+                } catch (IllegalAccessException | InvocationTargetException e) {
+                    // Nothing to do
+                }
+
+                List<GreenMetricTrace> traces = original.getTraces();
+                copy.setTraces(traces == null ? new ArrayList<>() : new ArrayList<>(traces));
+                return copy;
+            }).toList();
+        }
+
+        return metrics;
     }
 
 }

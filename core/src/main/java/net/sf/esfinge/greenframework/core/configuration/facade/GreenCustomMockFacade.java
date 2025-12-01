@@ -2,7 +2,7 @@ package net.sf.esfinge.greenframework.core.configuration.facade;
 
 import lombok.Getter;
 import net.sf.esfinge.greenframework.core.dto.annotation.GreenCustomMockConfiguration;
-import net.sf.esfinge.greenframework.core.dto.project.CustomMockResponse;
+import net.sf.esfinge.greenframework.core.dto.project.response.CustomMockResponse;
 import net.sf.esfinge.greenframework.core.mapper.GreenCustomMockMapper;
 import net.sf.esfinge.greenframework.core.service.GreenCustomMockService;
 

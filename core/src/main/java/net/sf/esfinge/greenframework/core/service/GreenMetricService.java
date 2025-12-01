@@ -5,6 +5,7 @@ import net.sf.esfinge.greenframework.core.dao.GreenFactoryDao;
 import net.sf.esfinge.greenframework.core.dao.contract.GreenMetricDao;
 import net.sf.esfinge.greenframework.core.dao.memory.GreenMetricDaoImpl;
 import net.sf.esfinge.greenframework.core.dto.project.ResolverMetricDTO;
+import net.sf.esfinge.greenframework.core.dto.project.request.GreenMetricFilterRequest;
 import net.sf.esfinge.greenframework.core.entity.GreenMetric;
 
 import java.time.LocalDateTime;
@@ -43,8 +44,8 @@ public class GreenMetricService {
         }
     }
 
-    public List<GreenMetric> getSavedEnergy() {
-        return greenMetricDao.getSavedEnergy();
+    public List<GreenMetric> getSavedEnergy(GreenMetricFilterRequest filter) {
+        return greenMetricDao.getSavedEnergy(filter);
     }
 
 }

@@ -1,4 +1,4 @@
-package net.sf.esfinge.greenframework.core.dto.project;
+package net.sf.esfinge.greenframework.core.dto.project.response;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;
@@ -29,7 +29,7 @@ public class GreenMetricResponse {
     private List<GreenMetricResponseTrace> traces;
     private List<GreenMetricResponse> methods;
 
-    //Métricas de Energia
+    //Energy Metrics
     public Double getTotalSavedKWh() {
         return getTotalSavedValue() / JOULES_PER_KWH;
     }
@@ -42,8 +42,7 @@ public class GreenMetricResponse {
         return totalWhSaved / powerLampLed;
     }
 
-    // Métricas Ambientais
-
+    // Environmental Metrics
     public Double getEstimatedCO2ReductionInKg() {
         return getTotalSavedKWh() * CO2_PER_KWH_IN_KG;
     }
@@ -60,13 +59,12 @@ public class GreenMetricResponse {
         return getEstimatedCO2ReductionInKg() / co2AbsorbedPerTree;
     }
 
-    // Métricas Financeiras
-
+    // Financial Metrics
     public Double getEstimatedCostSaving() {
         return getTotalSavedKWh() * GreenEnvironment.getPricePerKwh();
     }
 
-    // Métricas de Uso
+    // Usage Metrics
     public long getTotalMeasuredSeconds() {
         if (Objects.isNull(beginMeasuredTime) || Objects.isNull(endMeasuredTime) || beginMeasuredTime.isAfter(endMeasuredTime)) {
             return 0;

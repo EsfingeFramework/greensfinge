@@ -1,7 +1,7 @@
 package net.sf.esfinge.greenframework.core.mapper;
 
 import net.sf.esfinge.greenframework.core.dto.annotation.GreenCustomMockConfiguration;
-import net.sf.esfinge.greenframework.core.dto.project.CustomMockResponse;
+import net.sf.esfinge.greenframework.core.dto.project.response.CustomMockResponse;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 

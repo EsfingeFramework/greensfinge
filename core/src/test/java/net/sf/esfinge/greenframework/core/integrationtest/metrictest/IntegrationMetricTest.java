@@ -4,7 +4,8 @@ import net.sf.esfinge.greenframework.core.configuration.GreenFactory;
 import net.sf.esfinge.greenframework.core.configuration.facade.GreenConfigurationFacade;
 import net.sf.esfinge.greenframework.core.configuration.facade.GreenMetricFacade;
 import net.sf.esfinge.greenframework.core.dto.annotation.GreenSwitchConfiguration;
-import net.sf.esfinge.greenframework.core.dto.project.GreenMetricResponse;
+import net.sf.esfinge.greenframework.core.dto.project.request.GreenMetricFilterRequest;
+import net.sf.esfinge.greenframework.core.dto.project.response.GreenMetricResponse;
 import net.sf.esfinge.greenframework.core.integrationtest.metrictest.mock.MathService;
 import org.junit.jupiter.api.Test;
 
@@ -34,7 +35,10 @@ class IntegrationMetricTest {
             assertEquals(mockMethodReturn.intValue(), mathService.countNumber4());
         }
 
-        GreenMetricResponse greenMetric = metricFacade.getSavedEnergy(true).getMethods().stream().filter(
+        GreenMetricFilterRequest filter = new GreenMetricFilterRequest();
+        filter.setShowTrace(true);
+
+        GreenMetricResponse greenMetric = metricFacade.getSavedEnergy(filter).getMethods().stream().filter(
                         saved -> "net.sf.esfinge.greenframework.core.integrationtest.metrictest.mock.SumService#sum".equals(saved.getMethod())
                 ).findFirst()
                 .orElse(null);
@@ -62,7 +66,10 @@ class IntegrationMetricTest {
             assertEquals(8, mathService.minusOperation());
         }
 
-        GreenMetricResponse greenMetric = metricFacade.getSavedEnergy(true).getMethods().stream().filter(
+        GreenMetricFilterRequest filter = new GreenMetricFilterRequest();
+        filter.setShowTrace(true);
+
+        GreenMetricResponse greenMetric = metricFacade.getSavedEnergy(filter).getMethods().stream().filter(
                         saved -> "net.sf.esfinge.greenframework.core.integrationtest.metrictest.mock.SumService#minus".equals(saved.getMethod())
                 ).findFirst()
                 .orElse(null);

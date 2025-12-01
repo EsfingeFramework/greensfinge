@@ -16,13 +16,13 @@ import java.util.List;
 public class GreenMetric {
 
     private String method;
-    private Double averageSavedValue;
-    private Double totalSavedValue;
-    private Integer countCalled = 0;
-    private Integer qtyRealCall = 0;
-    private Integer qtyMockCall = 0;
+    private double averageSavedValue;
+    private double totalSavedValue;
+    private int countCalled = 0;
+    private int qtyRealCall = 0;
+    private int qtyMockCall = 0;
     private LocalDateTime beginMeasuredTime;
-    private Double timeSavedMillis;
+    private double timeSavedMillis;
     private Long realCallTotalDuration = 0L;
     private Long mockCallTotalDuration = 0L;
     private LocalDateTime endMeasuredTime;

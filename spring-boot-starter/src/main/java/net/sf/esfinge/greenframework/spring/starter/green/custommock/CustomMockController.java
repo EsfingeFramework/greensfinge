@@ -3,7 +3,7 @@ package net.sf.esfinge.greenframework.spring.starter.green.custommock;
 import jakarta.validation.Valid;
 import net.sf.esfinge.greenframework.core.configuration.facade.GreenCustomMockFacade;
 import net.sf.esfinge.greenframework.core.dto.annotation.GreenCustomMockConfiguration;
-import net.sf.esfinge.greenframework.core.dto.project.CustomMockResponse;
+import net.sf.esfinge.greenframework.core.dto.project.response.CustomMockResponse;
 import net.sf.esfinge.greenframework.spring.starter.green.custommock.dto.CustomMockRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

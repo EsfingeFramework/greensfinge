@@ -10,7 +10,7 @@ import net.bytebuddy.dynamic.loading.ClassLoadingStrategy;
 import net.bytebuddy.implementation.MethodDelegation;
 import net.bytebuddy.matcher.ElementMatchers;
 import net.sf.esfinge.greenframework.core.annotation.GreenConfigKey;
-import net.sf.esfinge.greenframework.core.configuration.esfinge.dto.ClassContainer;
+import net.sf.esfinge.greenframework.core.configuration.esfinge.dto.ClassFieldContainer;
 import net.sf.esfinge.greenframework.core.util.GreenReflectionUtil;
 import net.sf.esfinge.metadata.AnnotationReader;
 import org.objenesis.ObjenesisStd;
@@ -61,7 +61,7 @@ public class GreenFactory {
         Class<?> targetClass = original.getClass();
 
         AnnotationReader reader = new AnnotationReader();
-        ClassContainer classContainer = reader.readingAnnotationsTo(targetClass, ClassContainer.class);
+        ClassFieldContainer classFieldContainer = reader.readingAnnotationsTo(targetClass, ClassFieldContainer.class);
 
         Class<?> proxyClass = BYTE_BUDDY
                 .subclass(targetClass)
@@ -70,7 +70,7 @@ public class GreenFactory {
                         .and(ElementMatchers.not(ElementMatchers.isEquals()))
                         .and(ElementMatchers.not(ElementMatchers.isHashCode()))
                         .and(ElementMatchers.not(ElementMatchers.isToString())))
-                .intercept(MethodDelegation.to(new GreenClassMethodProxyInterceptor(classContainer)))
+                .intercept(MethodDelegation.to(new GreenClassMethodProxyInterceptor(classFieldContainer)))
                 .make()
                 .load(targetClass.getClassLoader(), ClassLoadingStrategy.Default.WRAPPER)
                 .getLoaded();

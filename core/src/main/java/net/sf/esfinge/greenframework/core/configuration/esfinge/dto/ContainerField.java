@@ -1,10 +1,11 @@
 package net.sf.esfinge.greenframework.core.configuration.esfinge.dto;
 
-import net.sf.esfinge.greenframework.core.configuration.esfinge.annotation.GreenReadAttributesAnnotation;
-import net.sf.esfinge.greenframework.core.configuration.esfinge.annotation.GreenReadFieldClassAnnotation;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import net.sf.esfinge.greenframework.core.configuration.esfinge.annotation.GreenReadAttributesAnnotation;
+import net.sf.esfinge.greenframework.core.configuration.esfinge.annotation.GreenReadFieldClassAnnotation;
+import net.sf.esfinge.greenframework.core.configuration.esfinge.annotation.GreenReadFieldTypeAnnotation;
 import net.sf.esfinge.metadata.annotation.container.ContainerFor;
 import net.sf.esfinge.metadata.annotation.container.ElementName;
 import net.sf.esfinge.metadata.container.ContainerTarget;
@@ -21,6 +22,9 @@ public class ContainerField {
     @ElementName
     private String attributeName;
 
+    @GreenReadFieldTypeAnnotation
+    private String attributeType;
+    
     @GreenReadFieldClassAnnotation
     private List<Class<?>> annotationField;
 

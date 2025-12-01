@@ -1,15 +1,14 @@
 package net.sf.esfinge.greenframework.core.configuration.esfinge.processor;
 
-import net.sf.esfinge.greenframework.core.annotation.GreenConfigKey;
 import io.github.classgraph.ClassGraph;
 import io.github.classgraph.ScanResult;
+import net.sf.esfinge.greenframework.core.annotation.GreenConfigKey;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.AnnotatedElement;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public abstract class GreenReadProcessor {
 
@@ -17,7 +16,7 @@ public abstract class GreenReadProcessor {
         List<String> greenAnnotations = scanAllGreenAnnotations();
         return Arrays.stream(elementWithMetadata.getDeclaredAnnotations())
                 .filter(e -> greenAnnotations.contains(e.annotationType().getName()))
-                .collect(Collectors.toList());
+                .toList();
     }
 
     private List<String> scanAllGreenAnnotations() {

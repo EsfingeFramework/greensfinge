@@ -1,12 +1,12 @@
 package net.sf.esfinge.greenframework.core.dao.memory;
 
 import net.sf.esfinge.greenframework.core.dao.contract.GreenScanConfigurationDao;
-import net.sf.esfinge.greenframework.core.entity.ScanGreenConfiguration;
+import net.sf.esfinge.greenframework.core.entity.GreenScanMapping;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class GreenScanConfigurationDaoImpl extends GreenMemoryDaoImpl<ScanGreenConfiguration> implements GreenScanConfigurationDao {
+public class GreenScanConfigurationDaoImpl extends GreenMemoryDaoImpl<GreenScanMapping> implements GreenScanConfigurationDao {
 
     private final String keyName = GreenScanConfigurationDaoImpl.class.getName();
 
@@ -14,12 +14,17 @@ public class GreenScanConfigurationDaoImpl extends GreenMemoryDaoImpl<ScanGreenC
         listStorage.put(keyName, new ArrayList<>());
     }
 
-    public List<ScanGreenConfiguration> findConfigurations() {
+    public List<GreenScanMapping> findConfigurations() {
         return listStorage.get(keyName);
     }
 
-    public void save(List<ScanGreenConfiguration> configurations) {
+    public void save(List<GreenScanMapping> configurations) {
         listStorage.put(keyName, configurations);
+    }
+
+    @Override
+    public void deleteAll() {
+        listStorage.get(keyName).clear();
     }
 
 }

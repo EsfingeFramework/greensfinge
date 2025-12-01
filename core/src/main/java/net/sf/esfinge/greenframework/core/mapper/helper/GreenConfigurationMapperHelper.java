@@ -1,15 +1,18 @@
 package net.sf.esfinge.greenframework.core.mapper.helper;
 
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import net.sf.esfinge.greenframework.core.dto.annotation.GreenAdjustableNumberConfiguration;
 import net.sf.esfinge.greenframework.core.dto.annotation.GreenDefaultConfiguration;
 import net.sf.esfinge.greenframework.core.dto.annotation.GreenSwitchConfiguration;
-import net.sf.esfinge.greenframework.core.dto.project.ConfigurationResponse;
+import net.sf.esfinge.greenframework.core.dto.project.response.ConfigurationResponse;
 import net.sf.esfinge.greenframework.core.entity.enuns.GreenConfigurationScope;
 import net.sf.esfinge.greenframework.core.entity.enuns.GreenConfigurationType;
 import org.mapstruct.Named;
 
 import java.util.Optional;
 
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class GreenConfigurationMapperHelper {
 
     @Named("customConfigurationMapper")

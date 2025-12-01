@@ -13,7 +13,7 @@ import java.util.List;
 @Getter
 @Setter
 @ContainerFor(ContainerTarget.TYPE)
-public class ClassContainer {
+public class ClassFieldContainer {
 
     @AllFieldsWith(GreenConfigAnnotation.class)
     private List<ContainerField> fields;

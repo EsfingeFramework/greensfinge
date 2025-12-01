@@ -22,6 +22,7 @@ public class GreenFrameworkProperties {
     private Double co2PerKmCar;
     private Double co2AbsorbedPerTreeYear;
     private Double powerLampLedWatts;
+    private String scanPackage;
 
     //This was necessary for the core module capture the environments correctly
     @PostConstruct
@@ -31,6 +32,7 @@ public class GreenFrameworkProperties {
         setProperty("green.framework.co2-per-km-car", toStringOrNull(co2PerKmCar));
         setProperty("green.framework.co2-absorbed-per-tree-year", toStringOrNull(co2AbsorbedPerTreeYear));
         setProperty("green.framework.power-lamp-led-watts", toStringOrNull(powerLampLedWatts));
+        setProperty("green.framework.scan-package", toStringOrNull(scanPackage));
     }
 
     private void setProperty(String key, String value) {

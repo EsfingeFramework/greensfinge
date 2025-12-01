@@ -3,9 +3,8 @@ package net.sf.esfinge.greenframework.core.configuration;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import net.bytebuddy.implementation.bind.annotation.*;
-import net.sf.esfinge.greenframework.core.annotation.GreenDefaultReturn;
 import net.sf.esfinge.greenframework.core.annotation.GreenSwitchOff;
-import net.sf.esfinge.greenframework.core.configuration.esfinge.dto.ClassContainer;
+import net.sf.esfinge.greenframework.core.configuration.esfinge.dto.ClassFieldContainer;
 import net.sf.esfinge.greenframework.core.configuration.esfinge.dto.ContainerField;
 import net.sf.esfinge.greenframework.core.configuration.interceptorprocessor.GreenStrategyProcessor;
 import net.sf.esfinge.greenframework.core.service.GreenProxyResolverService;
@@ -24,10 +23,10 @@ import static net.sf.esfinge.greenframework.core.util.GreenConstant.FIELD_ORIGIN
 public class GreenClassMethodProxyInterceptor {
 
     private final GreenProxyResolverService greenProxyResolverService = new GreenProxyResolverService();
-    private final ClassContainer classContainer;
+    private final ClassFieldContainer classFieldContainer;
 
-    public GreenClassMethodProxyInterceptor(ClassContainer classContainer) {
-        this.classContainer = classContainer;
+    public GreenClassMethodProxyInterceptor(ClassFieldContainer classFieldContainer) {
+        this.classFieldContainer = classFieldContainer;
     }
 
     @RuntimeType
@@ -56,13 +55,13 @@ public class GreenClassMethodProxyInterceptor {
             //Need to invoke the original bean for the other attribute dependencies
             return method.invoke(originalBean.get(target), args);
         } catch (InvocationTargetException e) {
-            throw e.getCause(); // preserva a exception real
+            throw e.getCause(); // preserve the original exception
         }
     }
 
     @SneakyThrows
     private void interceptGreenFieldsAnnotations(Object target) {
-        for (ContainerField containerField : classContainer.getFields()) {
+        for (ContainerField containerField : classFieldContainer.getFields()) {
             Object resolvedTarget = GreenReflectionUtil.resolveInjectionTarget(target);
             Field field = resolvedTarget.getClass().getDeclaredField(containerField.getAttributeName());
 

@@ -38,7 +38,7 @@ public class GreenReadAttributesAnnotationProcessor extends GreenReadProcessor i
                     if (value instanceof Annotation) {
                         processAnnotation(value, values);
                     } else {
-                        values.put(method.getName(), value);
+                        values.put(method.getDeclaringClass().getSimpleName(), value);
                     }
                 }
             }
